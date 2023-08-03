@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryApi.Service", "Libra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryApi.Controller", "LibraryApi.Controller\LibraryApi.Controller.csproj", "{DAD22F31-E447-4F8F-B05F-272E6EB902C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryApi.Testing", "LibraryApi.Testing\LibraryApi.Testing.csproj", "{04FDD3D8-8A5B-4EED-ADC9-38F867567EFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{DAD22F31-E447-4F8F-B05F-272E6EB902C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAD22F31-E447-4F8F-B05F-272E6EB902C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAD22F31-E447-4F8F-B05F-272E6EB902C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04FDD3D8-8A5B-4EED-ADC9-38F867567EFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04FDD3D8-8A5B-4EED-ADC9-38F867567EFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04FDD3D8-8A5B-4EED-ADC9-38F867567EFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04FDD3D8-8A5B-4EED-ADC9-38F867567EFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
