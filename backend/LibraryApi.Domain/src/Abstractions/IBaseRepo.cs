@@ -6,6 +6,6 @@ public interface IBaseRepo<T>
 {
   IEnumerable<T> GetAll(QueryOptions queryOptions);
   T GetOneById(string id);
-  T UpdateOneById(T UpdatedEntity, string id);
-  bool DeleteOneById(string id);
+  T UpdateOneById(T originalEntity, T updatedEntity);
+  bool DeleteOneById(T entity);
 }
