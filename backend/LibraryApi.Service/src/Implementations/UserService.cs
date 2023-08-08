@@ -17,7 +17,7 @@ public class UserService : BaseService<User, UserDto>, IUserService
   public UserDto UpdatePassword(string id, string newPassword)
   {
     var foundUser = _userRepo.GetOneById(id);
-    if (foundUser == null)
+    if (foundUser is null)
     {
       throw new Exception(id + ": User not found");
     }
