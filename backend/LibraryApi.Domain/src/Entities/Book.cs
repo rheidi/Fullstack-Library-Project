@@ -6,9 +6,10 @@ public class Book : BaseEntity
 {
   public string Title { get; set; }
   public int Year { get; set; }
-  public Author Author { get; set; }
+  public List<Author> Author { get; set; }
   public string Description { get; set; }
   public Genre Genre { get; set; }
   public string ImageUrl { get; set; }
-  public bool IsLoaned { get; set; } = false;
+  public int LibraryInventory { get; set;}
+  public int BooksAvailable { get; set; }
 }

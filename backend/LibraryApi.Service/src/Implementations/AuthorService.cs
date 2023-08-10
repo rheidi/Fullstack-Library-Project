@@ -6,7 +6,7 @@ using LibraryApi.Service.src.Dtos;
 
 namespace LibraryApi.Service.src.Implementations;
 
-public class AuthorService : BaseService<Author, Author>, IAuthorService
+public class AuthorService : BaseService<Author, AuthorReadDto, AuthorCreateDto, AuthorUpdateDto>, IAuthorService
 {
   private readonly IAuthorRepo _authorRepo;
   public AuthorService(IAuthorRepo authorRepo, IMapper mapper) : base(authorRepo, mapper)

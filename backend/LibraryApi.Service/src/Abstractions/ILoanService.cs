@@ -3,7 +3,7 @@ using LibraryApi.Service.src.Dtos;
 
 namespace LibraryApi.Service.src.Abstractions;
 
-public interface ILoanService : IBaseService<Loan, LoanDto>
+public interface ILoanService : IBaseService<Loan, LoanReadDto, LoanCreateDto, LoanUpdateDto>
 {
   
 }

@@ -3,7 +3,7 @@ using LibraryApi.Service.src.Dtos;
 
 namespace LibraryApi.Service.src.Abstractions;
 
-public interface IBookService : IBaseService<Book, BookDto>
+public interface IBookService : IBaseService<Book, BookReadDto, BookCreateDto, BookUpdateDto>
 {
   
 }
