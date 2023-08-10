@@ -6,7 +6,7 @@ using LibraryApi.Service.src.Dtos;
 
 namespace LibraryApi.Service.src.Implementations;
 
-public class BookService : BaseService<Book, BookDto>, IBookService
+public class BookService : BaseService<Book, BookReadDto, BookCreateDto, BookUpdateDto>, IBookService
 {
   private readonly IBookRepo _bookRepo;
   public BookService(IBookRepo bookRepo, IMapper mapper) : base(bookRepo, mapper)
