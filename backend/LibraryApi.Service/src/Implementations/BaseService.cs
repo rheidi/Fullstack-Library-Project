@@ -47,7 +47,7 @@ public class BaseService<T, TReadDto, TCreateDto, TUpdateDto> : IBaseService<T, 
     return _mapper.Map<TReadDto>(updatedEntity);
   }
 
-  public async Task<TReadDto> CreateOne(TCreateDto dto)
+  public virtual async Task<TReadDto> CreateOne(TCreateDto dto)
   {
     var entity = await _baseRepo.CreateOne(_mapper.Map<T>(dto));
     return _mapper.Map<TReadDto>(entity);
