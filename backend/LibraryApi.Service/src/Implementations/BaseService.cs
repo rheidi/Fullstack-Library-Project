@@ -43,7 +43,7 @@ public class BaseService<T, TReadDto, TCreateDto, TUpdateDto> : IBaseService<T, 
     {
       throw new Exception("Item not found.");
     }
-    var updatedEntity = _baseRepo.UpdateOneById(foundItem, _mapper.Map<T>(updated));
+    var updatedEntity = _baseRepo.UpdateOneById(_mapper.Map<T>(updated));
     return _mapper.Map<TReadDto>(updatedEntity);
   }
 

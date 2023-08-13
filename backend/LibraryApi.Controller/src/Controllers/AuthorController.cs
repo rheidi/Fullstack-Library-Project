@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryApi.Controller.src.Controllers;
 
-[Authorize]
+//[Authorize]
 public class AuthorController : CrudController<Author, AuthorReadDto, AuthorCreateDto, AuthorUpdateDto>
 {
   public AuthorController(IAuthorService baseService) : base(baseService)

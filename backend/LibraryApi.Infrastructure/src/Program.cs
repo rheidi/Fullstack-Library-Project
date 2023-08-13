@@ -1,3 +1,9 @@
+using LibraryApi.Domain.src.Abstractions;
+using LibraryApi.Infrastructure.src.Database;
+using LibraryApi.Infrastructure.src.RepoImplementations;
+using LibraryApi.Service.src.Abstractions;
+using LibraryApi.Service.src.Implementations;
+using LibraryApi.Service.src.Shared;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -5,6 +11,21 @@ using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+builder.Services.AddDbContext<DatabaseContext>();
+
+builder.Services
+.AddScoped<IUserRepo, UserRepo>()
+.AddScoped<IUserService, UserService>()
+.AddScoped<IBookRepo, BookRepo>()
+.AddScoped<IBookService, BookService>()
+.AddScoped<IAuthorRepo, AuthorRepo>()
+.AddScoped<IAuthorService, AuthorService>()
+.AddScoped<ILoanRepo, LoanRepo>()
+.AddScoped<ILoanService, LoanService>()
+.AddScoped<IAuthService, AuthService>()
+;
 // Add services to the container.
 
 builder.Services.AddControllers();
