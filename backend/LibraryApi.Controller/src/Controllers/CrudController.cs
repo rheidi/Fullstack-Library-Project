@@ -21,8 +21,8 @@ public class CrudController<T, TReadDto, TCreateDto, TUpdateDto> : ControllerBas
     return Ok(await _baseService.GetAll(queryOptions));
   }
 
-  [HttpGet("{id}")]
-  public virtual async Task<ActionResult<TReadDto>> GetOneById ([FromRoute] string id)
+  [HttpGet("{id:Guid}")]
+  public virtual async Task<ActionResult<TReadDto>> GetOneById ([FromRoute] Guid id)
   {
     return Ok(await _baseService.GetOneById(id));
   }
@@ -34,15 +34,15 @@ public class CrudController<T, TReadDto, TCreateDto, TUpdateDto> : ControllerBas
     return CreatedAtAction("Created", createdObject);
   }
 
-  [HttpPatch("{id}")]
-  public virtual async Task<ActionResult<TReadDto>> UpdateOneById([FromRoute] string id, [FromBody] TUpdateDto updateDto)
+  [HttpPatch("{id:Guid}")]
+  public virtual async Task<ActionResult<TReadDto>> UpdateOneById([FromRoute] Guid id, [FromBody] TUpdateDto updateDto)
   {
     var updatedObject = await _baseService.UpdateOneById(id, updateDto);
     return Ok(updatedObject);
   }
 
-  [HttpDelete("{id}")]
-  public virtual async Task<ActionResult<bool>> DeleteOneById([FromRoute] string id)
+  [HttpDelete("{id:Guid}")]
+  public virtual async Task<ActionResult<bool>> DeleteOneById([FromRoute] Guid id)
   {
     return StatusCode(204, await _baseService.DeleteOneById(id));
   }

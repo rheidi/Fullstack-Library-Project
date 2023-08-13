@@ -31,7 +31,7 @@ public class BaseRepo<T> : IBaseRepo<T> where T : class
       throw new NotImplementedException();
   }
 
-  public async Task<T> GetOneById(string id)
+  public async Task<T> GetOneById(Guid id)
   {
     return await _dbSet.FindAsync(id);
   }

@@ -5,5 +5,5 @@ namespace LibraryApi.Service.src.Abstractions;
 
 public interface IUserService : IBaseService<User, UserReadDto, UserCreateDto, UserUpdateDto>
 {
-  Task<UserReadDto> UpdatePassword(string id, string newPassword);
+  Task<UserReadDto> UpdatePassword(Guid id, string newPassword);
 }
