@@ -16,28 +16,34 @@ public class BaseRepo<T> : IBaseRepo<T> where T : class
     _context = dbContext;
   }
 
-  public Task<T> CreateOne(T entity)
+  public async Task<T> CreateOne(T entity)
   {
-      throw new NotImplementedException();
+    await _dbSet.AddAsync(entity);
+    await _context.SaveChangesAsync();
+    return entity;
   }
 
-  public Task<bool> DeleteOneById(T entity)
+  public async Task<bool> DeleteOneById(T entity)
   {
-      throw new NotImplementedException();
+    _dbSet.Remove(entity);
+    await _context.SaveChangesAsync();
+    return true;
   }
 
-  public Task<IEnumerable<T>> GetAll(QueryOptions queryOptions)
+  public async Task<IEnumerable<T>> GetAll(QueryOptions queryOptions)
   {
-      throw new NotImplementedException();
+    return await _dbSet.ToArrayAsync();
   }
 
-  public async Task<T> GetOneById(Guid id)
+  public async Task<T?> GetOneById(Guid id)
   {
     return await _dbSet.FindAsync(id);
   }
 
-  public Task<T> UpdateOneById(T originalEntity, T updatedEntity)
+  public async Task<T> UpdateOneById(T updatedEntity)
   {
-      throw new NotImplementedException();
+    _dbSet.Update(updatedEntity);
+    await _context.SaveChangesAsync();
+    return updatedEntity;
   }
 }
