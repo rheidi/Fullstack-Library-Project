@@ -17,14 +17,22 @@ public class DatabaseContext : DbContext
     _config = config;
   }
 
+  static DatabaseContext()
+  {
+    AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+    AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
+  }
+
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
     var builder = new NpgsqlDataSourceBuilder(_config.GetConnectionString("Default"));
+    optionsBuilder.AddInterceptors(new TimestampInterceptor());
     optionsBuilder.UseNpgsql(builder.Build()).UseSnakeCaseNamingConvention();
   }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
-    base.OnModelCreating(modelBuilder);
+    modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+    modelBuilder.Entity<User>().HasIndex(u => u.UserName).IsUnique();
   }
 }

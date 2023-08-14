@@ -16,7 +16,7 @@ public class BaseRepo<T> : IBaseRepo<T> where T : class
     _context = dbContext;
   }
 
-  public async Task<T> CreateOne(T entity)
+  public virtual async Task<T> CreateOne(T entity)
   {
     await _dbSet.AddAsync(entity);
     await _context.SaveChangesAsync();

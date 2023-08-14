@@ -18,7 +18,8 @@ public class CrudController<T, TReadDto, TCreateDto, TUpdateDto> : ControllerBas
   [HttpGet]
   public virtual async Task<ActionResult<IEnumerable<TReadDto>>> GetAll([FromQuery] QueryOptions queryOptions)
   {
-    return Ok(await _baseService.GetAll(queryOptions));
+    var result = (await _baseService.GetAll(queryOptions)).ToArray();
+    return Ok(result);
   }
 
   [HttpGet("{id:Guid}")]
@@ -31,7 +32,7 @@ public class CrudController<T, TReadDto, TCreateDto, TUpdateDto> : ControllerBas
   public virtual async Task<ActionResult<TReadDto>> CreateOne([FromBody] TCreateDto dto)
   {
     var createdObject = await _baseService.CreateOne(dto);
-    return CreatedAtAction("Created", createdObject);
+    return CreatedAtAction(nameof(CreateOne), createdObject);
   }
 
   [HttpPatch("{id:Guid}")]

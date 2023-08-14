@@ -35,4 +35,10 @@ public class UserRepo : BaseRepo<User>, IUserRepo
     await _context.SaveChangesAsync();
     return user;
   }
+
+  public override Task<User> CreateOne(User entity)
+  {
+    entity.Role = Role.Customer;
+    return base.CreateOne(entity);
+  }
 }
