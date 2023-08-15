@@ -1,0 +1,41 @@
+@use 'palette';
+
+body {
+  padding: 0;
+  margin: 0;
+  background: palette.$background;
+  color: palette.$background-light;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+main {
+  margin: 2rem;
+}
+
+nav {
+  background: palette.$panel;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+
+  a {
+    min-width: 2rem;
+    text-align: center;
+    margin-right: 0.1rem;
+    padding: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    background: palette.$highlight-dark;
+    color: palette.$accent-light;
+    &:hover {
+      color: palette.$highlight-light;
+    }
+    &.end {
+      margin-left: auto;
+    }
+  }
+}
+
+
