@@ -11,9 +11,14 @@ const Navigation = () => {
       <Link to="/">📖</Link>
       <Link to="/books">All books</Link>
       {currentUser ? (
-        <Link className="end" to="/profile">
-          Profile
-        </Link>
+        <>
+          <Link className="end" to="/cart">
+            Cart
+          </Link>
+          <Link className="end" to="/profile">
+            Profile
+          </Link>
+        </>
       ) : (
         <Link className="end" to="/login">
           Login

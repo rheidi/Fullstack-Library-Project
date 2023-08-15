@@ -32,9 +32,7 @@ const Cart = () => {
               <li className="cart-item" key={i.id}>
                 <span className="title">{i.title}</span>
                 <span className="year">{i.year}</span>
-                <span className="author">
-                  {i.authors.map(a => `${a.firstname} ${a.lastname}`).join(',')}
-                </span>
+                <span className="author">{`${i.author?.firstname} ${i.author?.lastname}`}</span>
                 <button onClick={() => dispatch(removeFromCart(i))}>Remove book from cart</button>
               </li>
             ))}

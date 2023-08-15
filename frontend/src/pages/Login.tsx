@@ -5,6 +5,7 @@ import { AxiosError } from 'axios'
 import useAppDispatch from '../hooks/useAppDispatch'
 import { login } from '../redux/reducers/userReducer'
 import useAppSelector from '../hooks/useAppSelector'
+import '../styles/login.scss'
 
 const Login = () => {
   const dispatch = useAppDispatch()
@@ -21,40 +22,34 @@ const Login = () => {
     })
   }
   return (
-    <div>
+    <main>
       <h1>Login</h1>
       {error && error !== '' && <p className="error">{error}</p>}
       <form onSubmit={e => handleSubmit(e)}>
         <fieldset>
           <legend>Log in:</legend>
-          <label id="email">
+          <label htmlFor="email" id="email">
             email:
-            <input
-              onChange={e => setEmail(e.target.value)}
-              type="email"
-              name="email"
-              value={email}
-            />
           </label>
-          <br />
-          <label id="password">
+          <input onChange={e => setEmail(e.target.value)} type="email" name="email" value={email} />
+          <label htmlFor="password" id="password">
             password:
-            <input
-              onChange={e => setPassword(e.target.value)}
-              type="password"
-              name="password"
-              value={password}
-            />
           </label>
-          <br />
+          <input
+            onChange={e => setPassword(e.target.value)}
+            type="password"
+            name="password"
+            value={password}
+          />
           <button type="submit">Submit</button>
         </fieldset>
       </form>
-      <br />
-      <h2>Register</h2>
-      <p>If you don't have an account, you can register here:</p>
-      <Link to="/signup">Sign up here</Link>
-    </div>
+      <div className="registration">
+        <h2>Register</h2>
+        <p>If you don't have an account, you can register here:</p>
+        <Link to="/signup">Sign up here</Link>
+      </div>
+    </main>
   )
 }
 

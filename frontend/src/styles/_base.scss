@@ -8,8 +8,34 @@ body {
   font-family: 'Helvetica', 'Arial', sans-serif;
 }
 
+#root {
+  width: 100%;
+}
+
 main {
-  margin: 2rem;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .tools {
+    border: 2px solid palette.$highlight-light;
+    background: palette.$highlight;
+    color: palette.$highlight-light;
+    padding: 0.5rem;
+  }
+}
+
+a {
+  color: palette.$accent-light;
+  text-decoration: none;
+  &:visited {
+    color: palette.$shade-light;
+  }
+  &:hover {
+    color: palette.$highlight-light;
+  }
 }
 
 nav {
@@ -29,8 +55,12 @@ nav {
     font-weight: 600;
     background: palette.$highlight-dark;
     color: palette.$accent-light;
+
+    &:visited {
+      color: palette.$accent-light;
+    }
     &:hover {
-      color: palette.$highlight-light;
+      color: palette.$highlight-light !important;
     }
     &.end {
       margin-left: auto;
@@ -38,4 +68,40 @@ nav {
   }
 }
 
+h1 {
+  margin-left: 2rem;
+  color: palette.$highlight-light
+}
+
+.error {
+  padding: 2rem;
+  background: palette.$accent-dark;
+  border: 1px solid palette.$accent-light;
+  border-radius: 4px;
+  color: palette.$accent-light;
+}
+
+.success {
+  padding: 2rem;
+  background: palette.$background-light;
+  border: 1px solid palette.$background-dark;
+  border-radius: 4px;
+  color: palette.$background-dark;
+}
+
+button {
+  border-radius: 4px;
+  padding: 0.4rem;
+  background: palette.$highlight-light;
+  color: palette.$highlight-dark;
+  border: palette.$highlight-dark;
+  margin: 0 0.5rem;
+  cursor: pointer;
+  &:active {
+    background: palette.$highlight-dark;
+    color: palette.$highlight-light;
+    border: palette.$highlight-light;
+
+  }
+}
 

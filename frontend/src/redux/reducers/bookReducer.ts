@@ -18,7 +18,8 @@ const initialState: BookReducer = {
 
 export const fetchAllBooks = createAsyncThunk('fetchAllBooks', async () => {
   try {
-    const result = await axios.get<Book[]>(`${config.backendUrl}/books`)
+    // const result = await axios.get<Book[]>(`${config.backendUrl}/books`)
+    const result = require('../../tests/books.json')
     return result.data
   } catch (e) {
     return e as AxiosError
@@ -27,8 +28,10 @@ export const fetchAllBooks = createAsyncThunk('fetchAllBooks', async () => {
 
 export const fetchOneBook = createAsyncThunk('fetchOneBook', async (id: string | undefined) => {
   try {
-    const result = await axios.get<Book>(`${config.backendUrl}/books/${id}`)
-    return result.data
+    // const result = await axios.get<Book>(`${config.backendUrl}/books/${id}`)
+    const result = require('../../tests/books.json')
+    // @ts-ignore
+    return result.data.find(book => book.id === id)
   } catch (e) {
     return e as AxiosError
   }

@@ -1,0 +1,47 @@
+@use "palette";
+
+form {
+  background: palette.$panel;
+  color: palette.$highlight-light;
+  padding: 2rem;
+
+  fieldset {
+    max-width: 40rem;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-gap: 1rem;
+    padding-top: 1rem;
+
+    label {
+      grid-column: 1 / 2;
+      align-self: center;
+      justify-self: end;
+    }
+
+    input,
+    button,
+    submit {
+      grid-column: 2 / 3;
+      border-radius: 4px;
+      padding: 0.4rem;
+    }
+
+    input {
+      border: 1px solid palette.$panel-light;
+      background: palette.$highlight-dark;
+      color: white;
+      &:focus, &:focus-visible {
+        border: 1px solid palette.$highlight;
+      }
+      &:focus {
+        outline: none;
+        box-shadow: 1px 1px 5px palette.$shade;
+      }
+    }
+
+    button, submit {
+      background: palette.$highlight-light;
+      color: palette.$highlight-dark;
+    }
+  }
+}

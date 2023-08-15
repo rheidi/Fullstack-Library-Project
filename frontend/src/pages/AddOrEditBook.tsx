@@ -14,7 +14,7 @@ const AddOrEditBook = () => {
   const dispatch = useAppDispatch()
   const [title, setTitle] = useState('')
   const [year, setYear] = useState(2000)
-  const [authors, setAuthors] = useState<Author[]>([])
+  const [author, setAuthors] = useState<Author | undefined>(undefined)
   const [description, setDescription] = useState('')
   const [genre, setGenre] = useState(5)
   const image = 'https://picsum.photos/300'
@@ -24,22 +24,23 @@ const AddOrEditBook = () => {
     if (id) {
       dispatch(fetchOneBook(id))
     }
-    if (book) {
-      setTitle(book.title)
-      setYear(book.year)
-      setAuthors(book.authors)
-      setDescription(book.description)
-      setGenre(book.genre)
-    }
   }, [dispatch, id])
+
+  if (book) {
+    setTitle(book.title)
+    setYear(book.year)
+    setAuthors(book.author)
+    setDescription(book.description)
+    setGenre(book.genre)
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (id) {
-      dispatch(editBook({ id, title, year, authors, description, genre, image }))
+      dispatch(editBook({ id, title, year, author, description, genre, image }))
       navigate(`/books/${id}`)
     } else {
-      const res = dispatch(addNewBook({ title, year, authors, description, genre, image }))
+      const res = dispatch(addNewBook({ title, year, author, description, genre, image }))
       navigate(`/books/${res}`)
     }
   }
@@ -66,12 +67,12 @@ const AddOrEditBook = () => {
             <input onChange={e => setYear(parseInt(e.target.value))} name="year" value={year} />
           </label>
           <br />
-          <label id="authors">
+          <label id="author">
             price:
             <input
-              onChange={e => setAuthors(e.target.value.split(',').map(convertToAuthor))}
-              name="year"
-              value={year}
+              onChange={e => setAuthors(convertToAuthor(e.target.value))}
+              name="author"
+              value={`${author?.firstname} ${author?.lastname}` ?? ''}
             />
           </label>
           <br />

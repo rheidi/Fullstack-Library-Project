@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 
 import useAppDispatch from '../hooks/useAppDispatch'
 import { newUser } from '../redux/reducers/userReducer'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import useAppSelector from '../hooks/useAppSelector'
+import { AxiosError } from 'axios'
 
 const SignUp = () => {
   const dispatch = useAppDispatch()
@@ -11,57 +13,65 @@ const SignUp = () => {
   const [username, setUserName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [success, setSuccess] = useState(false)
+  const { error } = useAppSelector(state => state.userReducer)
   const navigate = useNavigate()
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    dispatch(newUser({ firstname, lastname, username, email, password }))
-    navigate('/login')
+    dispatch(newUser({ firstname, lastname, username, email, password })).then(action => {
+      if (!(action.payload instanceof AxiosError)) {
+        setSuccess(true)
+        setFirstName('')
+        setLastName('')
+        setUserName('')
+        setEmail('')
+        setPassword('')
+        setTimeout(() => navigate('/login'), 5000)
+      }
+    })
   }
+
   return (
-    <div>
+    <main>
+      {error && error !== '' && <p className="error">{error}</p>}
+      {success && (
+        <p className="success">
+          Registration completed, redirecting to <Link to="/login">login page</Link>
+        </p>
+      )}
       <h1>Register new user</h1>
       <form onSubmit={e => handleSubmit(e)}>
         <fieldset>
           <legend>Registration info:</legend>
-          <label id="firstname">
+          <label htmlFor="firstname" id="firstname">
             first name:
-            <input onChange={e => setFirstName(e.target.value)} name="name" value={firstname} />
           </label>
-          <br />
-          <label id="lastname">
+          <input onChange={e => setFirstName(e.target.value)} name="firstname" value={firstname} />
+          <label htmlFor="lastname" id="lastname">
             last name:
-            <input onChange={e => setLastName(e.target.value)} name="name" value={lastname} />
           </label>
-          <br />
-          <label id="username">
+          <input onChange={e => setLastName(e.target.value)} name="lastname" value={lastname} />
+          <label htmlFor="username" id="username">
             username:
-            <input onChange={e => setUserName(e.target.value)} name="name" value={username} />
           </label>
-          <br />
-          <label id="email">
+          <input onChange={e => setUserName(e.target.value)} name="username" value={username} />
+          <label htmlFor="email" id="email">
             email:
-            <input
-              onChange={e => setEmail(e.target.value)}
-              type="email"
-              name="email"
-              value={email}
-            />
           </label>
-          <br />
-          <label id="password">
+          <input onChange={e => setEmail(e.target.value)} type="email" name="email" value={email} />
+          <label htmlFor="password" id="password">
             password:
-            <input
-              onChange={e => setPassword(e.target.value)}
-              type="password"
-              name="password"
-              value={password}
-            />
           </label>
-          <br />
+          <input
+            onChange={e => setPassword(e.target.value)}
+            type="password"
+            name="password"
+            value={password}
+          />
           <button type="submit">Submit</button>
         </fieldset>
       </form>
-    </div>
+    </main>
   )
 }
 

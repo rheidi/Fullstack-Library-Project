@@ -1,0 +1,59 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "title": "Suuri toivelaulukirja II",
+      "author": {
+        "firstname": "Fazer",
+        "lastname": "Musiikki"
+      },
+      "description": "Jatkaa suosittua sarjaa taas uudella kirjalla, joka sisältää 150 uutta sarjassa ennenjulkaisematonta laulua.",
+      "year": 1994,
+      "genre": 6
+    },
+    {
+      "id": "2",
+      "title": "The Priory of the Orange Tree",
+      "author": {
+        "firstname": "Samantha",
+        "lastname": "Shannon"
+      },
+      "description": "A World Divided. A queendom without an heir. An ancient enemy awakens.",
+      "year": 2022,
+      "genre": 4
+    },
+    {
+      "id": "3",
+      "title": "Foundation",
+      "author": {
+        "firstname": "Isaac",
+        "lastname": "Asimov"
+      },
+      "description": "For twelve thousand years the Galactic Empire had ruled supreme. Now it was dying. But only Hari Seldom, creator of the revolutionary science of psychohistory could see into the future – a dark age of ignorance, barbarism, and warfare that would last thirty thousand years. To preserve knowledge and save mankind. Seldon gathered the best minds in the Empire to a bleak planet at the edge of the Galaxy to serve as a beacon of hope for future generations. He called his sanctuary the Foundation.\nBut soon the fledgling Foundation found itself at the mercy of corrupt warlords rising in the wake of the receding Empire. Mankind's last best hope was faced with an agonizing choice: Submit to the barbarians and be overrun – or fight them and be destroyed.",
+      "year": 1954,
+      "genre": 5
+    },
+    {
+      "id": "4",
+      "title": "Jeppis",
+      "author": {
+        "firstname": "Tommi",
+        "lastname": "Liimatta"
+      },
+      "description": "80-luvulle sijoittuva hevinkuunteluromaani, josta puuttuu jälkiviisaus",
+      "year": 2014,
+      "genre": 0
+    },
+    {
+      "id": "5",
+      "title": "Last Argument of Kings",
+      "author": {
+        "firstname": "Joe",
+        "lastname": "Abercrombie"
+      },
+      "description": "Logen ninefingers might only have one more fight in him, but it's going to be a big one. Battle Rages across the North, the King of the Northmen still stands firm and there's only one man who can stop him. His oldest friend and his oldest enemy. It's past time for the Bloody-Nine to come home.\nWith too many masters and too little time, Superior Glokta is fighting a different kind of war. A secret struggel in which no-one is safe, and no one can be trusted. And as his days with a sword are far behind him, it's a good thing blackmail, threats and torture never go out of fashion.\nJezal dan Luthar has decided that winning glory is far too painful a process and turned his back on soldiering for a simple life with the woman he loves. But love can be painful too - and glory has a nasty habit of creeping up on a man when he least expects it.",
+      "year": 2008,
+      "genre": 4
+    }
+  ]
+}

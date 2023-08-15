@@ -9,16 +9,17 @@ import Book from './pages/Book'
 import useAppSelector from './hooks/useAppSelector'
 import AddOrEditBook from './pages/AddOrEditBook'
 import SignUp from './pages/SignUp'
+import Cart from './pages/Cart'
 
 const App = () => {
   const userState = useAppSelector(state => state.userReducer)
   const { currentUser } = userState
   const PrivateRoutes = ({ isAllowed }: { isAllowed: boolean }) => {
-    return isAllowed ? <Outlet /> : <Navigate to="/login" />
+    return isAllowed ? <Outlet /> : <Navigate to="login" />
   }
 
-  const LoggedInProtectedRoutes = ({ isAllowed }: { isAllowed: boolean }) => {
-    return isAllowed ? <Outlet /> : <Navigate to="/profile" />
+  const LoggedInRoutes = ({ isAllowed }: { isAllowed: boolean }) => {
+    return isAllowed ? <Outlet /> : <Navigate to="profile" />
   }
 
   return (
@@ -26,16 +27,20 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="/books" element={<Books />} />
-          <Route path="/book/:id" element={<Book />} />
-          <Route element={<PrivateRoutes isAllowed={!currentUser} />}>
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
+          <Route path="books" element={<Books />} />
+          <Route path="book/:id" element={<Book />} />
+          <Route element={<LoggedInRoutes isAllowed={!currentUser} />}>
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<SignUp />} />
+          </Route>
+          <Route element={<PrivateRoutes isAllowed={!!currentUser} />}>
+            <Route path="cart" element={<Cart />} />
           </Route>
           <Route
             element={<PrivateRoutes isAllowed={!!currentUser && currentUser.role === 'admin'} />}
           >
             <Route path="add_book" element={<AddOrEditBook />} />
+            <Route path="edit_book/:id" element={<AddOrEditBook />} />
           </Route>
         </Route>
       </Routes>

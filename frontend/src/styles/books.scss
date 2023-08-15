@@ -1,0 +1,23 @@
+@use "palette";
+
+main.book-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  margin: 2rem;
+  grid-gap: 1rem;
+
+  div.card {
+    align-self: start;
+    padding: 1rem;
+    border-radius: 4px;
+    border: 1px solid palette.$shade-light;
+    background: palette.$accent;
+    color: palette.$panel-light;
+
+    h2 {
+      margin-top: 0.5rem;
+      color: palette.$highlight-light;
+    }
+  }
+}

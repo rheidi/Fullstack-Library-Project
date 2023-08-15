@@ -2,10 +2,16 @@ import useAppSelector from '../hooks/useAppSelector'
 import useAppDispatch from '../hooks/useAppDispatch'
 import { useEffect } from 'react'
 import { fetchAllBooks } from '../redux/reducers/bookReducer'
+import '../styles/books.scss'
+import { Link } from 'react-router-dom'
+import { addToCart } from '../redux/reducers/cartReducer'
 
 const Books = () => {
   const { books } = useAppSelector(state => state.bookReducer)
   const dispatch = useAppDispatch()
+  const userState = useAppSelector(state => state.userReducer)
+
+  const { currentUser } = userState
 
   useEffect(() => {
     dispatch(fetchAllBooks())
@@ -14,10 +20,18 @@ const Books = () => {
   return (
     <main className="book-grid">
       {books.map(b => (
-        <div className="card">
-          <h2>{b.title}</h2>
-          <h3>{b.authors.map(a => `${a.firstname} ${a.lastname}`).join(',')}</h3>
-          <p>{b.description}</p>
+        <div key={b.id} className="card">
+          <Link to={`/book/${b.id}`}>
+            <h2>{b.title}</h2>
+            <h3>{`${b.author?.firstname} ${b.author?.lastname}`}</h3>
+          </Link>
+          <p>{b.description.split('\n')[0]}</p>
+          {currentUser && (
+            <div className="tools">
+              <button onClick={e => dispatch(addToCart(b))}>Add to cart</button>
+              {currentUser.role === 'admin' && <Link to={`/edit_book/${b.id}`}>Edit book</Link>}
+            </div>
+          )}
         </div>
       ))}
     </main>
