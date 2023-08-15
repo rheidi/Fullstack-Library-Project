@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using JWT.Algorithms;
+using JWT.Builder;
+using JWT.Extensions.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +53,14 @@ builder.Services.AddSwaggerGen(options =>
     });
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
+
+builder.Services
+.AddAuthentication(JwtAuthenticationDefaults.AuthenticationScheme)
+.AddJwt(
+    options => options.Keys = new[] { "my-secret-key" }
+);
+
+builder.Services.AddSingleton<IAlgorithmFactory>(new HMACSHAAlgorithmFactory());
 
 builder.Services.Configure<RouteOptions>(options =>
 {
