@@ -15,6 +15,16 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddDbContext<DatabaseContext>();
 
+builder.Services.AddCors(opts => 
+{
+    opts.AddDefaultPolicy(builder => 
+    {
+        builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
 builder.Services
 .AddScoped<IUserRepo, UserRepo>()
 .AddScoped<IUserService, UserService>()
@@ -55,6 +65,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors();
 //app.UseHttpsRedirection();
 
 app.UseAuthorization();
