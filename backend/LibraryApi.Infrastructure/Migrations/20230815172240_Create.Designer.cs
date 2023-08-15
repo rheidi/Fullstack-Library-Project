@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LibraryApi.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230815090830_Create")]
+    [Migration("20230815172240_Create")]
     partial class Create
     {
         /// <inheritdoc />
@@ -217,21 +217,12 @@ namespace LibraryApi.Infrastructure.Migrations
                         .HasColumnType("bytea")
                         .HasColumnName("salt");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("user_name");
-
                     b.HasKey("Id")
                         .HasName("pk_users");
 
                     b.HasIndex("Email")
                         .IsUnique()
                         .HasDatabaseName("ix_users_email");
-
-                    b.HasIndex("UserName")
-                        .IsUnique()
-                        .HasDatabaseName("ix_users_user_name");
 
                     b.ToTable("users", (string)null);
                 });

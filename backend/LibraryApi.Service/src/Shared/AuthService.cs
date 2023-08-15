@@ -19,7 +19,7 @@ public class AuthService : IAuthService
   public async Task<string> VerifyCredentials(UserCredentialsDto credentials)
   {
     var foundUserByEmail = await _userRepo.FindOneByEmail(credentials.Email) ?? throw new Exception("Username not found");
-    var isAuthenticated = PasswordService.VerifyPassword(foundUserByEmail.Password, credentials.Password, foundUserByEmail.Salt);
+    var isAuthenticated = PasswordService.VerifyPassword(credentials.Password, foundUserByEmail.Password, foundUserByEmail.Salt);
     if (!isAuthenticated)
     {
       throw new Exception("Credentials don't match.");

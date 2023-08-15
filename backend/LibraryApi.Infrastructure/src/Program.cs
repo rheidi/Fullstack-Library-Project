@@ -57,7 +57,11 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services
 .AddAuthentication(JwtAuthenticationDefaults.AuthenticationScheme)
 .AddJwt(
-    options => options.Keys = new[] { "my-secret-key" }
+    options =>
+    {
+        options.Keys = new[] { "my-secret-key" };
+        options.VerifySignature = true;
+    }
 );
 
 builder.Services.AddSingleton<IAlgorithmFactory>(new HMACSHAAlgorithmFactory());
@@ -79,9 +83,9 @@ if (app.Environment.IsDevelopment())
 app.UseCors();
 //app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.MapControllers();
 

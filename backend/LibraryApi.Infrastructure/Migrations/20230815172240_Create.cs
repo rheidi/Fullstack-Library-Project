@@ -57,7 +57,6 @@ namespace LibraryApi.Infrastructure.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     email = table.Column<string>(type: "text", nullable: false),
-                    user_name = table.Column<string>(type: "text", nullable: false),
                     password = table.Column<string>(type: "text", nullable: false),
                     salt = table.Column<byte[]>(type: "bytea", nullable: false),
                     first_name = table.Column<string>(type: "text", nullable: false),
@@ -143,12 +142,6 @@ namespace LibraryApi.Infrastructure.Migrations
                 name: "ix_users_email",
                 table: "users",
                 column: "email",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "ix_users_user_name",
-                table: "users",
-                column: "user_name",
                 unique: true);
         }
 

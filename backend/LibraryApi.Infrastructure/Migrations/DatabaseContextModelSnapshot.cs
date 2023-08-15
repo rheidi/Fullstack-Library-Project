@@ -214,21 +214,12 @@ namespace LibraryApi.Infrastructure.Migrations
                         .HasColumnType("bytea")
                         .HasColumnName("salt");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("user_name");
-
                     b.HasKey("Id")
                         .HasName("pk_users");
 
                     b.HasIndex("Email")
                         .IsUnique()
                         .HasDatabaseName("ix_users_email");
-
-                    b.HasIndex("UserName")
-                        .IsUnique()
-                        .HasDatabaseName("ix_users_user_name");
 
                     b.ToTable("users", (string)null);
                 });
