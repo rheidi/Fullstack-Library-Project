@@ -31,7 +31,7 @@ public class AuthService : IAuthService
   {
     var token = JwtBuilder.Create()
       .WithAlgorithm(new HMACSHA256Algorithm())
-      .WithSecret("my-secrete-key")
+      .WithSecret("my-secret-key")
       .AddClaim(ClaimName.VerifiedEmail, user.Email)
       .Encode();
     return token;
