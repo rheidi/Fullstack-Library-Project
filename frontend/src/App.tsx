@@ -8,12 +8,17 @@ import Login from './pages/Login'
 import Book from './pages/Book'
 import useAppSelector from './hooks/useAppSelector'
 import AddOrEditBook from './pages/AddOrEditBook'
+import SignUp from './pages/SignUp'
 
 const App = () => {
   const userState = useAppSelector(state => state.userReducer)
   const { currentUser } = userState
   const PrivateRoutes = ({ isAllowed }: { isAllowed: boolean }) => {
-    return isAllowed ? <Outlet /> : <Navigate to="login" />
+    return isAllowed ? <Outlet /> : <Navigate to="/login" />
+  }
+
+  const LoggedInProtectedRoutes = ({ isAllowed }: { isAllowed: boolean }) => {
+    return isAllowed ? <Outlet /> : <Navigate to="/profile" />
   }
 
   return (
@@ -23,7 +28,10 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="/books" element={<Books />} />
           <Route path="/book/:id" element={<Book />} />
-          <Route path="/login" element={<Login />} />
+          <Route element={<PrivateRoutes isAllowed={!currentUser} />}>
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+          </Route>
           <Route
             element={<PrivateRoutes isAllowed={!!currentUser && currentUser.role === 'admin'} />}
           >

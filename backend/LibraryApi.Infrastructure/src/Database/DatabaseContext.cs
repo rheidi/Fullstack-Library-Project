@@ -26,12 +26,16 @@ public class DatabaseContext : DbContext
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
     var builder = new NpgsqlDataSourceBuilder(_config.GetConnectionString("Default"));
+    builder.MapEnum<Role>();
+    builder.MapEnum<Genre>();
     optionsBuilder.AddInterceptors(new TimestampInterceptor());
     optionsBuilder.UseNpgsql(builder.Build()).UseSnakeCaseNamingConvention();
   }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
+    modelBuilder.HasPostgresEnum<Role>();
+    modelBuilder.HasPostgresEnum<Genre>();
     modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
     modelBuilder.Entity<User>().HasIndex(u => u.UserName).IsUnique();
   }

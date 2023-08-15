@@ -1,4 +1,5 @@
 ﻿using System;
+using LibraryApi.Domain.src.Entities;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -11,6 +12,10 @@ namespace LibraryApi.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("Npgsql:Enum:genre", "novel,romance,crime,s_ci_fi,fantasy,horror,poems")
+                .Annotation("Npgsql:Enum:role", "admin,customer,librarian");
+
             migrationBuilder.CreateTable(
                 name: "authors",
                 columns: table => new
@@ -18,8 +23,8 @@ namespace LibraryApi.Infrastructure.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     first_name = table.Column<string>(type: "text", nullable: false),
                     last_name = table.Column<string>(type: "text", nullable: false),
-                    creted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    last_updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    last_updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,12 +39,12 @@ namespace LibraryApi.Infrastructure.Migrations
                     title = table.Column<string>(type: "text", nullable: false),
                     year = table.Column<int>(type: "integer", nullable: false),
                     description = table.Column<string>(type: "text", nullable: false),
-                    genre = table.Column<int>(type: "integer", nullable: false),
+                    genre = table.Column<Genre>(type: "genre", nullable: false),
                     image_url = table.Column<string>(type: "text", nullable: false),
                     library_inventory = table.Column<int>(type: "integer", nullable: false),
                     books_available = table.Column<int>(type: "integer", nullable: false),
-                    creted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    last_updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    last_updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,9 +62,9 @@ namespace LibraryApi.Infrastructure.Migrations
                     salt = table.Column<byte[]>(type: "bytea", nullable: false),
                     first_name = table.Column<string>(type: "text", nullable: false),
                     last_name = table.Column<string>(type: "text", nullable: false),
-                    role = table.Column<int>(type: "integer", nullable: false),
-                    creted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    last_updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    role = table.Column<Role>(type: "role", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    last_updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -99,8 +104,8 @@ namespace LibraryApi.Infrastructure.Migrations
                     book_id = table.Column<Guid>(type: "uuid", nullable: false),
                     due_date = table.Column<DateOnly>(type: "date", nullable: false),
                     is_returned = table.Column<bool>(type: "boolean", nullable: false),
-                    creted_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    last_updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    last_updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -133,6 +138,18 @@ namespace LibraryApi.Infrastructure.Migrations
                 name: "ix_loans_user_id",
                 table: "loans",
                 column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_users_email",
+                table: "users",
+                column: "email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_users_user_name",
+                table: "users",
+                column: "user_name",
+                unique: true);
         }
 
         /// <inheritdoc />
