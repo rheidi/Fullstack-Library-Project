@@ -24,9 +24,9 @@ public class UserRepo : BaseRepo<User>, IUserRepo
     return user;
   }
 
-  public async Task<User?> FindOneByUsername(string username)
+  public async Task<User?> FindOneByEmail(string email)
   {
-    return await _users.FirstOrDefaultAsync(u => u.UserName == username);
+    return await _users.FirstOrDefaultAsync(u => u.Email == email);
   }
 
   public async Task<User> UpdatePassword(User user)

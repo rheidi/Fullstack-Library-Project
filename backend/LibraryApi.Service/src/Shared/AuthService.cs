@@ -1,4 +1,7 @@
+using JWT.Algorithms;
+using JWT.Builder;
 using LibraryApi.Domain.src.Abstractions;
+using LibraryApi.Domain.src.Entities;
 using LibraryApi.Service.src.Abstractions;
 using LibraryApi.Service.src.Dtos;
 
@@ -15,13 +18,22 @@ public class AuthService : IAuthService
 
   public async Task<string> VerifyCredentials(UserCredentialsDto credentials)
   {
-    var foundUserByUsername = await _userRepo.FindOneByUsername(credentials.Username);
-    var isAuthenticated = PasswordService.VerifyPassword(foundUserByUsername.Password, credentials.Password, foundUserByUsername.Salt);
+    var foundUserByEmail = await _userRepo.FindOneByEmail(credentials.Email) ?? throw new Exception("Username not found");
+    var isAuthenticated = PasswordService.VerifyPassword(foundUserByEmail.Password, credentials.Password, foundUserByEmail.Salt);
     if (!isAuthenticated)
     {
-      throw new Exception("Cradentials don't match.");
+      throw new Exception("Credentials don't match.");
     }
-    return "GENERATE TOKEN IS STILL NEEDED"; //WORK HERE
+    return GenerateToken(foundUserByEmail);
   }
-  
+
+  private string GenerateToken(User user)
+  {
+    var token = JwtBuilder.Create()
+      .WithAlgorithm(new HMACSHA256Algorithm())
+      .WithSecret("my-secrete-key")
+      .AddClaim(ClaimName.VerifiedEmail, user.Email)
+      .Encode();
+    return token;
+  }  
 }
