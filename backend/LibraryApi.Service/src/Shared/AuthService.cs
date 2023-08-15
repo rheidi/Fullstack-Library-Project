@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using JWT.Algorithms;
 using JWT.Builder;
 using LibraryApi.Domain.src.Abstractions;
@@ -33,6 +34,7 @@ public class AuthService : IAuthService
       .WithAlgorithm(new HMACSHA256Algorithm())
       .WithSecret("my-secret-key")
       .AddClaim(ClaimName.VerifiedEmail, user.Email)
+      .AddClaim(ClaimTypes.Role, user.Role.ToString())
       .Encode();
     return token;
   }  
