@@ -4,6 +4,7 @@ using LibraryApi.Infrastructure.src.RepoImplementations;
 using LibraryApi.Service.src.Abstractions;
 using LibraryApi.Service.src.Implementations;
 using LibraryApi.Service.src.Shared;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -11,6 +12,8 @@ using Swashbuckle.AspNetCore.Filters;
 using JWT.Algorithms;
 using JWT.Builder;
 using JWT.Extensions.AspNetCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,21 +57,22 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
-builder.Services
-.AddAuthentication(JwtAuthenticationDefaults.AuthenticationScheme)
-.AddJwt(
-    options =>
-    {
-        options.Keys = new[] { "my-secret-key" };
-        options.VerifySignature = true;
-    }
-);
-
-builder.Services.AddSingleton<IAlgorithmFactory>(new HMACSHAAlgorithmFactory());
-
 builder.Services.Configure<RouteOptions>(options =>
 {
     options.LowercaseUrls = true;
+});
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = "library-backend",
+        ValidateAudience = false,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("my-secrete-key-jsdguyfsdgcjsdbchjsdb jdhscjysdcsdj")),
+        ValidateIssuerSigningKey = true
+    };
 });
 
 var app = builder.Build();
@@ -81,6 +85,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors();
+
 //app.UseHttpsRedirection();
 
 app.UseAuthentication();

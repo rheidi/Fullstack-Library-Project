@@ -16,6 +16,8 @@ public class PasswordService
   {
     var hmac = new HMACSHA256(salt);
     var hashedOriginal = Encoding.UTF8.GetString(hmac.ComputeHash(Encoding.UTF8.GetBytes(originalPassword)));
+    Console.WriteLine("verify password: ");
+    Console.WriteLine(hashedOriginal == hashedPassword);
     return hashedOriginal == hashedPassword;
   }
 }

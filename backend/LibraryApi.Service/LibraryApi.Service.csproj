@@ -8,6 +8,8 @@
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="JWT" Version="10.1.0" />
     <PackageReference Include="JWT.Extensions.AspNetCore" Version="10.1.1" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.32.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.32.1" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -5,6 +5,10 @@ using LibraryApi.Domain.src.Abstractions;
 using LibraryApi.Domain.src.Entities;
 using LibraryApi.Service.src.Abstractions;
 using LibraryApi.Service.src.Dtos;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace LibraryApi.Service.src.Shared;
 
@@ -30,12 +34,22 @@ public class AuthService : IAuthService
 
   private string GenerateToken(User user)
   {
-    var token = JwtBuilder.Create()
-      .WithAlgorithm(new HMACSHA256Algorithm())
-      .WithSecret("my-secret-key")
-      .AddClaim(ClaimName.VerifiedEmail, user.Email)
-      .AddClaim(ClaimTypes.Role, user.Role.ToString())
-      .Encode();
-    return token;
+    var claims = new List<Claim>{
+      new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+      new Claim(ClaimTypes.Role, user.Role.ToString()),
+      new Claim(ClaimTypes.Email, user.Email)
+    };
+    var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("my-secrete-key-jsdguyfsdgcjsdbchjsdb jdhscjysdcsdj"));
+    var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+    var securityTokenDescriptor = new SecurityTokenDescriptor
+    {
+        Issuer = "library-backend",
+        Expires = DateTime.Now.AddMinutes(10),
+        Subject = new ClaimsIdentity(claims),
+        SigningCredentials = signingCredentials
+    };
+    var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+    var token = jwtSecurityTokenHandler.CreateToken(securityTokenDescriptor);
+    return jwtSecurityTokenHandler.WriteToken(token);
   }  
 }

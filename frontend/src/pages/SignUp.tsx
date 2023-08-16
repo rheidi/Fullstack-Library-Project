@@ -10,7 +10,6 @@ const SignUp = () => {
   const dispatch = useAppDispatch()
   const [firstname, setFirstName] = useState('')
   const [lastname, setLastName] = useState('')
-  const [username, setUserName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [success, setSuccess] = useState(false)
@@ -18,12 +17,11 @@ const SignUp = () => {
   const navigate = useNavigate()
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    dispatch(newUser({ firstname, lastname, username, email, password })).then(action => {
+    dispatch(newUser({ firstname, lastname, email, password })).then(action => {
       if (!(action.payload instanceof AxiosError)) {
         setSuccess(true)
         setFirstName('')
         setLastName('')
-        setUserName('')
         setEmail('')
         setPassword('')
         setTimeout(() => navigate('/login'), 5000)
@@ -51,10 +49,6 @@ const SignUp = () => {
             last name:
           </label>
           <input onChange={e => setLastName(e.target.value)} name="lastname" value={lastname} />
-          <label htmlFor="username" id="username">
-            username:
-          </label>
-          <input onChange={e => setUserName(e.target.value)} name="username" value={username} />
           <label htmlFor="email" id="email">
             email:
           </label>
