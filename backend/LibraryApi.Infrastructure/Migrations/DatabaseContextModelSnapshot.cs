@@ -25,25 +25,6 @@ namespace LibraryApi.Infrastructure.Migrations
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "role", new[] { "admin", "customer", "librarian" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("AuthorBook", b =>
-                {
-                    b.Property<Guid>("AuthorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("author_id");
-
-                    b.Property<Guid>("BooksId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("books_id");
-
-                    b.HasKey("AuthorId", "BooksId")
-                        .HasName("pk_author_book");
-
-                    b.HasIndex("BooksId")
-                        .HasDatabaseName("ix_author_book_books_id");
-
-                    b.ToTable("author_book", (string)null);
-                });
-
             modelBuilder.Entity("LibraryApi.Domain.src.Entities.Author", b =>
                 {
                     b.Property<Guid>("Id")
@@ -81,6 +62,10 @@ namespace LibraryApi.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("author_id");
 
                     b.Property<int>("BooksAvailable")
                         .HasColumnType("integer")
@@ -123,6 +108,9 @@ namespace LibraryApi.Infrastructure.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_books");
+
+                    b.HasIndex("AuthorId")
+                        .HasDatabaseName("ix_books_author_id");
 
                     b.ToTable("books", (string)null);
                 });
@@ -224,21 +212,16 @@ namespace LibraryApi.Infrastructure.Migrations
                     b.ToTable("users", (string)null);
                 });
 
-            modelBuilder.Entity("AuthorBook", b =>
+            modelBuilder.Entity("LibraryApi.Domain.src.Entities.Book", b =>
                 {
-                    b.HasOne("LibraryApi.Domain.src.Entities.Author", null)
+                    b.HasOne("LibraryApi.Domain.src.Entities.Author", "Author")
                         .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_author_book_authors_author_id");
+                        .HasConstraintName("fk_books_authors_author_id");
 
-                    b.HasOne("LibraryApi.Domain.src.Entities.Book", null)
-                        .WithMany()
-                        .HasForeignKey("BooksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_author_book_books_books_id");
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("LibraryApi.Domain.src.Entities.Loan", b =>

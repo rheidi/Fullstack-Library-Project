@@ -15,14 +15,15 @@ public class UserController : CrudController<User, UserReadDto, UserCreateDto, U
     _userService = baseService;
   }
 
-/*   [Authorize(Roles = "Admin")]
+  //[Authorize(Roles = "Admin")]
+  [HttpPost("admin")]
   public async Task<ActionResult<UserReadDto>> CreateAdmin([FromBody] UserCreateDto dto)
   {
     return CreatedAtAction(nameof(CreateAdmin), await _userService.CreateAdmin(dto));
-  } */
+  }
 
   //[Authorize(Roles = "Admin")]
-  [Authorize]
+  //[Authorize]
   public override async Task<ActionResult<IEnumerable<UserReadDto>>> GetAll([FromQuery] QueryOptions queryOptions)
   {
     return Ok(await _userService.GetAll(queryOptions));

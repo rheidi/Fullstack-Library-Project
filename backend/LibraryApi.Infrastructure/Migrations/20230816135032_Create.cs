@@ -32,26 +32,6 @@ namespace LibraryApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "books",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    title = table.Column<string>(type: "text", nullable: false),
-                    year = table.Column<int>(type: "integer", nullable: false),
-                    description = table.Column<string>(type: "text", nullable: false),
-                    genre = table.Column<Genre>(type: "genre", nullable: false),
-                    image_url = table.Column<string>(type: "text", nullable: false),
-                    library_inventory = table.Column<int>(type: "integer", nullable: false),
-                    books_available = table.Column<int>(type: "integer", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    last_updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_books", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "users",
                 columns: table => new
                 {
@@ -71,25 +51,28 @@ namespace LibraryApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "author_book",
+                name: "books",
                 columns: table => new
                 {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    title = table.Column<string>(type: "text", nullable: false),
+                    year = table.Column<int>(type: "integer", nullable: false),
                     author_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    books_id = table.Column<Guid>(type: "uuid", nullable: false)
+                    description = table.Column<string>(type: "text", nullable: false),
+                    genre = table.Column<Genre>(type: "genre", nullable: false),
+                    image_url = table.Column<string>(type: "text", nullable: false),
+                    library_inventory = table.Column<int>(type: "integer", nullable: false),
+                    books_available = table.Column<int>(type: "integer", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    last_updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_author_book", x => new { x.author_id, x.books_id });
+                    table.PrimaryKey("pk_books", x => x.id);
                     table.ForeignKey(
-                        name: "fk_author_book_authors_author_id",
+                        name: "fk_books_authors_author_id",
                         column: x => x.author_id,
                         principalTable: "authors",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_author_book_books_books_id",
-                        column: x => x.books_id,
-                        principalTable: "books",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -124,9 +107,9 @@ namespace LibraryApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_author_book_books_id",
-                table: "author_book",
-                column: "books_id");
+                name: "ix_books_author_id",
+                table: "books",
+                column: "author_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_loans_book_id",
@@ -149,19 +132,16 @@ namespace LibraryApi.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "author_book");
-
-            migrationBuilder.DropTable(
                 name: "loans");
-
-            migrationBuilder.DropTable(
-                name: "authors");
 
             migrationBuilder.DropTable(
                 name: "books");
 
             migrationBuilder.DropTable(
                 name: "users");
+
+            migrationBuilder.DropTable(
+                name: "authors");
         }
     }
 }

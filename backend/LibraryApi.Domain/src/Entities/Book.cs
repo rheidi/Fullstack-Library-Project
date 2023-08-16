@@ -6,7 +6,7 @@ public class Book : BaseEntity
 {
   public string Title { get; set; } = string.Empty;
   public int Year { get; set; }
-  public List<Author> Author { get; set; } =default!;
+  public Author Author { get; set; } =default!;
   public string Description { get; set; } = string.Empty;
   public Genre Genre { get; set; }
   public string ImageUrl { get; set; } = string.Empty;

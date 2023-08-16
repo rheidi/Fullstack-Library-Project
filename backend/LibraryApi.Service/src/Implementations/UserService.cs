@@ -37,4 +37,14 @@ public class UserService : BaseService<User, UserReadDto, UserCreateDto, UserUpd
     var created = await _userRepo.CreateOne(entity);
     return _mapper.Map<UserReadDto>(created);
   }
+
+  public async Task<UserReadDto> CreateAdmin(UserCreateDto dto)
+  {
+    var entity = _mapper.Map<User>(dto);
+    PasswordService.HashPassword(dto.Password, out var hashedPassword, out var salt);
+    entity.Password = hashedPassword;
+    entity.Salt = salt;
+    var created = await _userRepo.CreateAdmin(entity);
+    return _mapper.Map<UserReadDto>(created);
+  }
 }

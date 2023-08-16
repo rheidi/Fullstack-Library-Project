@@ -4,6 +4,7 @@ namespace LibraryApi.Service.src.Dtos;
 
 public class LoanReadDto
 {
+  public Guid Id { get; set; }
   public User User { get; set; }
   public Book Book { get; set; }
   public DateOnly DueDate { get; set; }
