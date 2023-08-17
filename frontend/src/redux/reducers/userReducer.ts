@@ -39,12 +39,12 @@ export const newUser = createAsyncThunk('newUser', async (newUser: NewUser) => {
 
 export const login = createAsyncThunk('login', async ({ email, password }: UserCredential) => {
   try {
-    const result = await axios.post<{ access_token: string }>(`${config.backendUrl}/login`, {
+    const result = await axios.post<{ access_token: string }>(`${config.backendUrl}/auth`, {
       email,
       password
     })
 
-    const authentication = await axios.get<User>(`${config.backendUrl}/profile`, {
+    const authentication = await axios.get<User>(`${config.backendUrl}/users`, {
       headers: {
         Authorization: `Bearer ${result.data.access_token}`
       }
