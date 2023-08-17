@@ -8,4 +8,3 @@ public interface IUserRepo : IBaseRepo<User>
   Task<User> UpdatePassword(User user);
   Task<User?> FindOneByEmail(string email);
 }
- 
