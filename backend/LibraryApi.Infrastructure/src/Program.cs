@@ -5,13 +5,8 @@ using LibraryApi.Service.src.Abstractions;
 using LibraryApi.Service.src.Implementations;
 using LibraryApi.Service.src.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
-using JWT.Algorithms;
-using JWT.Builder;
-using JWT.Extensions.AspNetCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -51,7 +46,7 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme{
         Description = "Bearer token authentication",
-        Name = "Authentication",
+        Name = "Authorization",
         In = ParameterLocation.Header,
     });
     options.OperationFilter<SecurityRequirementsOperationFilter>();
