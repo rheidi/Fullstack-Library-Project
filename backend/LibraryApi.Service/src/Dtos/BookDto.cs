@@ -7,7 +7,7 @@ public class BookReadDto
   public Guid Id { get; set; }
   public string Title { get; set; }
   public int Year { get; set; }
-  public Author Author { get; set; }
+  public AuthorReadDto Author { get; set; }
   public string Description { get; set; }
   public Genre Genre { get; set; }
   public string ImageUrl { get; set; }
@@ -18,7 +18,7 @@ public class BookCreateDto
 {
   public string Title { get; set; }
   public int Year { get; set; }
-  public Author Author { get; set; }
+  public AuthorCreateDto Author { get; set; }
   public string Description { get; set; }
   public Genre Genre { get; set; }
   public string ImageUrl { get; set; }
