@@ -19,7 +19,12 @@ const initialState: UserReducer = {
 }
 export const fetchAllUsers = createAsyncThunk('fetchAllUsers', async () => {
   try {
-    const result = await axios.get<User[]>(`${config.backendUrl}/users`)
+    const token = window.localStorage.getItem('token')
+    const result = await axios.get<User[]>(`${config.backendUrl}/users`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     return result.data
   } catch (e) {
     const error = e as AxiosError
@@ -43,14 +48,13 @@ export const login = createAsyncThunk('login', async ({ email, password }: UserC
       email,
       password
     })
+    window.localStorage.setItem('token', result.data.access_token)
 
     const authentication = await axios.get<User>(`${config.backendUrl}/users/profile`, {
       headers: {
         Authorization: `Bearer ${result.data.access_token}`
       }
     })
-    window.localStorage.setItem('token', result.data.access_token)
-    window.localStorage.setItem('user', JSON.stringify(authentication.data))
     return authentication.data
   } catch (e) {
     const error = e as AxiosError
@@ -88,6 +92,7 @@ const usersSlice = createSlice({
         if (action.payload instanceof AxiosError) {
           state.error = action.payload.message
         } else {
+          window.localStorage.setItem('user', JSON.stringify(action.payload))
           state.error = ''
           state.currentUser = action.payload
         }
