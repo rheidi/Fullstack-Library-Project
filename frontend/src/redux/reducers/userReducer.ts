@@ -44,11 +44,12 @@ export const login = createAsyncThunk('login', async ({ email, password }: UserC
       password
     })
 
-    const authentication = await axios.get<User>(`${config.backendUrl}/users`, {
+    const authentication = await axios.get<User>(`${config.backendUrl}/users/profile`, {
       headers: {
         Authorization: `Bearer ${result.data.access_token}`
       }
     })
+    window.localStorage.setItem('token', result.data.access_token)
     window.localStorage.setItem('user', JSON.stringify(authentication.data))
     return authentication.data
   } catch (e) {
