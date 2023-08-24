@@ -19,8 +19,8 @@ public class LoanUpdateDto
 
 public class LoanCreateDto
 {
-  public User User { get; set; }
-  public Book Book { get; set; }
+  public Guid UserId { get; set; }
+  public Guid BookId { get; set; }
   public DateOnly DueDate { get; set; }
   public bool IsReturned { get; set; }
 }
