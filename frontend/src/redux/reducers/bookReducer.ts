@@ -39,7 +39,12 @@ export const fetchOneBook = createAsyncThunk('fetchOneBook', async (id: string |
 
 export const addNewBook = createAsyncThunk('addNewBook', async (book: NewBook) => {
   try {
-    const result = await axios.post<Book>(`${config.backendUrl}/books`, book)
+    const token = window.localStorage.getItem('token')
+    const result = await axios.post<Book>(`${config.backendUrl}/books`, book, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     return result.data.id
   } catch (e) {
     return e as AxiosError
@@ -48,7 +53,12 @@ export const addNewBook = createAsyncThunk('addNewBook', async (book: NewBook) =
 
 export const editBook = createAsyncThunk('editBook', async (book: Book) => {
   try {
-    const result = await axios.post<Book>(`${config.backendUrl}/books`, book)
+    const token = window.localStorage.getItem('token')
+    const result = await axios.post<Book>(`${config.backendUrl}/books`, book, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     return result.data
   } catch (e) {
     return e as AxiosError

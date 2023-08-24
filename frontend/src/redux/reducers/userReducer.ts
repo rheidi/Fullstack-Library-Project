@@ -19,7 +19,12 @@ const initialState: UserReducer = {
 }
 export const fetchAllUsers = createAsyncThunk('fetchAllUsers', async () => {
   try {
-    const result = await axios.get<User[]>(`${config.backendUrl}/users`)
+    const token = window.localStorage.getItem('token')
+    const result = await axios.get<User[]>(`${config.backendUrl}/users`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     return result.data
   } catch (e) {
     const error = e as AxiosError
