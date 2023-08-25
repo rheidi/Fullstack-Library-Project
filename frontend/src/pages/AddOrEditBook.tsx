@@ -2,19 +2,20 @@ import React, { useEffect, useState } from 'react'
 import { addNewBook, editBook, fetchOneBook } from '../redux/reducers/bookReducer'
 import useAppDispatch from '../hooks/useAppDispatch'
 import { Genre } from '../types/Genre'
-import { getFormSubmissionInfo } from 'react-router-dom/dist/dom'
 import { Author } from '../types/Author'
 import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router'
 import useAppSelector from '../hooks/useAppSelector'
+import { fetchAllAuthors } from '../redux/reducers/authorReducer'
 
 const AddOrEditBook = () => {
   const id = useParams().id
   const { book } = useAppSelector(state => state.bookReducer)
+  const { authors } = useAppSelector(state => state.authorReducer)
   const dispatch = useAppDispatch()
   const [title, setTitle] = useState('')
   const [year, setYear] = useState(2000)
-  const [author, setAuthors] = useState<Author | undefined>(undefined)
+  const [author, setAuthor] = useState<Author | undefined>(undefined)
   const [description, setDescription] = useState('')
   const [genre, setGenre] = useState(5)
   const image = 'https://picsum.photos/300'
@@ -22,7 +23,7 @@ const AddOrEditBook = () => {
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchOneBook(id))
+      dispatch(fetchAllAuthors())
     }
   }, [dispatch, id])
 
@@ -31,7 +32,7 @@ const AddOrEditBook = () => {
   if (book) {
     setTitle(book.title)
     setYear(book.year)
-    setAuthors(book.author)
+    setAuthor(book.author)
     setDescription(book.description)
     setGenre(book.genre)
   }
@@ -47,10 +48,8 @@ const AddOrEditBook = () => {
     }
   }
 
-  const convertToAuthor = (a: string): Author => {
-    const [firstname, ...rest] = a.trim().split(' ')
-    const lastname = rest.join(' ')
-    return { firstname, lastname }
+  const convertToAuthor = (a: string): Author | undefined => {
+    return authors.find(ath => ath.id === a)
   }
 
   return (
@@ -65,17 +64,20 @@ const AddOrEditBook = () => {
           </label>
           <br />
           <label id="year">
-            price:
+            year:
             <input onChange={e => setYear(parseInt(e.target.value))} name="year" value={year} />
           </label>
           <br />
           <label id="author">
-            price:
-            <input
-              onChange={e => setAuthors(convertToAuthor(e.target.value))}
-              name="author"
-              value={`${author?.firstname} ${author?.lastname}` ?? ''}
-            />
+            author:
+            <select 
+              onChange={e => setAuthor(convertToAuthor(e.target.value))}
+              name="author" 
+            >
+              {authors.map(author => {
+                return <option value={author.id}>{`${author.firstname} ${author.lastname}`}</option>
+              })}
+            </select>
           </label>
           <br />
           <label id="description">

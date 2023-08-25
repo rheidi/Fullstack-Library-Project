@@ -34,8 +34,8 @@ export const fetchOneAuthor = createAsyncThunk('fetchOneBook', async (id: string
   }
 })
 
-const bookSlice = createSlice({
-  name: 'books',
+const authorSlice = createSlice({
+  name: 'authorSlice',
   initialState,
   reducers: {},
   extraReducers: build => {
@@ -57,4 +57,4 @@ const bookSlice = createSlice({
   }
 })
 
-export default bookSlice.reducer
+export default authorSlice.reducer
