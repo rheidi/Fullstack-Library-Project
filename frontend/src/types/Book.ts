@@ -11,4 +11,10 @@ export interface Book {
   image?: string
 }
 
-export type NewBook = Omit<Book, 'id'>
+type EditBookBase = Omit<Book, 'author'>
+type AuthorAsId = {
+  author: string
+}
+
+export type EditBook = EditBookBase & AuthorAsId
+export type NewBook = Omit<EditBook, 'id'>

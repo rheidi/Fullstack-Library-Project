@@ -1,5 +1,5 @@
-import { Book, NewBook } from '../../types/Book'
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { Book, EditBook, NewBook } from '../../types/Book'
+import { PayloadAction, createAsyncThunk, createSlice, isAnyOf, isFulfilled } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
 import config from '../../config'
 import { Author } from '../../types/Author'
@@ -8,7 +8,8 @@ interface BookReducer {
   books: Book[]
   book?: Book
   loading: boolean
-  error: string
+  error: string,
+  success?: string
 }
 
 const initialState: BookReducer = {
@@ -55,13 +56,13 @@ export const addNewBook = createAsyncThunk('addNewBook', async (book: NewBook) =
         Authorization: `Bearer ${token}`
       }
     })
-    return result.data.id
+    return result.data
   } catch (e) {
     return e as AxiosError
   }
 })
 
-export const editBook = createAsyncThunk('editBook', async (book: Book) => {
+export const editBook = createAsyncThunk('editBook', async (book: EditBook) => {
   try {
     const token = window.localStorage.getItem('token')
     const result = await axios.post<Book>(`${config.backendUrl}/books`, book, {
@@ -123,27 +124,71 @@ const bookSlice = createSlice({
   },
   extraReducers: build => {
     build
-      .addCase(fetchAllBooks.fulfilled, (state, action) => {
+      .addMatcher(
+        isAnyOf(
+          fetchAllBooks.pending,
+          fetchOneBook.pending,
+          fetchBooksBySearchTerm.pending,
+          addNewBook.pending,
+          editBook.pending,
+          loan.pending
+        ),
+        state => {
+          state.loading = true
+        }
+      )
+      .addMatcher(isFulfilled(fetchAllBooks), (state, action) => {
+        state.loading = false
         if (action.payload instanceof AxiosError) {
           state.error = action.payload.message
         } else {
           state.books = action.payload
         }
       })
-      .addCase(fetchOneBook.fulfilled, (state, action) => {
+      .addMatcher(isFulfilled(fetchOneBook), (state, action) => {
+        state.loading = false
         if (action.payload instanceof AxiosError) {
           state.error = action.payload.message
         } else {
           state.book = action.payload
         }
       })
-      .addCase(fetchBooksBySearchTerm.fulfilled, (state, action) => {
+      .addMatcher(isFulfilled(fetchBooksBySearchTerm), (state, action) => {
+        state.loading = false
         if (action.payload instanceof AxiosError) {
           state.error = action.payload.message
         } else {
           state.books = action.payload
         }
       })
+      .addMatcher(isFulfilled(addNewBook), (state, action) => {
+        state.loading = false
+        if (action.payload instanceof AxiosError) {
+          state.error = action.payload.message
+        } else {
+          state.success = `Book created with id: ${action.payload.id} as ${action.payload.title}`
+        }
+      })
+      .addMatcher(isFulfilled(editBook), (state, action) => {
+        state.loading = false
+        if (action.payload instanceof AxiosError) {
+          state.error = action.payload.message
+        } else {
+          state.success = `Book with id: ${action.payload.id} updated as ${action.payload.title}`
+        }
+      })
+      .addMatcher(
+        isAnyOf(
+          fetchAllBooks.rejected,
+          fetchOneBook.rejected,
+          fetchBooksBySearchTerm.rejected,
+          addNewBook.rejected,
+          editBook.rejected,
+          loan.rejected
+        ), (state, action) => {
+          state.error = action.error.message ?? 'Something went wrong'
+        }
+      )
   }
 })
 

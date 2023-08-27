@@ -40,7 +40,7 @@ const AddOrEditAuthor = () => {
           <label htmlFor="firstname" id="firstname">
             firstname:
           </label>
-          <input type="number" onChange={e => setBirthYear(e.target.value)} name="birthYear" value={birthYear} />
+          <input type="number" onChange={e => setBirthYear(parseInt(e.target.value))} name="birthYear" value={birthYear} />
         </fieldset>
       </form>
     </div>

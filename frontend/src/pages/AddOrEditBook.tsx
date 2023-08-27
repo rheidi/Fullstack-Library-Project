@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { addNewBook, editBook, fetchOneBook } from '../redux/reducers/bookReducer'
 import useAppDispatch from '../hooks/useAppDispatch'
 import { Genre } from '../types/Genre'
-import { Author } from '../types/Author'
 import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router'
 import useAppSelector from '../hooks/useAppSelector'
@@ -15,7 +14,7 @@ const AddOrEditBook = () => {
   const dispatch = useAppDispatch()
   const [title, setTitle] = useState('')
   const [year, setYear] = useState(2000)
-  const [author, setAuthor] = useState<Author | undefined>(undefined)
+  const [author, setAuthor] = useState('')
   const [description, setDescription] = useState('')
   const [genre, setGenre] = useState(5)
   const image = 'https://picsum.photos/300'
@@ -26,14 +25,14 @@ const AddOrEditBook = () => {
       dispatch(fetchOneBook())
     }
     dispatch(fetchAllAuthors())
-  }, [dispatch, fetchOneBook, fetchAllAuthors, id])
+  }, [dispatch, id])
 
 
   
   if (book) {
     setTitle(book.title)
     setYear(book.year)
-    setAuthor(book.author)
+    setAuthor(book.author.id)
     setDescription(book.description)
     setGenre(book.genre)
   }
@@ -49,9 +48,6 @@ const AddOrEditBook = () => {
     }
   }
 
-  const convertToAuthor = (a: string): Author | undefined => {
-    return authors.find(ath => ath.id === a)
-  }
 
   return (
     <div>
@@ -72,8 +68,8 @@ const AddOrEditBook = () => {
           <label id="author">
             author:
             <select 
-              onChange={e => setAuthor(convertToAuthor(e.target.value))}
-              name="author" 
+              onChange={e => setAuthor(e.target.value)}
+              name="author"
             >
               {authors.map(author => {
                 return <option value={author.id}>{`${author.firstname} ${author.lastname}`}</option>

@@ -4,7 +4,6 @@ import { Book } from '../../types/Book'
 import axios, { AxiosError } from 'axios'
 import config from '../../config'
 import { User } from '../../types/User'
-import { Exception } from 'sass'
 
 interface CartReducer {
   books: Book[]
@@ -56,7 +55,7 @@ const cartSlice = createSlice({
   reducers: {
     emptyCart: state => {
       window.localStorage.removeItem('cart')
-      return initialState
+      state.books = initialState.books
     },
     addToCart: (state, action: PayloadAction<Book>) => {
       const newBook = action.payload
