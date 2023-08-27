@@ -7,7 +7,7 @@ import { addNewAuthor, editAuthor } from "../redux/reducers/authorReducer"
 const AddOrEditAuthor = () => {
     const [firstname, setFirstname] = useState('')
     const [lastname, setLastname] = useState('')
-    const [birthYear, setBirthYear] = useState('')
+    const [birthYear, setBirthYear] = useState(0)
     const { currentAuthor } = useAppSelector(state => state.authorReducer)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -40,7 +40,7 @@ const AddOrEditAuthor = () => {
           <label htmlFor="firstname" id="firstname">
             firstname:
           </label>
-          <input onChange={e => setBirthYear(e.target.value)} name="birthYear" value={birthYear} />
+          <input type="number" onChange={e => setBirthYear(e.target.value)} name="birthYear" value={birthYear} />
         </fieldset>
       </form>
     </div>

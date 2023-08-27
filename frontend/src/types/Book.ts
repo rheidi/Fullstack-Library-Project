@@ -5,7 +5,7 @@ export interface Book {
   id: string
   year: number
   title: string
-  author?: Author
+  author: Author
   description: string
   genre: Genre
   image?: string

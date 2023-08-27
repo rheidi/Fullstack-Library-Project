@@ -1,7 +1,8 @@
 import { Book, NewBook } from '../../types/Book'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
 import config from '../../config'
+import { Author } from '../../types/Author'
 
 interface BookReducer {
   books: Book[]
@@ -67,16 +68,50 @@ export const editBook = createAsyncThunk('editBook', async (book: Book) => {
 
 export const loan = createAsyncThunk('loanBook', async (books: Book[]) => {
   try {
-    await axios.post(`${config.backendUrl}/loans`, books)
+    const result = await axios.post(`${config.backendUrl}/loans`, books)
+    return result.data
   } catch (e) {
     return e as AxiosError
   }
 })
 
+const sortByAuthor = (a: Author, b: Author, ascending = true) => {
+  const first = ascending ? a : b
+  const second = ascending ? b : a
+  if (first.lastname === second.lastname) {
+    if (first.firstname === second.firstname) {
+      return (first.birthYear ?? 0) - (second.birthYear ?? 0)
+    }
+    return first.firstname > second.firstname ? 1 : -1
+  }
+  return first.lastname > second.lastname ? 1 : -1
+}
+
 const bookSlice = createSlice({
   name: 'books',
   initialState,
-  reducers: {},
+  reducers: {
+    sortByTitle: (state, action: PayloadAction<'titleAsc' | 'titleDesc'>) => {
+      const { payload } = action
+      if (payload === "titleAsc") {
+        state.books.sort((a, b) => a.title > b.title ? 1 : -1)
+      } else {
+        state.books.sort((a, b) => a.title > b.title ? -1 : 1)
+      }
+    }, 
+    sortByAuthor: (state, action: PayloadAction<'authorAsc' | 'authorDesc'>) => {
+      const { payload } = action
+      state.books.sort((a, b) => sortByAuthor(a.author, b.author, payload === 'authorAsc'))
+    },
+    sortByYear: (state, action: PayloadAction<'yearAsc' | 'yearDesc'>) => {
+      const { payload } = action
+      state.books.sort((a, b) => payload === 'yearAsc' ? a.year - b.year : b.year - a.year)
+    },
+    sortByGenre: (state, action: PayloadAction<'genreAsc' | 'genreDesc'>) => {
+      const { payload } = action
+      state.books.sort((a, b) => payload === 'genreAsc' ? a.genre - b.genre : b.genre - a.genre)
+    }
+  },
   extraReducers: build => {
     build
       .addCase(fetchAllBooks.fulfilled, (state, action) => {
