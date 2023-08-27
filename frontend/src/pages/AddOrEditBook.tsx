@@ -23,9 +23,10 @@ const AddOrEditBook = () => {
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchAllAuthors())
+      dispatch(fetchOneBook())
     }
-  }, [dispatch, id])
+    dispatch(fetchAllAuthors())
+  }, [dispatch, fetchOneBook, fetchAllAuthors, id])
 
 
   

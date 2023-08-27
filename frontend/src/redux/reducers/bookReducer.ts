@@ -40,7 +40,7 @@ export const fetchOneBook = createAsyncThunk('fetchOneBook', async (id: string |
 export const addNewBook = createAsyncThunk('addNewBook', async (book: NewBook) => {
   try {
     const token = window.localStorage.getItem('token')
-    const result = await axios.post<Book>(`${config.backendUrl}/books`, book, {
+    const result = await axios.put<Book>(`${config.backendUrl}/books`, book, {
       headers: {
         Authorization: `Bearer ${token}`
       }

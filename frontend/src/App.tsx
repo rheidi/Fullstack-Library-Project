@@ -10,6 +10,7 @@ import useAppSelector from './hooks/useAppSelector'
 import AddOrEditBook from './pages/AddOrEditBook'
 import SignUp from './pages/SignUp'
 import Cart from './pages/Cart'
+import AddOrEditAuthor from './pages/AddOrEditAuthor'
 
 const App = () => {
   const userState = useAppSelector(state => state.userReducer)
@@ -41,6 +42,8 @@ const App = () => {
           >
             <Route path="add_book" element={<AddOrEditBook />} />
             <Route path="edit_book/:id" element={<AddOrEditBook />} />
+            <Route path="add_author" element={<AddOrEditAuthor />} />
+            <Route path="edit_author/:id" element={<AddOrEditAuthor />} />
           </Route>
         </Route>
       </Routes>
