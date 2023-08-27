@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LibraryApi.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230816135032_Create")]
+    [Migration("20230827130821_Create")]
     partial class Create
     {
         /// <inheritdoc />
@@ -133,10 +133,6 @@ namespace LibraryApi.Infrastructure.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<DateOnly>("DueDate")
-                        .HasColumnType("date")
-                        .HasColumnName("due_date");
-
                     b.Property<bool>("IsReturned")
                         .HasColumnType("boolean")
                         .HasColumnName("is_returned");
@@ -218,7 +214,7 @@ namespace LibraryApi.Infrastructure.Migrations
             modelBuilder.Entity("LibraryApi.Domain.src.Entities.Book", b =>
                 {
                     b.HasOne("LibraryApi.Domain.src.Entities.Author", "Author")
-                        .WithMany()
+                        .WithMany("Books")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
@@ -246,6 +242,11 @@ namespace LibraryApi.Infrastructure.Migrations
                     b.Navigation("Book");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("LibraryApi.Domain.src.Entities.Author", b =>
+                {
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

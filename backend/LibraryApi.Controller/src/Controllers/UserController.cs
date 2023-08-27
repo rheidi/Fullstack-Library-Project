@@ -24,7 +24,7 @@ public class UserController : CrudController<User, UserReadDto, UserCreateDto, U
     return CreatedAtAction(nameof(CreateAdmin), await _userService.CreateAdmin(dto));
   }
 
-  //[Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin")]
   //[Authorize]
   public override async Task<ActionResult<IEnumerable<UserReadDto>>> GetAll([FromQuery] QueryOptions queryOptions)
   {

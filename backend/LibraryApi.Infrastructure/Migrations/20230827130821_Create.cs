@@ -82,10 +82,9 @@ namespace LibraryApi.Infrastructure.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
+                    is_returned = table.Column<bool>(type: "boolean", nullable: false),
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     book_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    due_date = table.Column<DateOnly>(type: "date", nullable: false),
-                    is_returned = table.Column<bool>(type: "boolean", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     last_updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
