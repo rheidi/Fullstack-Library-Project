@@ -30,12 +30,12 @@ public class BaseRepo<T> : IBaseRepo<T> where T : class
     return true;
   }
 
-  public async Task<IEnumerable<T>> GetAll(QueryOptions queryOptions)
+  public virtual async Task<IEnumerable<T>> GetAll(QueryOptions queryOptions)
   {
     return await _dbSet.ToArrayAsync();
   }
 
-  public async Task<T?> GetOneById(Guid id)
+  public virtual async Task<T?> GetOneById(Guid id)
   {
     return await _dbSet.FindAsync(id);
   }
