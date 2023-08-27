@@ -119,7 +119,13 @@ const bookSlice = createSlice({
     },
     sortByGenre: (state, action: PayloadAction<'genreAsc' | 'genreDesc'>) => {
       const { payload } = action
-      state.books.sort((a, b) => payload === 'genreAsc' ? a.genre - b.genre : b.genre - a.genre)
+      state.books.sort((a, b) => {
+        if (payload === 'genreAsc') {
+          return a.genre > b.genre ? 1 : -1
+        } else {
+          return b.genre > a.genre ? 1 : -1
+        }
+      })
     }
   },
   extraReducers: build => {

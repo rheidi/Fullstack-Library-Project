@@ -1,9 +1,9 @@
 export enum Genre {
-  Novel,
-  Romance,
-  Crime,
-  SCiFi,
-  Fantasy,
-  Horror,
-  Poems
+  Novel = 'Novel',
+  Romance = 'Romance',
+  Crime = 'Crime',
+  SCiFi = 'SCiFi',
+  Fantasy = 'Fantasy',
+  Horror = 'Horror',
+  Poems = 'Poems'
 }

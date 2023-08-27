@@ -16,7 +16,7 @@ const AddOrEditBook = () => {
   const [year, setYear] = useState(2000)
   const [author, setAuthor] = useState('')
   const [description, setDescription] = useState('')
-  const [genre, setGenre] = useState(5)
+  const [genre, setGenre] = useState(Genre.Crime)
   const image = 'https://picsum.photos/300'
   const navigate = useNavigate()
 
@@ -88,14 +88,14 @@ const AddOrEditBook = () => {
           <br />
           <label id="categoryId">
             category id:
-            <select name="genre" id="genre" onChange={e => setGenre(parseInt(e.target.value))}>
-              <option value={Genre.Novel}>{Genre[Genre.Novel]}</option>
-              <option value={Genre.Romance}>{Genre[Genre.Romance]}</option>
-              <option value={Genre.Crime}>{Genre[Genre.Crime]}</option>
-              <option value={Genre.SCiFi}>{Genre[Genre.SCiFi]}</option>
-              <option value={Genre.Fantasy}>{Genre[Genre.Fantasy]}</option>
-              <option value={Genre.Horror}>{Genre[Genre.Horror]}</option>
-              <option value={Genre.Poems}>{Genre[Genre.Poems]}</option>
+            <select name="genre" id="genre" onChange={e => setGenre(e.target.value as Genre)}>
+              <option value={Genre.Novel}>{Genre.Novel}</option>
+              <option value={Genre.Romance}>{Genre.Romance}</option>
+              <option value={Genre.Crime}>{Genre.Crime}</option>
+              <option value={Genre.SCiFi}>{Genre.SCiFi}</option>
+              <option value={Genre.Fantasy}>{Genre.Fantasy}</option>
+              <option value={Genre.Horror}>{Genre.Horror}</option>
+              <option value={Genre.Poems}>{Genre.Poems}</option>
             </select>
           </label>
           <button type="submit">Submit</button>
