@@ -27,6 +27,15 @@ export const fetchAllBooks = createAsyncThunk('fetchAllBooks', async () => {
   }
 })
 
+export const fetchBooksBySearchTerm = createAsyncThunk('fetchBooksBySearchTerm', async (term: string) => {
+  try {
+    const result = await axios.get<Book[]>(`${config.backendUrl}/books/search/${term}`)
+    return result.data
+  } catch (e) {
+    return e as AxiosError
+  }
+})
+
 export const fetchOneBook = createAsyncThunk('fetchOneBook', async (id: string | undefined) => {
   try {
     // const result = await axios.get<Book>(`${config.backendUrl}/books/${id}`)
@@ -126,6 +135,13 @@ const bookSlice = createSlice({
           state.error = action.payload.message
         } else {
           state.book = action.payload
+        }
+      })
+      .addCase(fetchBooksBySearchTerm.fulfilled, (state, action) => {
+        if (action.payload instanceof AxiosError) {
+          state.error = action.payload.message
+        } else {
+          state.books = action.payload
         }
       })
   }
