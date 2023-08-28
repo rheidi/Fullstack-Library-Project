@@ -18,9 +18,19 @@ const initialState: BookReducer = {
   error: ''
 }
 
-export const fetchAllBooks = createAsyncThunk('fetchAllBooks', async () => {
+export interface BookFetcherParams {
+  pageNumber: number,
+  pageSize: number
+  search?: string
+}
+
+export const fetchAllBooks = createAsyncThunk('fetchAllBooks', async ({ pageNumber = 0, pageSize = 25, search }: BookFetcherParams) => {
   try {
-    // const result = await axios.get<Book[]>(`${config.backendUrl}/books`)
+    let dataSourceUrl = `${config.backendUrl}/books?pageNumber=${pageNumber}&pageSize=${pageSize}`
+    if (search && search !== '') {
+      dataSourceUrl += `&search=${search}`
+    }
+    // const result = await axios.get<Book[]>(dataSourceUrl)
     const result = require('../../tests/books.json')
     return result.data
   } catch (e) {

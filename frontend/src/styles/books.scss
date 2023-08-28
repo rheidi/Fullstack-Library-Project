@@ -6,6 +6,52 @@ main.book-grid {
   grid-template-rows: auto;
   margin: 2rem;
   grid-gap: 1rem;
+  align-items: stretch;
+
+  .tools {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    width: 100%;
+  }
+
+  #book-tools {
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+
+    #searchform {
+      max-width: 50%;
+    }
+  }
+
+  #pagination {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    button {
+      border: 1px solid palette.$shade;
+      width: 10rem;
+
+      &:disabled {
+        pointer-events: none;
+        cursor: not-allowed;
+        background-color: palette.$highlight;
+        color: palette.$highlight-light;
+        border: 1px solid palette.$highlight-light;
+      }
+
+      &.next:after {
+        margin-left: 1rem;
+        content: '>'
+      }
+
+      &.prev:before {
+        margin-right: 1rem;
+        content: '<'
+      }
+    }
+  }
 
   div.card {
     align-self: start;

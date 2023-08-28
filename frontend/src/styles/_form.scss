@@ -1,6 +1,6 @@
 @use "palette";
 
-form {
+form:not(#searchform) {
   background: palette.$panel;
   color: palette.$highlight-light;
   padding: 2rem;
