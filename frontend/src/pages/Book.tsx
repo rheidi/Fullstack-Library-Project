@@ -17,8 +17,11 @@ const Book = () => {
   const { currentUser } = userState
 
   useEffect(() => {
-    dispatch(fetchOneBook(id))
+    if (!book || book.id !== id) {
+      dispatch(fetchOneBook(id))
+    }
   }, [dispatch, id])
+
 
   if (!book) {
     return (

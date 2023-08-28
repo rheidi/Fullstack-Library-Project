@@ -21,8 +21,8 @@ const AddOrEditBook = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (id) {
-      dispatch(fetchOneBook())
+    if (id && (!book || book.id !== id)) {
+      dispatch(fetchOneBook(id))
     }
     dispatch(fetchAllAuthors())
   }, [dispatch, id])
@@ -41,10 +41,10 @@ const AddOrEditBook = () => {
     e.preventDefault()
     if (id) {
       dispatch(editBook({ id, title, year, author, description, genre, image }))
-      navigate(`/books/${id}`)
+      navigate(`/book/${id}`)
     } else {
       const res = dispatch(addNewBook({ title, year, author, description, genre, image }))
-      navigate(`/books/${res}`)
+      navigate(`/book/${res}`)
     }
   }
 
@@ -55,49 +55,45 @@ const AddOrEditBook = () => {
       <form onSubmit={e => handleSubmit(e)}>
         <fieldset>
           <legend>New product info:</legend>
-          <label id="title">
+          <label htmlFor="title">
             title:
-            <input onChange={e => setTitle(e.target.value)} name="title" value={title} />
           </label>
-          <br />
-          <label id="year">
+          <input onChange={e => setTitle(e.target.value)} name="title" value={title} />
+          <label htmlFor="year">
             year:
-            <input onChange={e => setYear(parseInt(e.target.value))} name="year" value={year} />
           </label>
-          <br />
-          <label id="author">
+          <input onChange={e => setYear(parseInt(e.target.value))} name="year" value={year} />
+          <label htmlFor="author">
             author:
-            <select 
-              onChange={e => setAuthor(e.target.value)}
-              name="author"
-            >
-              {authors.map(author => {
-                return <option value={author.id}>{`${author.firstName} ${author.lastName}`}</option>
-              })}
-            </select>
           </label>
-          <br />
-          <label id="description">
+          <select 
+            onChange={e => setAuthor(e.target.value)}
+            name="author"
+          >
+            {authors.map(author => {
+              return <option key={author.id} value={author.id}>{`${author.firstName} ${author.lastName}`}</option>
+            })}
+          </select>
+          <label htmlFor="description">
             description:
-            <input
-              onChange={e => setDescription(e.target.value)}
-              name="description"
-              value={description}
-            />
           </label>
-          <br />
-          <label id="categoryId">
+          <input
+            onChange={e => setDescription(e.target.value)}
+            name="description"
+            value={description}
+          />
+          <label htmlFor="categoryId">
             category id:
-            <select name="genre" id="genre" onChange={e => setGenre(e.target.value as Genre)}>
-              <option value={Genre.Novel}>{Genre.Novel}</option>
-              <option value={Genre.Romance}>{Genre.Romance}</option>
-              <option value={Genre.Crime}>{Genre.Crime}</option>
-              <option value={Genre.SCiFi}>{Genre.SCiFi}</option>
-              <option value={Genre.Fantasy}>{Genre.Fantasy}</option>
-              <option value={Genre.Horror}>{Genre.Horror}</option>
-              <option value={Genre.Poems}>{Genre.Poems}</option>
-            </select>
           </label>
+          <select name="genre" id="genre" onChange={e => setGenre(e.target.value as Genre)}>
+            <option value={Genre.Novel}>{Genre.Novel}</option>
+            <option value={Genre.Romance}>{Genre.Romance}</option>
+            <option value={Genre.Crime}>{Genre.Crime}</option>
+            <option value={Genre.SCiFi}>{Genre.SCiFi}</option>
+            <option value={Genre.Fantasy}>{Genre.Fantasy}</option>
+            <option value={Genre.Horror}>{Genre.Horror}</option>
+            <option value={Genre.Poems}>{Genre.Poems}</option>
+          </select>
           <button type="submit">Submit</button>
         </fieldset>
       </form>
