@@ -4,7 +4,6 @@ using LibraryApi.Domain.src.Shared;
 using LibraryApi.Service.src.Abstractions;
 using LibraryApi.Service.src.Dtos;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryApi.Controller.src.Controllers;
