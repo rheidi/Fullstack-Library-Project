@@ -1,20 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
-import Layout from './components/Layout'
-import Home from './pages/Home'
-import Books from './pages/Books'
-import './styles/style.scss'
-import Login from './pages/Login'
-import Book from './pages/Book'
 import useAppSelector from './hooks/useAppSelector'
-import AddOrEditBook from './pages/AddOrEditBook'
-import SignUp from './pages/SignUp'
-import Cart from './pages/Cart'
+import useAppDispatch from './hooks/useAppDispatch'
+import Layout from './components/Layout'
 import AddOrEditAuthor from './pages/AddOrEditAuthor'
+import AddOrEditBook from './pages/AddOrEditBook'
+import Authors from './pages/Authors'
+import Book from './pages/Book'
+import Books from './pages/Books'
+import Cart from './pages/Cart'
+import Home from './pages/Home'
+import Login from './pages/Login'
+import SignUp from './pages/SignUp'
+import { restoreUser } from './redux/reducers/userReducer'
+import './styles/style.scss'
 
 const App = () => {
+  const dispatch = useAppDispatch()
+
   const userState = useAppSelector(state => state.userReducer)
   const { currentUser } = userState
+
+  useEffect(() => {
+    if(!currentUser) {
+      dispatch(restoreUser())
+    }
+  })
+
   const PrivateRoutes = ({ isAllowed }: { isAllowed: boolean }) => {
     return isAllowed ? <Outlet /> : <Navigate to="login" />
   }
