@@ -42,6 +42,7 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="books" element={<Books />} />
           <Route path="book/:id" element={<Book />} />
+          <Route path="authors" element={<Authors />} />
           <Route element={<LoggedInRoutes isAllowed={!currentUser} />}>
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignUp />} />

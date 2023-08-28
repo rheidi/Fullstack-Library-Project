@@ -10,8 +10,15 @@ const Navigation = () => {
     <nav>
       <Link to="/">📖</Link>
       <Link to="/books">All books</Link>
+      <Link to="/authors">All Authors</Link>
       {currentUser ? (
         <>
+          { currentUser.role === "Admin" && (
+            <>
+              <Link to="/add_book">Add book</Link>
+            </>
+          )
+          }
           <Link className="end" to="/cart">
             Cart
           </Link>
