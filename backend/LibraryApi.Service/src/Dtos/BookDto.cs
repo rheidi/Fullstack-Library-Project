@@ -7,7 +7,6 @@ public class BookReadDto
   public Guid Id { get; set; }
   public string Title { get; set; }
   public int Year { get; set; }
-  public AuthorReadDto Author { get; set; }
   public string AuthorName { get; set; }
   public string Description { get; set; }
   public Genre Genre { get; set; }

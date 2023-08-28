@@ -1,11 +1,9 @@
-using LibraryApi.Domain.src.Entities;
-
 namespace LibraryApi.Service.src.Dtos;
 
 public class LoanReadDto
 {
-  public UserReadDto User { get; set; }
-  public BookReadDto Book { get; set; }
+  public Guid UserId { get; set; }
+  public Guid BookId { get; set; }
   // public DateOnly DueDate { get; set; }
   public bool IsReturned { get; set; }
 }
