@@ -25,11 +25,12 @@ public class DatabaseContext : DbContext
 
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
-    var builder = new NpgsqlDataSourceBuilder(_config.GetConnectionString("Default"));
-    builder.MapEnum<Role>();
-    builder.MapEnum<Genre>();
-    optionsBuilder.AddInterceptors(new TimestampInterceptor());
-    optionsBuilder.UseNpgsql(builder.Build()).UseSnakeCaseNamingConvention();
+    // These are added to Program.cs:
+    // var builder = new NpgsqlDataSourceBuilder(_config.GetConnectionString("Default"));
+    // builder.MapEnum<Role>();
+    // builder.MapEnum<Genre>();
+    // optionsBuilder.AddInterceptors(new TimestampInterceptor());
+    // optionsBuilder.UseNpgsql(builder.Build()).UseSnakeCaseNamingConvention();
   }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)

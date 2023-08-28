@@ -10,12 +10,13 @@ using Swashbuckle.AspNetCore.Filters;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using LibraryApi.Infrastructure.src.AuthorizationRequirements;
+using Npgsql;
+using LibraryApi.Domain.src.Entities;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
-
-builder.Services.AddDbContext<DatabaseContext>();
 
 builder.Services.AddCors(opts => 
 {
@@ -25,6 +26,20 @@ builder.Services.AddCors(opts =>
         .AllowAnyHeader()
         .AllowAnyMethod();
     });
+});
+
+var connectionString = builder.Configuration.GetConnectionString("Default");
+
+var npgsqlBuilder = new NpgsqlDataSourceBuilder(connectionString);
+npgsqlBuilder.MapEnum<Role>();
+npgsqlBuilder.MapEnum<Genre>();
+var dataSource = npgsqlBuilder.Build();
+
+builder.Services.AddDbContext<DatabaseContext>(options =>
+{
+    options.AddInterceptors(new TimestampInterceptor());
+    options.UseNpgsql(dataSource)
+    .UseSnakeCaseNamingConvention();
 });
 
 builder.Services
