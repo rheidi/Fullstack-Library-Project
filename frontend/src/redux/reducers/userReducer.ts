@@ -17,6 +17,7 @@ const initialState: UserReducer = {
   loading: false,
   error: ''
 }
+
 export const fetchAllUsers = createAsyncThunk('fetchAllUsers', async () => {
   try {
     const token = window.localStorage.getItem('token')
@@ -44,15 +45,16 @@ export const newUser = createAsyncThunk('newUser', async (newUser: NewUser) => {
 
 export const login = createAsyncThunk('login', async ({ email, password }: UserCredential) => {
   try {
-    const result = await axios.post<{ access_token: string }>(`${config.backendUrl}/auth`, {
+    const result = await axios.post<string>(`${config.backendUrl}/auth`, {
       email,
       password
     })
-    window.localStorage.setItem('token', result.data.access_token)
+    window.localStorage.setItem('token', result.data)
+    console.log(result.data)
 
     const authentication = await axios.get<User>(`${config.backendUrl}/users/profile`, {
       headers: {
-        Authorization: `Bearer ${result.data.access_token}`
+        Authorization: `Bearer ${result.data}`
       }
     })
     return authentication.data
@@ -69,6 +71,12 @@ const usersSlice = createSlice({
     logOutUser: state => {
       window.localStorage.removeItem('user')
       return initialState
+    },
+    restoreUser: state => {
+      const localStorageUserItem = window.localStorage.getItem('user')
+      if (localStorageUserItem) {
+        state.currentUser = JSON.parse(localStorageUserItem)
+      }
     }
   },
   extraReducers: build => {
