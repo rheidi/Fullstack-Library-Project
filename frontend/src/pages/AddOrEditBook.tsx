@@ -72,7 +72,7 @@ const AddOrEditBook = () => {
               name="author"
             >
               {authors.map(author => {
-                return <option value={author.id}>{`${author.firstname} ${author.lastname}`}</option>
+                return <option value={author.id}>{`${author.firstName} ${author.lastName}`}</option>
               })}
             </select>
           </label>

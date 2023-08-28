@@ -50,7 +50,7 @@ const App = () => {
             <Route path="cart" element={<Cart />} />
           </Route>
           <Route
-            element={<PrivateRoutes isAllowed={!!currentUser && currentUser.role === 'admin'} />}
+            element={<PrivateRoutes isAllowed={!!currentUser && currentUser.role === 'Admin'} />}
           >
             <Route path="add_book" element={<AddOrEditBook />} />
             <Route path="edit_book/:id" element={<AddOrEditBook />} />

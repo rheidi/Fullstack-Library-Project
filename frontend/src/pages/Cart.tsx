@@ -32,7 +32,7 @@ const Cart = () => {
               <li className="cart-item" key={i.id}>
                 <span className="title">{i.title}</span>
                 <span className="year">{i.year}</span>
-                <span className="author">{`${i.author?.firstname} ${i.author?.lastname}`}</span>
+                <span className="author">{`${i.author?.firstName} ${i.author?.lastName}`}</span>
                 <button onClick={() => dispatch(removeFromCart(i))}>Remove book from cart</button>
               </li>
             ))}

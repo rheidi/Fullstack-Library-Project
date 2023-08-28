@@ -1,8 +1,8 @@
 export interface Author {
   id: string
-  firstname: string
-  lastname: string,
-  birthYear?: number
+  firstName: string
+  lastName: string,
+  yearOfBirth?: number
 }
 
 export type NewAuthor = Omit<Author, 'id'>

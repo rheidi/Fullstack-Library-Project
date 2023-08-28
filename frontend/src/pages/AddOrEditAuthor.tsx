@@ -17,9 +17,9 @@ const AddOrEditAuthor = () => {
       e.preventDefault()
       if (currentAuthor) {
         const { id } = currentAuthor
-        dispatch(editAuthor({ id, firstname, lastname, birthYear }))
+        dispatch(editAuthor({ id, firstName: firstname, lastName: lastname, yearOfBirth: birthYear }))
       } else {
-        const res = dispatch(addNewAuthor({ firstname, lastname, birthYear }))
+        const res = dispatch(addNewAuthor({ firstName: firstname, lastName: lastname, yearOfBirth: birthYear }))
         navigate(`/edit_author/${res}`)
       }
     }

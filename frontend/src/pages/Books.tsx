@@ -51,12 +51,12 @@ const Books = () => {
           <Link to={`/book/${b.id}`}>
             <h2>{b.title}</h2>
             <p>{Genre[b.genre]}</p>
-            <h3>{`${b.author?.firstname} ${b.author?.lastname}`}</h3>
+            <h3>{`${b.author?.firstName} ${b.author?.lastName}`}</h3>
           </Link>
           {currentUser && (
             <div className="tools">
               <button onClick={_ => dispatch(addToCart(b))}>Add to cart</button>
-              {currentUser.role === 'admin' && <Link to={`/edit_book/${b.id}`}>Edit book</Link>}
+              {currentUser.role === 'Admin' && <Link to={`/edit_book/${b.id}`}>Edit book</Link>}
             </div>
           )}
         </div>

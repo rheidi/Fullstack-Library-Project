@@ -33,7 +33,7 @@ const Book = () => {
       {book.image ? <img src={book.image} alt={`Cover of ${book.title}`} /> : null}
       <h1>{book.title}</h1>
       <p className="author">
-        {book.author?.firstname} {book.author?.lastname}
+        {book.author?.firstName} {book.author?.lastName}
       </p>
       <p className="meta">
         <span className="genre">{Genre[book.genre]}</span> <span className="year">{book.year}</span>
@@ -44,7 +44,7 @@ const Book = () => {
       {currentUser && (
         <div className="tools">
           <button onClick={e => dispatch(addToCart(book))}>Add to cart</button>
-          {currentUser.role === 'admin' && <Link to={`/edit_book/${book.id}`}>Edit book</Link>}
+          {currentUser.role === 'Admin' && <Link to={`/edit_book/${book.id}`}>Edit book</Link>}
         </div>
       )}
     </main>

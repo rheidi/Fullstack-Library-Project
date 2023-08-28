@@ -4,5 +4,5 @@ export interface User {
   lastname: string
   email: string
   password: string
-  role: 'customer' | 'admin' | 'librarian'
+  role: 'Customer' | 'Admin' | 'Librarian'
 }

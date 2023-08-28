@@ -98,13 +98,13 @@ export const loan = createAsyncThunk('loanBook', async (books: Book[]) => {
 const sortByAuthor = (a: Author, b: Author, ascending = true) => {
   const first = ascending ? a : b
   const second = ascending ? b : a
-  if (first.lastname === second.lastname) {
-    if (first.firstname === second.firstname) {
-      return (first.birthYear ?? 0) - (second.birthYear ?? 0)
+  if (first.lastName === second.lastName) {
+    if (first.firstName === second.firstName) {
+      return (first.yearOfBirth ?? 0) - (second.yearOfBirth ?? 0)
     }
-    return first.firstname > second.firstname ? 1 : -1
+    return first.firstName > second.firstName ? 1 : -1
   }
-  return first.lastname > second.lastname ? 1 : -1
+  return first.lastName > second.lastName ? 1 : -1
 }
 
 const bookSlice = createSlice({
