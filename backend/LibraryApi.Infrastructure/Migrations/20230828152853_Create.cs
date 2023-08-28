@@ -23,6 +23,7 @@ namespace LibraryApi.Infrastructure.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     first_name = table.Column<string>(type: "text", nullable: false),
                     last_name = table.Column<string>(type: "text", nullable: false),
+                    year_of_birth = table.Column<int>(type: "integer", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     last_updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
@@ -58,6 +59,7 @@ namespace LibraryApi.Infrastructure.Migrations
                     title = table.Column<string>(type: "text", nullable: false),
                     year = table.Column<int>(type: "integer", nullable: false),
                     author_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    author_name = table.Column<string>(type: "text", nullable: false),
                     description = table.Column<string>(type: "text", nullable: false),
                     genre = table.Column<Genre>(type: "genre", nullable: false),
                     image_url = table.Column<string>(type: "text", nullable: false),

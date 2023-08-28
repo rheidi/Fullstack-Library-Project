@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LibraryApi.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230827175022_Create")]
+    [Migration("20230828152853_Create")]
     partial class Create
     {
         /// <inheritdoc />
@@ -22,9 +22,6 @@ namespace LibraryApi.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.10")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "genre", new[] { "novel", "romance", "crime", "s_ci_fi", "fantasy", "horror", "poems" });
@@ -56,6 +53,10 @@ namespace LibraryApi.Infrastructure.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("last_updated_at");
 
+                    b.Property<int>("YearOfBirth")
+                        .HasColumnType("integer")
+                        .HasColumnName("year_of_birth");
+
                     b.HasKey("Id")
                         .HasName("pk_authors");
 
@@ -72,6 +73,11 @@ namespace LibraryApi.Infrastructure.Migrations
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uuid")
                         .HasColumnName("author_id");
+
+                    b.Property<string>("AuthorName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("author_name");
 
                     b.Property<int>("BooksAvailable")
                         .HasColumnType("integer")

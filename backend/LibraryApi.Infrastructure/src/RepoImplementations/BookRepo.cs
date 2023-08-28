@@ -15,10 +15,4 @@ public class BookRepo : BaseRepo<Book>, IBookRepo
     _books = dbContext.Books;
     _context = dbContext;
   }
-  
-/*   public override async Task<IEnumerable<Book>> GetAll(QueryOptions queryOptions)
-  {
-    return await _books.Include(b => b.Author).ToArrayAsync();
-  } */
-  
 }

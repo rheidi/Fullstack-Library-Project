@@ -21,9 +21,4 @@ public class AuthorRepo : BaseRepo<Author>, IAuthorRepo
   {
     return await _authors.FirstOrDefaultAsync(a => a.FirstName == firstName && a.LastName == lastName);
   }
-
-/*   public override async Task<IEnumerable<Author>> GetAll(QueryOptions queryOptions)
-  {
-    return await _authors.Include(b => b.Books).ToArrayAsync();
-  } */
 }
