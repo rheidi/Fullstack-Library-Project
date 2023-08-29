@@ -8,7 +8,7 @@ export interface Book {
   authorId: string
   description: string
   genre: Genre
-  image?: string
+  imageUrl?: string
 }
 
 export type NewBook = Omit<Book, 'id'>

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { addNewBook, editBook, fetchOneBook } from '../redux/reducers/bookReducer'
+import { addNewBook, clearBook, editBook, fetchOneBook } from '../redux/reducers/bookReducer'
 import useAppDispatch from '../hooks/useAppDispatch'
 import { Genre } from '../types/Genre'
 import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router'
 import useAppSelector from '../hooks/useAppSelector'
 import { fetchAllAuthors } from '../redux/reducers/authorReducer'
+import { AxiosError } from 'axios'
+
 
 const AddOrEditBook = () => {
   const id = useParams().id
@@ -17,35 +19,52 @@ const AddOrEditBook = () => {
   const [authorId, setAuthorId] = useState('')
   const [description, setDescription] = useState('')
   const [genre, setGenre] = useState(Genre.Crime)
-  const image = 'https://picsum.photos/300'
+  const imageUrl = 'https://picsum.photos/300'
   const navigate = useNavigate()
 
   useEffect(() => {
     if (id && (!book || book.id !== id)) {
       dispatch(fetchOneBook(id))
+    } else {
+      dispatch(clearBook)
     }
-    dispatch(fetchAllAuthors())
-  }, [dispatch, id])
-
-
-  
-  if (book) {
+    // Ensure author selector has value upon load
+    const ensureAuthors = async () => {
+      const authorsList = await dispatch(fetchAllAuthors()).unwrap()
+      if (authorsList instanceof AxiosError) {
+        throw authorsList
+      }
+      if (authorId === '') {
+        setAuthorId(authorsList[0].id)
+      }
+    }
+    ensureAuthors().catch(e => console.log(e))
+  }, [dispatch, id, setAuthorId])
+ 
+  if (id && book && title !== book.title) {
     setTitle(book.title)
     setYear(book.year)
+    setAuthorId(book.authorId)
     setDescription(book.description)
     setGenre(book.genre)
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (id) {
-      dispatch(editBook({ id, description, genre, image }))
+      dispatch(editBook({ id, description, genre, imageUrl }))
       navigate(`/book/${id}`)
     } else {
+      console.log(authorId)
       const selectedAuthor = authors.find(a => a.id === authorId)
+      console.log(selectedAuthor)
       const authorName = selectedAuthor ? `${selectedAuthor.firstName} ${selectedAuthor.lastName}` : ''
-      const res = dispatch(addNewBook({ title, year, authorId, authorName, description, genre, image }))
-      navigate(`/book/${res}`)
+      dispatch(addNewBook({ title, year, authorId, authorName, description, genre, imageUrl }))
+      setTimeout(() => {
+        if (book) {
+          navigate(book.id)
+        }
+      }, 1000)
     }
   }
 
@@ -69,6 +88,7 @@ const AddOrEditBook = () => {
           <select 
             onChange={e => setAuthorId(e.target.value)}
             name="author"
+            value={authorId}
           >
             {authors.map(author => {
               return <option key={author.id} value={author.id}>{`${author.firstName} ${author.lastName}`}</option>

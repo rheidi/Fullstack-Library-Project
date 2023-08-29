@@ -5,7 +5,6 @@ import useAppDispatch from '../hooks/useAppDispatch'
 import useAppSelector from '../hooks/useAppSelector'
 import { fetchOneBook } from '../redux/reducers/bookReducer'
 import { addToCart } from '../redux/reducers/cartReducer'
-import { Genre } from '../types/Genre'
 import '../styles/book.scss'
 import { Link } from 'react-router-dom'
 
@@ -16,10 +15,10 @@ const Book = () => {
   const userState = useAppSelector(state => state.userReducer)
   const { currentUser } = userState
 
+  console.log(id)
+
   useEffect(() => {
-    if (!book || book.id !== id) {
-      dispatch(fetchOneBook(id))
-    }
+    dispatch(fetchOneBook(id))
   }, [dispatch, id])
 
 
@@ -33,7 +32,7 @@ const Book = () => {
 
   return (
     <main className="book">
-      {book.image ? <img src={book.image} alt={`Cover of ${book.title}`} /> : null}
+      {book.imageUrl ? <img src={book.imageUrl} alt={`Cover of ${book.title}`} /> : null}
       <h1>{book.title}</h1>
       <p className="author">
         {book.authorName}
