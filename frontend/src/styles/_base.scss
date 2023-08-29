@@ -46,6 +46,11 @@ nav {
   justify-content: flex-start;
   width: 100%;
 
+  .end {
+    margin-left: auto;
+    padding: 0.5rem 0;
+  }
+
   a {
     min-width: 2rem;
     text-align: center;
@@ -61,9 +66,6 @@ nav {
     }
     &:hover {
       color: palette.$highlight-light !important;
-    }
-    &.end {
-      margin-left: auto;
     }
   }
 }
