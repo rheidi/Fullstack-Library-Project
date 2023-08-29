@@ -13,4 +13,9 @@ public class LoanService : BaseService<Loan, LoanReadDto, LoanCreateDto, LoanUpd
   {
     _loanRepo = loanRepo;
   }
+
+  public async Task<IEnumerable<LoanReadDto>> GetLoansForOneUser(Guid id)
+  {
+    return _mapper.Map<IEnumerable<LoanReadDto>>(await _loanRepo.GetLoansForOneUser(id));
+  }
 }

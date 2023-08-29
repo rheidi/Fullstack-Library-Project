@@ -5,5 +5,5 @@ namespace LibraryApi.Service.src.Abstractions;
 
 public interface ILoanService : IBaseService<Loan, LoanReadDto, LoanCreateDto, LoanUpdateDto>
 {
-  
+  Task<IEnumerable<LoanReadDto>> GetLoansForOneUser(Guid id);
 }
