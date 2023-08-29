@@ -29,8 +29,7 @@ export const fetchAllBooks = createAsyncThunk('fetchAllBooks', async ({ pageNumb
     if (search && search !== '') {
       dataSourceUrl += `&search=${search}`
     }
-    // const result = await axios.get<Book[]>(dataSourceUrl)
-    const result = require('../../tests/books.json')
+    const result = await axios.get<Book[]>(dataSourceUrl)
     return result.data
   } catch (e) {
     return e as AxiosError
