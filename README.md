@@ -3,7 +3,7 @@
 
 ## Introduction
 
-This work is a full-stack application made as an assignment for Integrify. This project uses react on front end and .NET EF Core on back end with PostgreSQL database. Architecture in the back end follows clean architecture principles. The project is a library management system for book borrowing.
+This work is a full-stack application made as an assignment for Integrify. This project uses react on front end and .NET EF Core on back end with PostgreSQL database. Architecture in the back end follows clean architecture principles. The project is a library management system for book borrowing for every home library.
 
 ## Table of Content
 
@@ -24,33 +24,35 @@ This work is a full-stack application made as an assignment for Integrify. This 
 
 ## Features
 
+Books and single book information as well as list of all authors can be viewed by anyone. If user wants to borrow books, user has to register first. User can also view users own loans, and return books. If registered user has administrator rights, new book or author can be added to the system. Admin can also edit books and authors. Administrator can view all users and loans. Because I considered this to be an application for to keep track of to whom I loan my own books and for other homelibraries, only admin can return books.
+
 ## Project Structure
 ```
 .
 ├── backend
 │ ├── Controller
 │ │ └── src
-│ │ └── Controllers
+│ │  └── Controllers
 │ ├── Domain
 │ │ └── src
-│ │ ├── Abstractions
-│ │ ├── Entities
-│ │ └── Shared
+│ │  ├── Abstractions
+│ │  ├── Entities
+│ │  └── Shared
 │ ├── Infrastructure
 │ │ ├── Migrations
 │ │ ├── Properties
 │ │ └── src
-│ │ ├── AuthorizationRequirements
-│ │ ├── Configurations
-│ │ ├── Database
-│ │ ├── Repoimplementations
-│ │ └── Program.cs
+│ │  ├── AuthorizationRequirements
+│ │  ├── Configurations
+│ │  ├── Database
+│ │  ├── Repoimplementations
+│ │  └── Program.cs
 │ └── Service
 │ └── src
-│ ├── Abstractions
-│ ├── Dtos
-│ ├── Implementations
-│ └── Shared
+│  ├── Abstractions
+│  ├── Dtos
+│  ├── Implementations
+│  └── Shared
 └── frontend
 ├── public
 ├── scr
@@ -81,6 +83,11 @@ This project has been deployed in ???
 
 ## Missing Functionalities
 
-Library inventory.
+Library needs an inventory.
+Books could have multiple authors.
+User should be able to unregister.
+Addind reviews would be nice.
 
 ## Known Bugs
+
+Search from genre doesn't work.
