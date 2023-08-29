@@ -17,7 +17,7 @@ const Cart = () => {
 
   return (
     <aside>
-      <h2>Shopping cart</h2>
+      <h2>Selected book for borrowing</h2>
 
       {cart.length === 0 ? (
         <div>
@@ -32,7 +32,7 @@ const Cart = () => {
               <li className="cart-item" key={i.id}>
                 <span className="title">{i.title}</span>
                 <span className="year">{i.year}</span>
-                <span className="author">{`${i.author?.firstName} ${i.author?.lastName}`}</span>
+                <span className="author">{i.authorName}</span>
                 <button onClick={() => dispatch(removeFromCart(i))}>Remove book from cart</button>
               </li>
             ))}

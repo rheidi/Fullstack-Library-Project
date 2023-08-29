@@ -8,6 +8,7 @@ public class BookReadDto
   public string Title { get; set; }
   public int Year { get; set; }
   public string AuthorName { get; set; }
+  public Guid AuthorId { get; set; }
   public string Description { get; set; }
   public Genre Genre { get; set; }
   public string ImageUrl { get; set; }

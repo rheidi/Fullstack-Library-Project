@@ -2,7 +2,6 @@ import { Book, EditBook, NewBook } from '../../types/Book'
 import { PayloadAction, createAsyncThunk, createSlice, isAnyOf, isFulfilled } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
 import config from '../../config'
-import { Author } from '../../types/Author'
 
 interface BookReducer {
   books: Book[]
@@ -95,18 +94,6 @@ export const loan = createAsyncThunk('loanBook', async (books: Book[]) => {
   }
 })
 
-const sortByAuthor = (a: Author, b: Author, ascending = true) => {
-  const first = ascending ? a : b
-  const second = ascending ? b : a
-  if (first.lastName === second.lastName) {
-    if (first.firstName === second.firstName) {
-      return (first.yearOfBirth ?? 0) - (second.yearOfBirth ?? 0)
-    }
-    return first.firstName > second.firstName ? 1 : -1
-  }
-  return first.lastName > second.lastName ? 1 : -1
-}
-
 const bookSlice = createSlice({
   name: 'books',
   initialState,
@@ -121,7 +108,12 @@ const bookSlice = createSlice({
     }, 
     sortByAuthor: (state, action: PayloadAction<'authorAsc' | 'authorDesc'>) => {
       const { payload } = action
-      state.books.sort((a, b) => sortByAuthor(a.author, b.author, payload === 'authorAsc'))
+      if (payload === "authorAsc") {
+        state.books.sort((a, b) => a.authorName > b.authorName ? -1 : 1)
+      } else {
+        state.books.sort((a, b) => a.authorName > b.authorName ? 1 : -1)
+      }
+      
     },
     sortByYear: (state, action: PayloadAction<'yearAsc' | 'yearDesc'>) => {
       const { payload } = action

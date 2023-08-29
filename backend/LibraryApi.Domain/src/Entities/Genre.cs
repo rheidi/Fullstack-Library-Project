@@ -8,7 +8,7 @@ public enum Genre
   Novel,
   Romance,
   Crime,
-  SCiFi,
+  SciFi,
   Fantasy,
   Horror,
   Poems,

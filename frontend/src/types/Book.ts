@@ -1,20 +1,15 @@
-import { Author } from './Author'
 import { Genre } from './Genre'
 
 export interface Book {
   id: string
   year: number
   title: string
-  author: Author
+  authorName: string
+  authorId: string
   description: string
   genre: Genre
   image?: string
 }
 
-type EditBookBase = Omit<Book, 'author'>
-type AuthorAsId = {
-  author: string
-}
-
-export type EditBook = EditBookBase & AuthorAsId
-export type NewBook = Omit<EditBook, 'id'>
+export type NewBook = Omit<Book, 'id'>
+export type EditBook = Omit<Book, 'year'| 'title' | 'authorName' | 'authorId'>

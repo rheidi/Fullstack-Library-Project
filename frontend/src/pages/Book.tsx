@@ -36,10 +36,10 @@ const Book = () => {
       {book.image ? <img src={book.image} alt={`Cover of ${book.title}`} /> : null}
       <h1>{book.title}</h1>
       <p className="author">
-        {book.author?.firstName} {book.author?.lastName}
+        {book.authorName}
       </p>
       <p className="meta">
-        <span className="genre">{Genre[book.genre]}</span> <span className="year">{book.year}</span>
+        <span className="genre">{book.genre}</span> <span className="year">{book.year}</span>
       </p>
       {book.description.split('\n').map((paragraph, idx) => (
         <p key={idx}>{paragraph}</p>
