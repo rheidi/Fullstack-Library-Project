@@ -3,13 +3,15 @@ import bookReducer from './reducers/bookReducer'
 import userReducer from './reducers/userReducer'
 import cartReducer from './reducers/cartReducer'
 import authorReducer from './reducers/authorReducer'
+import loanReducer from './reducers/loanReducer'
 
 const store = configureStore({
   reducer: {
     authorReducer,
     bookReducer,
-    userReducer,
-    cartReducer
+    cartReducer,
+    loanReducer,
+    userReducer
   }
 })
 

@@ -19,6 +19,9 @@ const Navigation = () => {
             </>
           )
           }
+          <Link className="end" to="/loans">
+            Loans
+          </Link>
           <Link className="end" to="/cart">
             Cart
           </Link>
