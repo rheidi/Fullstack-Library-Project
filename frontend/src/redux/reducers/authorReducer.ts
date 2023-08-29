@@ -25,7 +25,7 @@ export const fetchAllAuthors = createAsyncThunk('fetchAllAuthors', async () => {
   }
 })
 
-export const fetchOneAuthor = createAsyncThunk('fetchOneBook', async (id: string) => {
+export const fetchOneAuthor = createAsyncThunk('fetchOneAuthor', async (id: string) => {
   try {
     const result = await axios.get<Author>(`${config.backendUrl}/authors/${id}`)
     return result.data
