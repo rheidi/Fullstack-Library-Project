@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LibraryApi.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230828152853_Create")]
+    [Migration("20230829062301_Create")]
     partial class Create
     {
         /// <inheritdoc />
@@ -158,9 +158,11 @@ namespace LibraryApi.Infrastructure.Migrations
                         .HasName("pk_loans");
 
                     b.HasIndex("BookId")
+                        .IsUnique()
                         .HasDatabaseName("ix_loans_book_id");
 
                     b.HasIndex("UserId")
+                        .IsUnique()
                         .HasDatabaseName("ix_loans_user_id");
 
                     b.ToTable("loans", (string)null);
@@ -235,15 +237,15 @@ namespace LibraryApi.Infrastructure.Migrations
             modelBuilder.Entity("LibraryApi.Domain.src.Entities.Loan", b =>
                 {
                     b.HasOne("LibraryApi.Domain.src.Entities.Book", "Book")
-                        .WithMany("Loans")
-                        .HasForeignKey("BookId")
+                        .WithOne("Loan")
+                        .HasForeignKey("LibraryApi.Domain.src.Entities.Loan", "BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_loans_books_book_id");
 
                     b.HasOne("LibraryApi.Domain.src.Entities.User", "User")
-                        .WithMany("Loans")
-                        .HasForeignKey("UserId")
+                        .WithOne("Loan")
+                        .HasForeignKey("LibraryApi.Domain.src.Entities.Loan", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_loans_users_user_id");
@@ -260,12 +262,12 @@ namespace LibraryApi.Infrastructure.Migrations
 
             modelBuilder.Entity("LibraryApi.Domain.src.Entities.Book", b =>
                 {
-                    b.Navigation("Loans");
+                    b.Navigation("Loan");
                 });
 
             modelBuilder.Entity("LibraryApi.Domain.src.Entities.User", b =>
                 {
-                    b.Navigation("Loans");
+                    b.Navigation("Loan");
                 });
 #pragma warning restore 612, 618
         }

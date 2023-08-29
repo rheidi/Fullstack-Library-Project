@@ -38,10 +38,20 @@ public class DatabaseContext : DbContext
     modelBuilder.HasPostgresEnum<Role>();
     modelBuilder.HasPostgresEnum<Genre>();
     modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
-/*     modelBuilder.Entity<Book>()
+    modelBuilder.Entity<Book>()
       .HasOne(b => b.Author)
       .WithMany(a => a.Books)
       .HasForeignKey(b => b.AuthorId)
-      .IsRequired(); */
+      .IsRequired();
+    modelBuilder.Entity<Loan>()
+      .HasOne(e => e.Book)
+      .WithOne(e => e.Loan)
+      .HasForeignKey<Loan>(e => e.BookId)
+      .IsRequired();
+    modelBuilder.Entity<Loan>()
+      .HasOne(e => e.User)
+      .WithOne(e => e.Loan)
+      .HasForeignKey<Loan>(e => e.UserId)
+      .IsRequired();
   }
 }

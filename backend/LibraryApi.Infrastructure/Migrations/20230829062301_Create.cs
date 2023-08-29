@@ -115,12 +115,14 @@ namespace LibraryApi.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "ix_loans_book_id",
                 table: "loans",
-                column: "book_id");
+                column: "book_id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "ix_loans_user_id",
                 table: "loans",
-                column: "user_id");
+                column: "user_id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "ix_users_email",

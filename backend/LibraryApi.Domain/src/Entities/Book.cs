@@ -14,5 +14,5 @@ public class Book : BaseEntity
   public string ImageUrl { get; set; }
   public int LibraryInventory { get; set;}
   public int BooksAvailable { get; set; }
-  public List<Loan> Loans { get; set; }
+  public Loan? Loan { get; set; }
 }
