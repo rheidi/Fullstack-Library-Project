@@ -10,7 +10,7 @@ const Authors = () => {
 
   useEffect(() => {
     dispatch(fetchAllAuthors())
-  })
+  }, [dispatch])
   
 
   return <main>

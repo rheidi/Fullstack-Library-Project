@@ -47,10 +47,8 @@ export const fetchBooksBySearchTerm = createAsyncThunk('fetchBooksBySearchTerm',
 
 export const fetchOneBook = createAsyncThunk('fetchOneBook', async (id: string | undefined) => {
   try {
-    // const result = await axios.get<Book>(`${config.backendUrl}/books/${id}`)
-    const result = require('../../tests/books.json')
-    // @ts-ignore
-    return result.data.find(book => book.id === id)
+    const result = await axios.get<Book>(`${config.backendUrl}/books/${id}`)
+    return result.data
   } catch (e) {
     return e as AxiosError
   }
@@ -59,7 +57,7 @@ export const fetchOneBook = createAsyncThunk('fetchOneBook', async (id: string |
 export const addNewBook = createAsyncThunk('addNewBook', async (book: NewBook) => {
   try {
     const token = window.localStorage.getItem('token')
-    const result = await axios.put<Book>(`${config.backendUrl}/books`, book, {
+    const result = await axios.post<Book>(`${config.backendUrl}/books`, book, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -73,7 +71,7 @@ export const addNewBook = createAsyncThunk('addNewBook', async (book: NewBook) =
 export const editBook = createAsyncThunk('editBook', async (book: EditBook) => {
   try {
     const token = window.localStorage.getItem('token')
-    const result = await axios.post<Book>(`${config.backendUrl}/books`, book, {
+    const result = await axios.patch<Book>(`${config.backendUrl}/books`, book, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -97,6 +95,9 @@ const bookSlice = createSlice({
   name: 'books',
   initialState,
   reducers: {
+    clearBook: (state, action: PayloadAction<'clearBook'>) => {
+      delete state.book
+    },
     sortByTitle: (state, action: PayloadAction<'titleAsc' | 'titleDesc'>) => {
       const { payload } = action
       if (payload === "titleAsc") {
@@ -174,6 +175,7 @@ const bookSlice = createSlice({
           state.error = action.payload.message
         } else {
           state.success = `Book created with id: ${action.payload.id} as ${action.payload.title}`
+          state.book = action.payload
         }
       })
       .addMatcher(isFulfilled(editBook), (state, action) => {
@@ -200,3 +202,4 @@ const bookSlice = createSlice({
 })
 
 export default bookSlice.reducer
+export const { clearBook } = bookSlice.actions

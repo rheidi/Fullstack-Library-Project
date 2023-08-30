@@ -11,6 +11,7 @@ const Navigation = () => {
       <Link to="/">📖</Link>
       <Link to="/books">All books</Link>
       <Link to="/authors">All Authors</Link>
+      <div className="end">
       {currentUser ? (
         <>
           { currentUser.role === "Admin" && (
@@ -19,21 +20,22 @@ const Navigation = () => {
             </>
           )
           }
-          <Link className="end" to="/loans">
+          <Link to="/loans">
             Loans
           </Link>
-          <Link className="end" to="/cart">
+          <Link to="/cart">
             Cart
           </Link>
-          <Link className="end" to="/profile">
+          <Link to="/profile">
             Profile
           </Link>
         </>
       ) : (
-        <Link className="end" to="/login">
+        <Link to="/login">
           Login
         </Link>
       )}
+      </div>
     </nav>
   )
 }
