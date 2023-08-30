@@ -34,7 +34,7 @@ export const fetchAllLoans = createAsyncThunk('fetchAllLoans', async () => {
         }
       })
       const book = await axios.get<Book>(`${config.backendUrl}/books/${loan.bookId}`)
-      return { id: loan.id, user: user.data, book: book.data }
+      return { id: loan.id, user: user.data, book: book.data, isReturned: loan.isReturned }
     }))
   } catch (e) {
     return e as AxiosError
@@ -51,7 +51,7 @@ export const fetchUserLoans = createAsyncThunk('fetchUserLoans', async (user: Us
     })
     return await Promise.all(result.data.map(async loan => {
       const book = await axios.get<Book>(`${config.backendUrl}/books/${loan.bookId}`)
-      return { id: loan.id, user, book: book.data }
+      return { id: loan.id, user, book: book.data, isReturned: loan.isReturned }
     }))
   } catch (e) {
     return e as AxiosError
@@ -73,7 +73,7 @@ export const fetchOneLoan = createAsyncThunk('fetchOneLoan', async (id: string) 
         Authorization: `Bearer ${token}`
       }
     })
-    return { id, book: book.data, user: user.data }
+    return { id, book: book.data, user: user.data, isReturned: result.data.isReturned }
   } catch (e) {
     return e as AxiosError
   }

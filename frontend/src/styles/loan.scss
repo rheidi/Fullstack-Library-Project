@@ -1,0 +1,16 @@
+@use "palette";
+
+main {
+  table {
+    border: 0 none;
+    padding: 0.5rem;
+    td {
+      &.borrowed {
+        color: palette.$shade-light;
+      }
+      &.returned {
+        color: palette.$highlight;
+      }
+    }
+  }
+}

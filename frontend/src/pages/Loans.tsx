@@ -36,10 +36,11 @@ const Loans = () => {
       <tbody>
       {loans.map(loan => {
         const { book, user } = loan
+        const status = loan.isReturned ? 'returned' : 'borrowed'
         return <tr key={loan.id}>
           <td>{`${book.title} - ${book.authorName} (${book.year})`}</td>
-          <td>{`${user.firstname} ${user.lastname}`}</td>
-          <td>???</td>
+          <td>{`${user.firstName} ${user.lastName}`}</td>
+          <td className={status}>{status}</td>
           {admin && <td><button onClick={_ => returnBook(loan.id)}>Set returned</button></td>}
         </tr>
       })}

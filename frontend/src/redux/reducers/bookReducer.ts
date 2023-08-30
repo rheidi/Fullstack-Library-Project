@@ -2,6 +2,7 @@ import { Book, EditBook, NewBook } from '../../types/Book'
 import { PayloadAction, createAsyncThunk, createSlice, isAnyOf, isFulfilled } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
 import config from '../../config'
+import { Loan } from '../../types/Loan'
 
 interface BookReducer {
   books: Book[]
@@ -84,8 +85,18 @@ export const editBook = createAsyncThunk('editBook', async (book: EditBook) => {
 
 export const loan = createAsyncThunk('loanBook', async (books: Book[]) => {
   try {
-    const result = await axios.post(`${config.backendUrl}/loans`, books)
-    return result.data
+    const token = window.localStorage.getItem('token')
+    const user = JSON.parse(window.localStorage.getItem('user') ||'{}')
+    if (user.id) {
+      const result = await Promise.all(books.map(async book => {
+        return await axios.post<Loan>(`${config.backendUrl}/loans`, { userId: user.id, bookId: book.id, isReturned: false }, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+      }))
+      return result
+    }
   } catch (e) {
     return e as AxiosError
   }
