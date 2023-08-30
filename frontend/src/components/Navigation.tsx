@@ -9,9 +9,6 @@ const Navigation = () => {
   const navigate = useNavigate()
   const logout = () => {
     dispatch(logOutUser())
-    setTimeout(() => {
-      navigate('/')
-    }, 1000)
   }
 
   return (
