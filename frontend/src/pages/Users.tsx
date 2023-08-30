@@ -21,7 +21,7 @@ const Users = () => {
       { 
         users.map(user => {
           return <li key={user.id}>
-            {`${user.firstName} ${user.lastName} (${user.email})`}&nbsp;{ isAdmin(currentUser) ?? <button onClick={_ => dispatch(deleteUser(user.id))}></button>}
+            {`${user.firstName} ${user.lastName} (${user.email})`}&nbsp;{ isAdmin(currentUser) && !isAdmin(user) && <button onClick={_ => dispatch(deleteUser(user.id))}>Delete user</button>}
           </li>
         })
       }
