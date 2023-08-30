@@ -83,6 +83,20 @@ export const editBook = createAsyncThunk('editBook', async (book: EditBook) => {
   }
 })
 
+export const deleteBook = createAsyncThunk('deleteBook', async (bookId: string) => {
+  try {
+    const token = window.localStorage.getItem('token')
+    await axios.delete(`${config.backendUrl}/books/${bookId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    return bookId
+  } catch (e) {
+    return e as AxiosError
+  }
+})
+
 export const loan = createAsyncThunk('loanBook', async (books: Book[]) => {
   try {
     const token = window.localStorage.getItem('token')
@@ -195,6 +209,15 @@ const bookSlice = createSlice({
           state.error = action.payload.message
         } else {
           state.success = `Book with id: ${action.payload.id} updated as ${action.payload.title}`
+        }
+      })
+      .addMatcher(isFulfilled(deleteBook), (state, action) => {
+        state.loading = false
+        if (action.payload instanceof AxiosError) {
+          state.error = action.payload.message
+        } else {
+          state.books = state.books.filter(book => book.id !== action.payload)
+          state.success = `book with id ${action.payload} deleted`
         }
       })
       .addMatcher(

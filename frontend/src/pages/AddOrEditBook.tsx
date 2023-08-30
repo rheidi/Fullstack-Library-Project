@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { addNewBook, clearBook, editBook, fetchOneBook } from '../redux/reducers/bookReducer'
+import { addNewBook, clearBook, deleteBook, editBook, fetchOneBook } from '../redux/reducers/bookReducer'
 import useAppDispatch from '../hooks/useAppDispatch'
 import { Genre } from '../types/Genre'
 import { useNavigate } from 'react-router-dom'
@@ -7,6 +7,7 @@ import { useParams } from 'react-router'
 import useAppSelector from '../hooks/useAppSelector'
 import { fetchAllAuthors } from '../redux/reducers/authorReducer'
 import { AxiosError } from 'axios'
+import { isAdmin } from '../utils/userUtils'
 
 
 const AddOrEditBook = () => {
@@ -68,9 +69,18 @@ const AddOrEditBook = () => {
     }
   }
 
+  function deleteBookAndNavigate(): void {
+    if (id) {
+      dispatch(deleteBook(id))
+      setTimeout(() => navigate('/books'), 1500)
+    }
+  }
+
   return (
     <div>
       <h1>{book ? 'Edit book' : 'Add a new book'}</h1>
+      {id && <button onClick={_ => deleteBookAndNavigate()}>Delete book</button>}
+
       <form onSubmit={e => handleSubmit(e)}>
         <fieldset>
           <legend>New product info:</legend>
