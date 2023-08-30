@@ -42,7 +42,7 @@ export const editAuthor = createAsyncThunk('editAuthor', async (author: Author) 
         Authorization: `Bearer ${token}`
       }
     })
-    return result.data.id
+    return result.data
   } catch (e) {
     return e as AxiosError
   }
@@ -56,7 +56,7 @@ export const addNewAuthor = createAsyncThunk('addNewAuthor', async (newAuthor: N
         Authorization: `Bearer ${token}`
       }
     })
-    return result.data.id
+    return result.data
   } catch (e) {
     return e as AxiosError
   }
@@ -85,6 +85,21 @@ const authorSlice = createSlice({
           state.error = action.payload.message
         } else {
           state.currentAuthor = action.payload
+        }
+      })
+      .addCase((addNewAuthor.fulfilled), (state, action) => {
+        if (action.payload instanceof AxiosError) {
+          state.error = action.payload.message
+        } else {
+          state.authors.push(action.payload)
+        }
+      })
+      .addCase((editAuthor.fulfilled), (state, action) => {
+        if (action.payload instanceof AxiosError) {
+          state.error = action.payload.message
+        } else {
+          const edited = action.payload
+          state.authors = state.authors.map(author => author.id === edited.id ? edited : author)
         }
       })
   }

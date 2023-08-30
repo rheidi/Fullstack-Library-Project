@@ -54,19 +54,14 @@ const AddOrEditBook = () => {
     e.preventDefault()
     if (id) {
       dispatch(editBook({ id, description, genre, imageUrl }))
-      navigate(`/book/${id}`)
     } else {
       console.log(authorId)
       const selectedAuthor = authors.find(a => a.id === authorId)
       console.log(selectedAuthor)
       const authorName = selectedAuthor ? `${selectedAuthor.firstName} ${selectedAuthor.lastName}` : ''
       dispatch(addNewBook({ title, year, authorId, authorName, description, genre, imageUrl }))
-      setTimeout(() => {
-        if (book) {
-          navigate(book.id)
-        }
-      }, 1000)
     }
+    navigate(`/books`)
   }
 
   function deleteBookAndNavigate(): void {
@@ -91,7 +86,7 @@ const AddOrEditBook = () => {
           <label htmlFor="year">
             year:
           </label>
-          <input onChange={e => setYear(parseInt(e.target.value))} name="year" value={year} />
+          <input type="number" onChange={e => setYear(parseInt(e.target.value))} name="year" value={year} />
           <label htmlFor="author">
             author:
           </label>

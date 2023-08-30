@@ -107,9 +107,6 @@ const usersSlice = createSlice({
           state.users = action.payload
         }
       })
-      .addCase(fetchAllUsers.pending, (state, action) => {
-        state.loading = true
-      })
       .addCase(fetchAllUsers.rejected, (state, action) => {
         state.error = 'Cannot fetch data'
       })

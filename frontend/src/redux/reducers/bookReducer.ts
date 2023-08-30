@@ -201,6 +201,7 @@ const bookSlice = createSlice({
         } else {
           state.success = `Book created with id: ${action.payload.id} as ${action.payload.title}`
           state.book = action.payload
+          state.books.push(action.payload)
         }
       })
       .addMatcher(isFulfilled(editBook), (state, action) => {
@@ -208,6 +209,8 @@ const bookSlice = createSlice({
         if (action.payload instanceof AxiosError) {
           state.error = action.payload.message
         } else {
+          const edit = action.payload
+          state.books = state.books.map(book => book.id === edit.id ? edit : book)
           state.success = `Book with id: ${action.payload.id} updated as ${action.payload.title}`
         }
       })

@@ -58,6 +58,7 @@ const Books = () => {
               {currentUser.role === 'Admin' && <Link to={`/edit_book/${b.id}`}>Edit book</Link>}
             </div>
           )}
+          <div className='more-info'><Link to={`/book/${b.id}`}><span>More info &gt;</span></Link></div>
         </div>
       ))}
       <div id="pagination" className="tools">

@@ -65,5 +65,11 @@ main.book-grid {
       margin-top: 0.5rem;
       color: palette.$highlight-light;
     }
+
+    .more-info {
+      margin: 0.5rem;
+      width: 100%;
+      text-align: end;
+    }
   }
 }

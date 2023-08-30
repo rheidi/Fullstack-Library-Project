@@ -30,12 +30,11 @@ const AddOrEditAuthor = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (currentAuthor) {
-      const { id } = currentAuthor
-      dispatch(editAuthor({ id, firstName: firstname, lastName: lastname, yearOfBirth: birthYear }))
+      dispatch(editAuthor({ id: currentAuthor.id, firstName: firstname, lastName: lastname, yearOfBirth: birthYear }))
     } else {
-      const res = dispatch(addNewAuthor({ firstName: firstname, lastName: lastname, yearOfBirth: birthYear }))
-      navigate(`/authors`)
+      dispatch(addNewAuthor({ firstName: firstname, lastName: lastname, yearOfBirth: birthYear }))
     }
+    navigate(`/authors`)
   }
 
   return <div>
@@ -44,14 +43,14 @@ const AddOrEditAuthor = () => {
       <fieldset>
         <legend>New author info:</legend>
         <label htmlFor="firstname" id="firstname">
-          firstname:
+          Firstname:
         </label>
         <input onChange={e => setFirstname(e.target.value)} name="firstname" value={firstname} />
         <label htmlFor="firstname" id="firstname">
-          firstname:
+          Lastname:
         </label>
         <input onChange={e => setLastname(e.target.value)} name="lastname" value={lastname} />
-        <label htmlFor="firstname" id="firstname">
+        <label htmlFor="lastname" id="lastname">
           Birth year:
         </label>
         <input type="number" onChange={e => setBirthYear(parseInt(e.target.value))} name="birthYear" value={birthYear} />
