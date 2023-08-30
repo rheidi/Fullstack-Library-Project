@@ -9,5 +9,5 @@ public class Loan : BaseEntity
   public Guid BookId { get; set; }
   public User User { get; set; } = null!;
   public Book Book { get; set; } = null!;
-  // public DateOnly DueDate { get; set; }  
+  // public DateOnly DueDate { get; set; }
 }

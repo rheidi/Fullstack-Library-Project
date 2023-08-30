@@ -3,7 +3,7 @@
 
 ## Introduction
 
-This work is a full-stack application made as an assignment for Integrify. This project uses react on front end and .NET EF Core on back end with PostgreSQL database. Architecture in the back end follows clean architecture principles. The project is a library management system for book borrowing for every home library.
+This project is a library management system for book borrowing for every home library. It is a full-stack application made as an assignment for Integrify. The project uses React on front end and .NET EF Core on back end with PostgreSQL database. Architecture in the back end follows clean architecture principles.
 
 ## Table of Content
 
@@ -25,6 +25,8 @@ This work is a full-stack application made as an assignment for Integrify. This 
 ## Features
 
 Books and single book information as well as list of all authors can be viewed by anyone. If user wants to borrow books, user has to register first. User can also view users own loans, both currently loaned and returned. If registered user has administrator rights, new book or author can be added to the system. Admin can also edit books and authors. Administrator can view all users and loans. Because I considered this to be an application for to keep track of to whom I loan my own books and for other home libraries, only admin can return books.
+
+There is a ready-made admin account for testing purposes (the token expires in 10 minutes after logging in). Email: admin@mail.com, password: admin123.
 
 ## Project Structure
 ```
