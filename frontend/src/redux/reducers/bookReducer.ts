@@ -106,7 +106,7 @@ const bookSlice = createSlice({
   name: 'books',
   initialState,
   reducers: {
-    clearBook: (state, action: PayloadAction<'clearBook'>) => {
+    clearBook: (state, action: PayloadAction) => {
       delete state.book
     },
     sortByTitle: (state, action: PayloadAction<'titleAsc' | 'titleDesc'>) => {

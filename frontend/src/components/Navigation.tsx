@@ -1,10 +1,18 @@
-import { Link } from 'react-router-dom'
-// import useAppDispatch from '../hooks/useAppDispatch'
+import { Link, useNavigate } from 'react-router-dom'
 import useAppSelector from '../hooks/useAppSelector'
+import useAppDispatch from '../hooks/useAppDispatch'
+import { logOutUser } from '../redux/reducers/userReducer'
 
 const Navigation = () => {
-  // const dispatch = useAppDispatch()
   const currentUser = useAppSelector(state => state.userReducer.currentUser)
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const logout = () => {
+    dispatch(logOutUser())
+    setTimeout(() => {
+      navigate('/')
+    }, 1000)
+  }
 
   return (
     <nav>
@@ -17,6 +25,7 @@ const Navigation = () => {
           { currentUser.role === "Admin" && (
             <>
               <Link to="/add_book">Add book</Link>
+              <Link to="/add_author">Add author</Link>
             </>
           )
           }
@@ -29,6 +38,7 @@ const Navigation = () => {
           <Link to="/profile">
             Profile
           </Link>
+          <button onClick={_ => logout()}>Logout</button>
         </>
       ) : (
         <Link to="/login">

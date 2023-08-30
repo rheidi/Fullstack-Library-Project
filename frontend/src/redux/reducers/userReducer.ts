@@ -70,7 +70,9 @@ const usersSlice = createSlice({
   reducers: {
     logOutUser: state => {
       window.localStorage.removeItem('user')
-      return initialState
+      window.localStorage.removeItem('token')
+      delete state.currentUser
+      return state
     },
     restoreUser: state => {
       const localStorageUserItem = window.localStorage.getItem('user')

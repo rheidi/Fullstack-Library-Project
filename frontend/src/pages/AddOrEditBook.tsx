@@ -26,7 +26,7 @@ const AddOrEditBook = () => {
     if (id && (!book || book.id !== id)) {
       dispatch(fetchOneBook(id))
     } else {
-      dispatch(clearBook)
+      dispatch(clearBook())
     }
     // Ensure author selector has value upon load
     const ensureAuthors = async () => {
@@ -34,7 +34,7 @@ const AddOrEditBook = () => {
       if (authorsList instanceof AxiosError) {
         throw authorsList
       }
-      if (authorId === '') {
+      if (authorId === '' && authorsList.length > 0) {
         setAuthorId(authorsList[0].id)
       }
     }
