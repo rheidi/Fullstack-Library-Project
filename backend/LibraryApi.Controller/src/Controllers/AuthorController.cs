@@ -15,7 +15,7 @@ public class AuthorController : CrudController<Author, AuthorReadDto, AuthorCrea
     _authorService = baseService;
   }
 
-  //[Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin")]
   [HttpPost]
   public override async Task<ActionResult<AuthorReadDto>> CreateOne([FromBody] AuthorCreateDto dto)
   {
@@ -23,7 +23,7 @@ public class AuthorController : CrudController<Author, AuthorReadDto, AuthorCrea
     return CreatedAtAction(nameof(CreateOne), createdAuthor);
   }
 
-  //[Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin")]
   [HttpPatch("{id:Guid}")]
   public override async Task<ActionResult<AuthorReadDto>> UpdateOneById([FromRoute] Guid id, [FromBody] AuthorUpdateDto updateDto)
   {
@@ -31,7 +31,7 @@ public class AuthorController : CrudController<Author, AuthorReadDto, AuthorCrea
     return Ok(updatedAuthor);
   }
 
-  //[Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin")]
   [HttpDelete("{id:Guid}")]
   public override async Task<ActionResult<bool>> DeleteOneById([FromRoute] Guid id)
   {
