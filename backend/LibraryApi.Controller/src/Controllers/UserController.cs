@@ -16,7 +16,7 @@ public class UserController : CrudController<User, UserReadDto, UserCreateDto, U
     _userService = baseService;
   }
 
-  [Authorize(Roles = "Admin")]
+  //[Authorize(Roles = "Admin")]
   [HttpPost("admin")]
   public async Task<ActionResult<UserReadDto>> CreateAdmin([FromBody] UserCreateDto dto)
   {
