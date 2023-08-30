@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import useAppSelector from "../hooks/useAppSelector"
 import { isAdmin } from "../utils/userUtils"
 import useAppDispatch from "../hooks/useAppDispatch"
-import loanReducer, { fetchAllLoans, fetchUserLoans } from "../redux/reducers/loanReducer"
+import loanReducer, { fetchAllLoans, fetchUserLoans, returnLoan } from "../redux/reducers/loanReducer"
 
 const Loans = () => {
   const { loans } = useAppSelector(state => state.loanReducer)
@@ -20,8 +20,6 @@ const Loans = () => {
     }
   }, [currentUser])
 
-  const returnBook = (id: string) => console.log('return book with id ' + id)
-
   return <main>
     <h1>Loans</h1>
     <table>
@@ -35,13 +33,15 @@ const Loans = () => {
       </thead>
       <tbody>
       {loans.map(loan => {
-        const { book, user } = loan
+        const { id, book, user } = loan
         const status = loan.isReturned ? 'returned' : 'borrowed'
-        return <tr key={loan.id}>
+        return <tr key={id}>
           <td>{`${book.title} - ${book.authorName} (${book.year})`}</td>
           <td>{`${user.firstName} ${user.lastName}`}</td>
           <td className={status}>{status}</td>
-          {admin && <td><button onClick={_ => returnBook(loan.id)}>Set returned</button></td>}
+          {admin && <td>
+            <button onClick={_ => dispatch(returnLoan(loan))}>Set returned</button>
+          </td>}
         </tr>
       })}
       </tbody>

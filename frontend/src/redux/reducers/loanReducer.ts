@@ -79,6 +79,17 @@ export const fetchOneLoan = createAsyncThunk('fetchOneLoan', async (id: string) 
   }
 })
 
+export const returnLoan = createAsyncThunk('returnLoan', async (loan: LoanReadDto) => {
+    const token = window.localStorage.getItem('token')
+    const returnedLoan = { isReturned: true }
+    await axios.patch<Loan>(`${config.backendUrl}/loans/${loan.id}`, returnedLoan, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    return { ...loan, isReturned: true }
+})
+
 const loanSlice = createSlice({
   name: 'loanSlice',
   initialState,
@@ -104,6 +115,14 @@ const loanSlice = createSlice({
           state.error = action.payload.message
         } else {
           state.loans = action.payload
+        }
+      })
+      .addCase(returnLoan.fulfilled, (state, action) => {
+        if (action.payload instanceof AxiosError) {
+          state.error = action.payload.message
+        } else {
+          const returned = action.payload
+          state.loans = state.loans.map(loan => loan.id === returned.id ? returned : loan)
         }
       })
   }

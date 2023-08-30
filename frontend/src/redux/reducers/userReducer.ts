@@ -65,7 +65,6 @@ export const login = createAsyncThunk('login', async ({ email, password }: UserC
       password
     })
     window.localStorage.setItem('token', result.data)
-    console.log(result.data)
 
     const authentication = await axios.get<User>(`${config.backendUrl}/users/profile`, {
       headers: {
