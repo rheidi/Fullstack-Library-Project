@@ -18,13 +18,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-builder.Services.AddCors(opts => 
+builder.Services.AddCors(opts =>
 {
-    opts.AddDefaultPolicy(builder => 
+    opts.AddDefaultPolicy(builder =>
     {
-        builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
-        .AllowAnyHeader()
-        .AllowAnyMethod();
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
     });
 });
 
@@ -60,7 +58,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
         Description = "Bearer token authentication",
         Name = "Authorization",
         In = ParameterLocation.Header,
@@ -96,11 +95,13 @@ builder.Services.AddAuthorization(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+/* if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+} */
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseCors();
 

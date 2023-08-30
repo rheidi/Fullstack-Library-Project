@@ -7,13 +7,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LibraryApi.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Create : Migration
+    public partial class CreateDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
-                .Annotation("Npgsql:Enum:genre", "novel,romance,crime,s_ci_fi,fantasy,horror,poems")
+                .Annotation("Npgsql:Enum:genre", "novel,romance,crime,sci_fi,fantasy,horror,poems")
                 .Annotation("Npgsql:Enum:role", "admin,customer,librarian");
 
             migrationBuilder.CreateTable(
