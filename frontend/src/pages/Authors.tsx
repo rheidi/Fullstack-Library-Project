@@ -14,7 +14,6 @@ const Authors = () => {
   useEffect(() => {
     dispatch(fetchAllAuthors())
   }, [dispatch])
-  
 
   return <main>
     <h1>List of authors</h1>

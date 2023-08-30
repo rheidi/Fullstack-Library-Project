@@ -77,6 +77,7 @@ const authorSlice = createSlice({
           state.error = action.payload.message
         } else {
           state.authors = action.payload
+          state.error = ''
         }
       })
       .addCase(fetchOneAuthor.fulfilled, (state, action) => {

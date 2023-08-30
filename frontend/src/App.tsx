@@ -16,6 +16,7 @@ import { restoreUser } from './redux/reducers/userReducer'
 import './styles/style.scss'
 import Loans from './pages/Loans'
 import Profile from './pages/Profile'
+import Users from './pages/Users'
 
 const App = () => {
   const dispatch = useAppDispatch()
@@ -61,6 +62,7 @@ const App = () => {
             <Route path="edit_book/:id" element={<AddOrEditBook />} />
             <Route path="add_author" element={<AddOrEditAuthor />} />
             <Route path="edit_author/:id" element={<AddOrEditAuthor />} />
+            <Route path="users" element={<Users />} />
           </Route>
         </Route>
       </Routes>

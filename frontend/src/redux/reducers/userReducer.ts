@@ -4,6 +4,7 @@ import config from '../../config'
 import axios, { AxiosError } from 'axios'
 import { NewUser } from '../../types/NewUser'
 import { UserCredential } from '../../types/UserCredential'
+import { access } from 'fs'
 
 interface UserReducer {
   users: User[]
@@ -40,6 +41,20 @@ export const newUser = createAsyncThunk('newUser', async (newUser: NewUser) => {
   } catch (e) {
     const error = e as AxiosError
     return error
+  }
+})
+
+export const deleteUser = createAsyncThunk('deleteUser', async (userId: string) => {
+  try {
+    const token = window.localStorage.getItem('token')
+    await axios.delete(`${config.backendUrl}/users/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    return userId
+  } catch (e) {
+    return e as AxiosError
   }
 })
 
@@ -84,13 +99,13 @@ const usersSlice = createSlice({
   extraReducers: build => {
     build
       .addCase(fetchAllUsers.fulfilled, (state, action) => {
+        state.loading = false
         if (action.payload instanceof AxiosError) {
           state.error = action.payload.message
         } else {
           state.error = ''
           state.users = action.payload
         }
-        state.loading = false
       })
       .addCase(fetchAllUsers.pending, (state, action) => {
         state.loading = true
@@ -114,6 +129,13 @@ const usersSlice = createSlice({
         } else {
           state.error = ''
           state.users.push(action.payload)
+        }
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        if (action.payload instanceof AxiosError) {
+          state.error = action.payload.message
+        } else {
+          state.users = state.users.filter(user => user.id !== action.payload)
         }
       })
   }
