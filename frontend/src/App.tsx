@@ -15,6 +15,7 @@ import SignUp from './pages/SignUp'
 import { restoreUser } from './redux/reducers/userReducer'
 import './styles/style.scss'
 import Loans from './pages/Loans'
+import Profile from './pages/Profile'
 
 const App = () => {
   const dispatch = useAppDispatch()
@@ -51,6 +52,7 @@ const App = () => {
           <Route element={<PrivateRoutes isAllowed={!!currentUser} />}>
             <Route path="loans" element={<Loans />} />
             <Route path="cart" element={<Cart />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
           <Route
             element={<PrivateRoutes isAllowed={!!currentUser && currentUser.role === 'Admin'} />}

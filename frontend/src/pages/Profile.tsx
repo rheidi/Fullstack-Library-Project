@@ -8,7 +8,7 @@ const Profile = () => {
   return (
     <div>
       <h1>Profile</h1>
-      <p>Name: {currentUser?.firstname + ' ' + currentUser?.lastname}</p>
+      <p>Name: {currentUser?.firstName + ' ' + currentUser?.lastName}</p>
       <p>Email: {currentUser?.email}</p>
     </div>
   )
