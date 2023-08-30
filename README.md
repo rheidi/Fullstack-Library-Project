@@ -24,7 +24,7 @@ This work is a full-stack application made as an assignment for Integrify. This 
 
 ## Features
 
-Books and single book information as well as list of all authors can be viewed by anyone. If user wants to borrow books, user has to register first. User can also view users own loans, and return books. If registered user has administrator rights, new book or author can be added to the system. Admin can also edit books and authors. Administrator can view all users and loans. Because I considered this to be an application for to keep track of to whom I loan my own books and for other homelibraries, only admin can return books.
+Books and single book information as well as list of all authors can be viewed by anyone. If user wants to borrow books, user has to register first. User can also view users own loans, both currently loaned and returned. If registered user has administrator rights, new book or author can be added to the system. Admin can also edit books and authors. Administrator can view all users and loans. Because I considered this to be an application for to keep track of to whom I loan my own books and for other home libraries, only admin can return books.
 
 ## Project Structure
 ```
@@ -83,11 +83,12 @@ This project has been deployed in ???
 
 ## Missing Functionalities
 
-Library needs an inventory.
-Books could have multiple authors.
-User should be able to unregister.
-Addind reviews would be nice.
+* Library needs an inventory.
+* Books could have multiple authors.
+* User should be able to unregister.
+* Addind reviews would be nice.
 
 ## Known Bugs
 
-Search from genre doesn't work.
+* Search from genre doesn't work.
+* AddOrEdit Book: if book has been edited, and then trying to add a new book straight from the same page, the form does not clear.

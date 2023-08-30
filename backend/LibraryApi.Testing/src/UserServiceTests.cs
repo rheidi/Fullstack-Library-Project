@@ -24,9 +24,9 @@ public class UserServiceTests
   }
 
   [Fact]
-  public async Task CreateOne_WithValidDto_ReturnsCreatedUser()
+  public async Task CreateOne_WithValidData_ReturnsCreatedUser()
   {
-  var createDto = new UserCreateDto { Email = "test@mail.com", Password = "test123" };
+  var createDto = new UserCreateDto { Email = "test@mail.com", Password = "test123", FirstName = "Nalle", LastName = "Puh" };
   var expectedUser = new User { Id = Guid.NewGuid(), Email = createDto.Email, Password = "hashedPassword", Salt = new byte[] { 0x01, 0x02, 0x03 } };
   _userRepoMock.Setup(repo => repo.CreateOne(It.IsAny<User>())).ReturnsAsync(expectedUser);
 
@@ -40,19 +40,18 @@ public class UserServiceTests
   }
 
   [Fact]
-  public async Task UpdateOne_WithValidDto_ReturnsEditedUser()
+  public async Task UpdateOne_WithValidData_ReturnsUpdatedUser()
   {
     var id = Guid.NewGuid();
     var editDto = new UserUpdateDto { FirstName = "New", LastName = "Name"};
     var userToUpdate = new User { Id = id, FirstName = "oldFirstName", LastName = "oldLastName", Password = "hashedPassword", Salt = new byte[] { 0x01, 0x02, 0x03 } };
-    var expectedUser = new User { Id = id, FirstName = editDto.FirstName, LastName = editDto.LastName, Password = "hashedPassword", Salt = new byte[] { 0x01, 0x02, 0x03 } };
     
     var userService = new UserService(_userRepoMock.Object, _mapper);
 
     var result = await userService.UpdateOneById(id, editDto);
 
     Assert.NotNull(result);
-    Assert.Equal(expectedUser.FirstName, result.FirstName);
-    Assert.Equal(expectedUser.LastName, result.LastName);
+    Assert.Equal(editDto.FirstName, result.FirstName);
+    Assert.Equal(editDto.LastName, result.LastName);
   }
 }
