@@ -39,14 +39,7 @@ public class BaseRepo<T> : IBaseRepo<T> where T : class
     {
       var searchTerm = queryOptions.Search.ToLower();
 
-      if (typeof(T) == typeof(Book))
-      {
-        items = items.Where(b => ((Book)
-        (object)b).Title.ToLower().Contains(searchTerm));
-        items = items.Include(b => ((Book)(object)b).Genre);
-        items = items.Include(b => ((Book)(object)b).Author);
-      }
-      else if (typeof(T) == typeof(Author))
+      if (typeof(T) == typeof(Author))
       {
         items = items.Where(a => ((Author)(object)a).FirstName.ToLower().Contains(searchTerm) ||
         ((Author)(object)a).LastName.ToLower().Contains(searchTerm));

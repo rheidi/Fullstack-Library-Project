@@ -24,7 +24,6 @@ public class AuthorRepo : BaseRepo<Author>, IAuthorRepo
 
   public async override Task<Author> GetOneById(Guid id)
   {
-    var author = await _authors.Include(a => a.Books).FirstOrDefaultAsync(a => a.Id == id);
-    return author;
+    return await _authors.Include(a => a.Books).FirstOrDefaultAsync(a => a.Id == id);
   }
 }
