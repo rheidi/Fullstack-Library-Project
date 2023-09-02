@@ -1,3 +1,5 @@
+using LibraryApi.Domain.src.Entities;
+
 namespace LibraryApi.Service.src.Dtos;
 
 public class AuthorReadDto
@@ -6,6 +8,7 @@ public class AuthorReadDto
   public string FirstName { get; set; }
   public string LastName { get; set; }
   public int YearOfBirth { get; set; }
+  public List<BookReadDto> Books { get; set; }
 }
 
 public class AuthorUpdateDto

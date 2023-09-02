@@ -19,4 +19,9 @@ public class LoanRepo : BaseRepo<Loan>, ILoanRepo
   {
     return await _loans.Where(l => l.Id == id).ToListAsync();
   }
+
+  public async override Task<Loan> GetOneById(Guid id)
+  {
+    return await _loans.Include(l => l.User).Include(l => l.Book).FirstOrDefaultAsync(a => a.Id == id);
+  }
 }

@@ -13,8 +13,17 @@ using LibraryApi.Infrastructure.src.AuthorizationRequirements;
 using Npgsql;
 using LibraryApi.Domain.src.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 

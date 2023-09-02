@@ -41,4 +41,9 @@ public class UserRepo : BaseRepo<User>, IUserRepo
     entity.Role = Role.Customer;
     return base.CreateOne(entity);
   }
+
+  public async override Task<User> GetOneById(Guid id)
+  {
+    return await _users.Include(u => u.Loans).FirstOrDefaultAsync(a => a.Id == id);
+  }
 }

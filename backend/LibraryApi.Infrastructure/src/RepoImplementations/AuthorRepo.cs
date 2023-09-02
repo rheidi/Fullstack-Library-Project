@@ -21,4 +21,10 @@ public class AuthorRepo : BaseRepo<Author>, IAuthorRepo
   {
     return await _authors.FirstOrDefaultAsync(a => a.FirstName == firstName && a.LastName == lastName);
   }
+
+  public async override Task<Author> GetOneById(Guid id)
+  {
+    var author = await _authors.Include(a => a.Books).FirstOrDefaultAsync(a => a.Id == id);
+    return author;
+  }
 }

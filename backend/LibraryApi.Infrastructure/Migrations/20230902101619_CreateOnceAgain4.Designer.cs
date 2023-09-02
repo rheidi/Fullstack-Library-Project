@@ -4,6 +4,7 @@ using LibraryApi.Domain.src.Entities;
 using LibraryApi.Infrastructure.src.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LibraryApi.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230902101619_CreateOnceAgain4")]
+    partial class CreateOnceAgain4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,6 +73,11 @@ namespace LibraryApi.Infrastructure.Migrations
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uuid")
                         .HasColumnName("author_id");
+
+                    b.Property<string>("AuthorName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("author_name");
 
                     b.Property<int>("BooksAvailable")
                         .HasColumnType("integer")
@@ -150,9 +158,11 @@ namespace LibraryApi.Infrastructure.Migrations
                         .HasName("pk_loans");
 
                     b.HasIndex("BookId")
+                        .IsUnique()
                         .HasDatabaseName("ix_loans_book_id");
 
                     b.HasIndex("UserId")
+                        .IsUnique()
                         .HasDatabaseName("ix_loans_user_id");
 
                     b.ToTable("loans", (string)null);
@@ -227,15 +237,15 @@ namespace LibraryApi.Infrastructure.Migrations
             modelBuilder.Entity("LibraryApi.Domain.src.Entities.Loan", b =>
                 {
                     b.HasOne("LibraryApi.Domain.src.Entities.Book", "Book")
-                        .WithMany("Loans")
-                        .HasForeignKey("BookId")
+                        .WithOne("Loan")
+                        .HasForeignKey("LibraryApi.Domain.src.Entities.Loan", "BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_loans_books_book_id");
 
                     b.HasOne("LibraryApi.Domain.src.Entities.User", "User")
-                        .WithMany("Loans")
-                        .HasForeignKey("UserId")
+                        .WithOne("Loan")
+                        .HasForeignKey("LibraryApi.Domain.src.Entities.Loan", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_loans_users_user_id");
@@ -252,12 +262,12 @@ namespace LibraryApi.Infrastructure.Migrations
 
             modelBuilder.Entity("LibraryApi.Domain.src.Entities.Book", b =>
                 {
-                    b.Navigation("Loans");
+                    b.Navigation("Loan");
                 });
 
             modelBuilder.Entity("LibraryApi.Domain.src.Entities.User", b =>
                 {
-                    b.Navigation("Loans");
+                    b.Navigation("Loan");
                 });
 #pragma warning restore 612, 618
         }

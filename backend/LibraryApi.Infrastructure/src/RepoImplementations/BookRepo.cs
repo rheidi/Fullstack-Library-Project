@@ -15,4 +15,9 @@ public class BookRepo : BaseRepo<Book>, IBookRepo
     _books = dbContext.Books;
     _context = dbContext;
   }
+
+  public async override Task<Book> GetOneById(Guid id)
+  {
+    return await _books.Include(b => b.Author).FirstOrDefaultAsync(a => a.Id == id);
+  }
 }

@@ -8,19 +8,19 @@ public class MapperProfile : Profile
 {
   public MapperProfile()
   {
-    CreateMap<User, UserReadDto>();
+    CreateMap<User, UserReadDto>().ReverseMap();
     CreateMap<UserUpdateDto, User>();
     CreateMap<UserCreateDto, User>();
 
-    CreateMap<Book, BookReadDto>();
+    CreateMap<Book, BookReadDto>().ReverseMap();
     CreateMap<BookUpdateDto, Book>();
     CreateMap<BookCreateDto, Book>();
 
-    CreateMap<Author, AuthorReadDto>();
+    CreateMap<Author, AuthorReadDto>().ReverseMap();
     CreateMap<AuthorUpdateDto, Author>();
     CreateMap<AuthorCreateDto, Author>();
 
-    CreateMap<Loan, LoanReadDto>();
+    CreateMap<Loan, LoanReadDto>().ReverseMap();
     CreateMap<LoanUpdateDto, Loan>();
     CreateMap<LoanCreateDto, Loan>();
   }  

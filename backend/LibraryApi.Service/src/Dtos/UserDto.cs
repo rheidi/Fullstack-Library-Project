@@ -9,6 +9,7 @@ public class UserReadDto
   public string FirstName { get; set; }
   public string LastName { get; set; }
   public Role Role { get; set; } = Role.Customer;
+  public List<LoanReadDto> Loans { get; set; }
 }
 
 public class UserCreateDto

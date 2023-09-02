@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LibraryApi.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230830125347_CreateDatabase")]
-    partial class CreateDatabase
+    [Migration("20230831062225_CreateOnceAgain3")]
+    partial class CreateOnceAgain3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
