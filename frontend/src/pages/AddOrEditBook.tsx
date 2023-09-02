@@ -45,7 +45,7 @@ const AddOrEditBook = () => {
   if (id && book && title !== book.title) {
     setTitle(book.title)
     setYear(book.year)
-    setAuthorId(book.authorId)
+    setAuthorId(book.author.id)
     setDescription(book.description)
     setGenre(book.genre)
   }
@@ -55,11 +55,7 @@ const AddOrEditBook = () => {
     if (id) {
       dispatch(editBook({ id, description, genre, imageUrl }))
     } else {
-      console.log(authorId)
-      const selectedAuthor = authors.find(a => a.id === authorId)
-      console.log(selectedAuthor)
-      const authorName = selectedAuthor ? `${selectedAuthor.firstName} ${selectedAuthor.lastName}` : ''
-      dispatch(addNewBook({ title, year, authorId, authorName, description, genre, imageUrl }))
+      dispatch(addNewBook({ title, year, authorId, description, genre, imageUrl }))
     }
     navigate(`/books`)
   }

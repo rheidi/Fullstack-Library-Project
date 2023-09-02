@@ -5,6 +5,7 @@ import { fetchAllBooks } from '../redux/reducers/bookReducer'
 import '../styles/books.scss'
 import { Link } from 'react-router-dom'
 import { addToCart } from '../redux/reducers/cartReducer'
+import { formatAuthorName } from '../utils/authorUtils'
 
 const Books = () => {
   const { books } = useAppSelector(state => state.bookReducer)
@@ -50,7 +51,7 @@ const Books = () => {
           <Link to={`/book/${b.id}`}>
             <h2>{b.title}</h2>
             <p>{b.genre}</p>
-            <h3>{`${b.authorName}`}</h3>
+            <h3>{`${formatAuthorName(b.author)}`}</h3>
           </Link>
           {currentUser && (
             <div className="tools">

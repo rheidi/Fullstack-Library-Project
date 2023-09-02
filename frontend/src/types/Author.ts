@@ -1,3 +1,5 @@
+import { Book } from "./Book"
+
 export interface Author {
   id: string
   firstName: string
@@ -5,4 +7,7 @@ export interface Author {
   yearOfBirth?: number
 }
 
-export type NewAuthor = Omit<Author, 'id'>
+export type NewAuthor = Omit<Author, 'id' | 'books'>
+export type ListAuthor = Author & {
+  books: Book[]
+}

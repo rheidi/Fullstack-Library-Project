@@ -3,6 +3,7 @@ import useAppSelector from "../hooks/useAppSelector"
 import { isAdmin } from "../utils/userUtils"
 import useAppDispatch from "../hooks/useAppDispatch"
 import loanReducer, { fetchAllLoans, fetchUserLoans, returnLoan } from "../redux/reducers/loanReducer"
+import { formatAuthorShortname } from "../utils/authorUtils"
 
 const Loans = () => {
   const { loans } = useAppSelector(state => state.loanReducer)
@@ -36,7 +37,7 @@ const Loans = () => {
         const { id, book, user } = loan
         const status = loan.isReturned ? 'returned' : 'borrowed'
         return <tr key={id}>
-          <td>{`${book.title} - ${book.authorName} (${book.year})`}</td>
+          <td>{`${book.title} - ${formatAuthorShortname(book.author)} (${book.year})`}</td>
           <td>{`${user.firstName} ${user.lastName}`}</td>
           <td className={status}>{status}</td>
           {admin && <td>
