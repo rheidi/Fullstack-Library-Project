@@ -1,10 +1,10 @@
-import { Author, NewAuthor } from '../../types/Author'
+import { Author, ListAuthor, NewAuthor } from '../../types/Author'
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
 import config from '../../config'
 
 interface AuthorReducer {
-  authors: Author[]
+  authors: ListAuthor[]
   currentAuthor?: Author
   loading: boolean
   error: string
@@ -18,7 +18,7 @@ const initialState: AuthorReducer = {
 
 export const fetchAllAuthors = createAsyncThunk('fetchAllAuthors', async () => {
   try {
-    const result = await axios.get<Author[]>(`${config.backendUrl}/authors`)
+    const result = await axios.get<ListAuthor[]>(`${config.backendUrl}/authors`)
     return result.data
   } catch (e) {
     return e as AxiosError
@@ -34,10 +34,10 @@ export const fetchOneAuthor = createAsyncThunk('fetchOneAuthor', async (id: stri
   }
 })
 
-export const editAuthor = createAsyncThunk('editAuthor', async (author: Author) => {
+export const editAuthor = createAsyncThunk('editAuthor', async (author: ListAuthor) => {
   try {
     const token = window.localStorage.getItem('token')
-    const result = await axios.patch<Author>(`${config.backendUrl}/authors`, author, {
+    const result = await axios.patch<ListAuthor>(`${config.backendUrl}/authors`, author, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -51,7 +51,7 @@ export const editAuthor = createAsyncThunk('editAuthor', async (author: Author) 
 export const addNewAuthor = createAsyncThunk('addNewAuthor', async (newAuthor: NewAuthor) => {
   try {
     const token = window.localStorage.getItem('token')
-    const result = await axios.post<Author>(`${config.backendUrl}/authors`, newAuthor, {
+    const result = await axios.post<ListAuthor>(`${config.backendUrl}/authors`, newAuthor, {
       headers: {
         Authorization: `Bearer ${token}`
       }

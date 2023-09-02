@@ -5,9 +5,8 @@ export interface Author {
   firstName: string
   lastName: string,
   yearOfBirth?: number
+  books: Book[]
 }
 
 export type NewAuthor = Omit<Author, 'id' | 'books'>
-export type ListAuthor = Author & {
-  books: Book[]
-}
+export type ListAuthor = Omit<Author, 'books'>
