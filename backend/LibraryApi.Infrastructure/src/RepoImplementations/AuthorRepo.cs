@@ -26,4 +26,25 @@ public class AuthorRepo : BaseRepo<Author>, IAuthorRepo
   {
     return await _authors.Include(a => a.Books).FirstOrDefaultAsync(a => a.Id == id);
   }
+
+  public async override Task<IEnumerable<Author>> GetAll(QueryOptions queryOptions)
+  {
+    var authors = _authors.Include(a => a.Books).AsQueryable();
+
+    if(!string.IsNullOrEmpty(queryOptions.Search))
+    {
+      var searchTerm = queryOptions.Search.ToLower();
+
+      authors = authors.Where(a => a.FirstName.ToLower().Contains(searchTerm) ||
+            a.LastName.ToLower().Contains(searchTerm)
+      );
+    }
+  
+    authors = authors.OrderBy(a => a.LastName).ThenBy(a => a.FirstName);
+
+    authors = authors.Skip((queryOptions.PageNumber - 1) * queryOptions.PageSize)
+      .Take(queryOptions.PageSize);
+
+    return await authors.ToListAsync();
+  }
 }

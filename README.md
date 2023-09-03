@@ -24,7 +24,7 @@ This project is a library management system for book borrowing for every home li
 
 ## Features
 
-Books and single book information as well as list of all authors can be viewed by anyone. If user wants to borrow books, user has to register first. User can also view users own loans, both currently loaned and returned. If registered user has administrator rights, new book or author can be added to the system. Admin can also edit books and authors. Administrator can view all users and loans. Because I considered this to be an application for to keep track of to whom I loan my own books and for other home libraries, only admin can return books.
+Books and single book information as well as list of all authors and single author info can be viewed by anyone. If user wants to borrow books, user has to register first. Borrowing a book is done by adding the book in to a cart first, and then cart can be viewed, and then deside what books to borrow. User can also view users own loans, both currently loaned and returned. If registered user has administrator rights, new book or author can be added to the system. Admin can also edit books and authors. Administrator can view all users and loans. Because I considered this to be an application for to keep track of to whom I loan my own books and for other home libraries, only admin can return books.
 
 There is a ready-made admin account for testing purposes (the token expires in 10 minutes after logging in). Email: admin@mail.com, password: admin123.
 
@@ -81,16 +81,28 @@ Clone  the  repository from GitHub with `git clone` Then `npm install` for the n
 
 ### Deployment
 
-This project has been deployed in ???
+The back end of this project has been deployed in
+https://home-library-management-application.azurewebsites.net
+
+and the routes can be viewed and tested in
+https://home-library-management-application.azurewebsites.net/swagger/index.html
+
+The front end has been deployed in https://fullstack-library-project.vercel.app/
+
+It is really slow to start, maybe due to the back end residing in low priority tier computing because it is a free service. It might take up to 20-30 seconds to start, but then it should operate normally.
+
+There is one user with admin rights created already, with email admin@mail.com and password admin123.
 
 ## Missing Functionalities
 
 * Library needs an inventory.
 * Books could have multiple authors.
-* User should be able to unregister.
+* Deleting books or authors is not done in the front end yet.
 * Addind reviews would be nice.
+* Loans should have return date
 
 ## Known Bugs
 
-* Search from genre doesn't work.
-* AddOrEdit Book: if book has been edited, and then trying to add a new book straight from the same page, the form does not clear.
+* User can still borrow same book multiple times
+* There is no indicator if book is added to a cart or not
+* If User has loans, and user removes own cart, loans just evaporate
