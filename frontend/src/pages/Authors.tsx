@@ -5,6 +5,7 @@ import { formatAuthorName } from "../utils/authorUtils"
 import { fetchAllAuthors } from "../redux/reducers/authorReducer"
 import { isAdmin } from "../utils/userUtils"
 import { Link } from "react-router-dom"
+import '../styles/authors.scss'
 
 const Authors = () => {
   const { authors } = useAppSelector(state => state.authorReducer)
@@ -24,7 +25,7 @@ const Authors = () => {
               {formatAuthorName(author)}
             </Link>
             {isAdmin(currentUser) &&
-              <Link to={`/edit_author/${author.id}`}>Edit</Link>
+              <Link to={`/edit_author/${author.id}`}><span className="edit">Edit</span></Link>
             }
           </li>
         })

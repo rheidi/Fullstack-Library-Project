@@ -51,7 +51,7 @@ const Books = () => {
           <Link to={`/book/${b.id}`}>
             <h2>{b.title}</h2>
             <p>{b.genre}</p>
-            <h3>{`${formatAuthorName(b.author)}`}</h3>
+            <h3><Link to={`/author/${b.author.id}`}>{`${formatAuthorName(b.author)}`}</Link></h3>
           </Link>
           {currentUser && (
             <div className="tools">
