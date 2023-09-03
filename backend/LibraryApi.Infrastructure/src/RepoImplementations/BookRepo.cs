@@ -29,6 +29,7 @@ public class BookRepo : BaseRepo<Book>, IBookRepo
     if(!string.IsNullOrEmpty(queryOptions.Search))
     {
       var searchTerm = queryOptions.Search.ToLower();
+
       books = books.Where(b => b.Title.ToLower().Contains(searchTerm) ||
             b.Author.FirstName.ToLower().Contains(searchTerm) ||
             b.Author.LastName.ToLower().Contains(searchTerm) ||
@@ -36,7 +37,7 @@ public class BookRepo : BaseRepo<Book>, IBookRepo
       );
     }
   
-    books.OrderBy(b => b.Title).ThenBy(b => b.Author.LastName).ThenBy(b => b.Author.FirstName);
+    books = books.OrderBy(b => b.Author.LastName).ThenBy(b => b.Author.FirstName).ThenBy(b => b.Title);
 
     if (queryOptions.OrderByDescending)
     {

@@ -18,7 +18,11 @@ public class LoanRepo : BaseRepo<Loan>, ILoanRepo
 
   public async Task<IEnumerable<Loan>> GetLoansForOneUser(Guid id)
   {
-    return await _loans.Where(l => l.Id == id).ToListAsync();
+    return await _loans.Include(l => l.User)
+                       .Include(l => l.Book)
+                       .ThenInclude(l => l.Author)
+                       .Where(l => l.UserId == id)
+                       .ToListAsync();
   }
 
   public async override Task<Loan> GetOneById(Guid id)
