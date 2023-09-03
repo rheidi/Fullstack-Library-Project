@@ -29,7 +29,7 @@ const App = () => {
     if(!currentUser) {
       dispatch(restoreUser())
     }
-  }, [dispatch, currentUser, restoreUser])
+  }, [dispatch, currentUser])
 
   const PrivateRoutes = ({ isAllowed }: { isAllowed: boolean }) => {
     return isAllowed ? <Outlet /> : <Navigate to="login" />

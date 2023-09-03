@@ -4,6 +4,7 @@ import { Book } from '../../types/Book'
 import axios, { AxiosError } from 'axios'
 import config from '../../config'
 import { User } from '../../types/User'
+import { LoanReadDto } from '../../types/Loan'
 
 interface CartReducer {
   books: Book[]
@@ -21,29 +22,29 @@ type State = {
   user: User
 }
 
-export const loanBooks = createAsyncThunk<Book[], Book[], { state: State }>(
+export const loanBooks = createAsyncThunk<LoanReadDto[], Book[], { state: State }>(
   'cart/loan',
   async (books, { getState }) => {
     const state = getState()
     const token = window.localStorage.getItem('token')
     try {
-      const loanedBooks: Book[] = []
+      const newLoans: LoanReadDto[] = []
       if (!token) throw new Error('Cannot authenticate');
       await Promise.all(books.map(async book => {
-        const loanResult = await axios.post(`${config.backendUrl}/loans`, {
-          UserId: state.user.id,
-          BookId: book.id
+        const loanResult = await axios.post<LoanReadDto>(`${config.backendUrl}/loans`, {
+          userId: state.user.id,
+          bookId: book.id
         }, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         })
         if (loanResult.data) {
-          loanedBooks.push(book)
+          newLoans.push(loanResult.data)
         }
       }))
 
-      return loanedBooks
+      return newLoans
     } catch (e) {
       throw e
     }
@@ -69,12 +70,13 @@ const cartSlice = createSlice({
     }
   },
   extraReducers: builder => {
-    builder.addCase(loanBooks.fulfilled, (state, action: PayloadAction<Book[]>) => {
+    builder.addCase(loanBooks.fulfilled, (state, action: PayloadAction<LoanReadDto[]>) => {
       if (action.payload instanceof AxiosError) {
         state.error = action.payload.message
       } else {
         state.error = ''
         state.books = []
+        console.log(action.payload)
       }
       state.loading = false
     })

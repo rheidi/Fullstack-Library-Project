@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import useAppSelector from "../hooks/useAppSelector"
 import { isAdmin } from "../utils/userUtils"
 import useAppDispatch from "../hooks/useAppDispatch"
-import loanReducer, { fetchAllLoans, fetchUserLoans, returnLoan } from "../redux/reducers/loanReducer"
+import { fetchAllLoans, fetchUserLoans, returnLoan } from "../redux/reducers/loanReducer"
 import { formatAuthorShortname } from "../utils/authorUtils"
 import { Link } from "react-router-dom"
 
@@ -20,7 +20,7 @@ const Loans = () => {
         dispatch(fetchUserLoans(currentUser))
       }
     }
-  }, [currentUser])
+  }, [currentUser, admin, dispatch])
 
   if (!loans || loans.length < 1) {
     return <main>
@@ -47,7 +47,7 @@ const Loans = () => {
           <td>
             <Link to={`/book/${book.id}`}>{book.title}</Link>
             {book.author ?
-              <Link to={`/author/${book.author.id}`}>`- ${formatAuthorShortname(book.author)}`</Link> :
+              <Link to={`/author/${book.author.id}`}> - {formatAuthorShortname(book.author)}</Link> :
               ''
             } ({book.year})</td>
           <td>{`${user.firstName} ${user.lastName}`}</td>

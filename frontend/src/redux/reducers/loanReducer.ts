@@ -36,7 +36,7 @@ export const fetchAllLoans = createAsyncThunk('fetchAllLoans', async () => {
 export const fetchUserLoans = createAsyncThunk('fetchUserLoans', async (user: User) => {
   try {
     const token = window.localStorage.getItem('token')
-    const result = await axios.get<LoanReadDto[]>(`${config.backendUrl}/loans/${user.id}`, {
+    const result = await axios.get<LoanReadDto[]>(`${config.backendUrl}/loans/userloans?id=${user.id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -77,6 +77,25 @@ export const returnLoan = createAsyncThunk('returnLoan', async (loan: LoanReadDt
       }
     })
     return { ...loan, isReturned: true }
+})
+
+export const loanSingleBook = createAsyncThunk('loanBook', async (books: Book[]) => {
+  try {
+    const token = window.localStorage.getItem('token')
+    const user = JSON.parse(window.localStorage.getItem('user') ||'{}')
+    if (user.id) {
+      const result = await Promise.all(books.map(async book => {
+        return await axios.post<Loan>(`${config.backendUrl}/loans`, { userId: user.id, bookId: book.id }, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+      }))
+      return result
+    }
+  } catch (e) {
+    return e as AxiosError
+  }
 })
 
 const loanSlice = createSlice({

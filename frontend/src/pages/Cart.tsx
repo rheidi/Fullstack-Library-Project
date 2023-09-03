@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import useAppDispatch from '../hooks/useAppDispatch'
 import useAppSelector from '../hooks/useAppSelector'
 import { emptyCart, removeFromCart } from '../redux/reducers/cartReducer'
-import { loan } from '../redux/reducers/bookReducer'
+import { loanSingleBook } from '../redux/reducers/loanReducer'
 import { formatAuthorName } from '../utils/authorUtils'
 
 const Cart = () => {
@@ -12,7 +12,7 @@ const Cart = () => {
   const dispatch = useAppDispatch()
 
   const checkout = () => {
-    dispatch(loan(cart))
+    dispatch(loanSingleBook(cart))
     dispatch(emptyCart())
   }
 

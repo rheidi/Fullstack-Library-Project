@@ -19,7 +19,7 @@ const AddOrEditAuthor = () => {
     } else {
       dispatch(clearAuthor())
     }
-  }, [dispatch, id])
+  }, [dispatch, id, currentAuthor])
 
   if (id && currentAuthor && currentAuthor.firstName !== firstname) {
     setFirstname(currentAuthor.firstName)

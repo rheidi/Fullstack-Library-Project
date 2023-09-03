@@ -2,7 +2,6 @@ import { Book, EditBook, NewBook } from '../../types/Book'
 import { PayloadAction, createAsyncThunk, createSlice, isAnyOf, isFulfilled } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
 import config from '../../config'
-import { Loan } from '../../types/Loan'
 import { Author } from '../../types/Author'
 
 
@@ -104,25 +103,6 @@ export const deleteBook = createAsyncThunk('deleteBook', async (bookId: string) 
   }
 })
 
-export const loan = createAsyncThunk('loanBook', async (books: Book[]) => {
-  try {
-    const token = window.localStorage.getItem('token')
-    const user = JSON.parse(window.localStorage.getItem('user') ||'{}')
-    if (user.id) {
-      const result = await Promise.all(books.map(async book => {
-        return await axios.post<Loan>(`${config.backendUrl}/loans`, { userId: user.id, bookId: book.id, isReturned: false }, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-      }))
-      return result
-    }
-  } catch (e) {
-    return e as AxiosError
-  }
-})
-
 const sortByAuthor = (a: Author, b: Author, ascending = true) => {
     const first = ascending ? a : b
     const second = ascending ? b : a
@@ -177,8 +157,7 @@ const bookSlice = createSlice({
           fetchOneBook.pending,
           fetchBooksBySearchTerm.pending,
           addNewBook.pending,
-          editBook.pending,
-          loan.pending
+          editBook.pending
         ),
         state => {
           state.loading = true
@@ -243,8 +222,7 @@ const bookSlice = createSlice({
           fetchOneBook.rejected,
           fetchBooksBySearchTerm.rejected,
           addNewBook.rejected,
-          editBook.rejected,
-          loan.rejected
+          editBook.rejected
         ), (state, action) => {
           state.error = action.error.message ?? 'Something went wrong'
         }

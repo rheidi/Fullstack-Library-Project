@@ -20,16 +20,22 @@ const Books = () => {
   useEffect(() => {
     const queryParams = { pageNumber, pageSize, search }
     dispatch(fetchAllBooks(queryParams))
-  }, [dispatch])
+  }, [dispatch, pageNumber, pageSize, search])
 
   const updateSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const searchField = document.getElementById('search') as HTMLInputElement
-    const searchTerm = searchField.value
-    console.log(searchTerm)
-    if (searchTerm && searchTerm !== '' && search !== searchTerm) {
-      setSearch(searchTerm)
-    }    
+    const queryParams = { pageNumber, pageSize, search }
+    dispatch(fetchAllBooks(queryParams))
+  }
+
+  const increasePageNumber = () => {
+    if (books.length < pageSize) return
+    setPageNumber(pageNumber + 1)
+  }
+
+  const decreasePageNumber = () => {
+    if (pageNumber <= 1) return
+    setPageNumber(pageNumber - 1)
   }
 
   return (
@@ -41,8 +47,8 @@ const Books = () => {
           <option value="27">25</option>
           <option value="54">50</option>
         </select>
-        <form id="searchform" onSubmit={e => {updateSearch(e)}}>
-          <input name="search-term" id="search" placeholder="search" />
+        <form id="searchform" onSubmit={e => {updateSearch(e)}} >
+          <input name="search-term" id="search" placeholder="search" value={search} onChange={e => setSearch(e.target.value)} />
           <button type="submit">Search</button>
         </form>
       </div>
@@ -63,8 +69,8 @@ const Books = () => {
         </div>
       ))}
       <div id="pagination" className="tools">
-        <button className="prev" disabled={(pageNumber <= 1)}>Previous</button>
-        <button className="next" disabled={(books.length < pageSize)}>Next</button>
+        <button className="prev" disabled={(pageNumber <= 1)} onClick={_ => decreasePageNumber()}>Previous</button>
+        <button className="next" disabled={(books.length < pageSize)} onClick={_ => increasePageNumber()}>Next</button>
         </div>
     </main>
   )

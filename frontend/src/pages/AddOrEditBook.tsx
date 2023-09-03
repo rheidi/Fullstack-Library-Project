@@ -7,8 +7,6 @@ import { useParams } from 'react-router'
 import useAppSelector from '../hooks/useAppSelector'
 import { fetchAllAuthors } from '../redux/reducers/authorReducer'
 import { AxiosError } from 'axios'
-import { isAdmin } from '../utils/userUtils'
-
 
 const AddOrEditBook = () => {
   const id = useParams().id
@@ -40,7 +38,7 @@ const AddOrEditBook = () => {
       }
     }
     ensureAuthors().catch(e => console.log(e))
-  }, [dispatch, id, setAuthorId])
+  }, [dispatch, id, setAuthorId, authorId, book])
  
   if (id && book && title !== book.title) {
     setTitle(book.title)
@@ -110,7 +108,7 @@ const AddOrEditBook = () => {
             <option value={Genre.Novel}>{Genre.Novel}</option>
             <option value={Genre.Romance}>{Genre.Romance}</option>
             <option value={Genre.Crime}>{Genre.Crime}</option>
-            <option value={Genre.SciFi}>{Genre.SciFi}</option>
+            <option value={Genre.Scifi}>{Genre.Scifi}</option>
             <option value={Genre.Fantasy}>{Genre.Fantasy}</option>
             <option value={Genre.Horror}>{Genre.Horror}</option>
             <option value={Genre.Poems}>{Genre.Poems}</option>
