@@ -18,7 +18,7 @@ const initialState: AuthorReducer = {
 
 export const fetchAllAuthors = createAsyncThunk('fetchAllAuthors', async () => {
   try {
-    const result = await axios.get<ListAuthor[]>(`${config.backendUrl}/authors`)
+    const result = await axios.get<ListAuthor[]>(`${config.backendUrl}/authors?PageSize=100`)
     return result.data
   } catch (e) {
     return e as AxiosError
