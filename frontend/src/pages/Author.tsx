@@ -34,7 +34,7 @@ const Author = () => {
         {books.map(b => {
           return (
             <li key={b.id}>
-              <Link to={`/books/${b.id}`}>{b.title} ({b.year}), {b.genre}</Link>
+              <Link to={`/book/${b.id}`}>{b.title} ({b.year}), {b.genre}</Link>
             </li>
           )}
         )}
