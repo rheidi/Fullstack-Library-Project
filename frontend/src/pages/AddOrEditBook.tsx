@@ -19,7 +19,7 @@ const AddOrEditBook = () => {
   const [year, setYear] = useState(2000)
   const [authorId, setAuthorId] = useState('')
   const [description, setDescription] = useState('')
-  const [genre, setGenre] = useState(Genre.Crime)
+  const [genre, setGenre] = useState(Genre.Novel)
   const imageUrl = 'https://picsum.photos/300'
   const navigate = useNavigate()
 
