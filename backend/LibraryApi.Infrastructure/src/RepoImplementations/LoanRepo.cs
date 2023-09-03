@@ -3,6 +3,7 @@ using LibraryApi.Domain.src.Abstractions;
 using LibraryApi.Infrastructure.src.Database;
 using Microsoft.EntityFrameworkCore;
 using LibraryApi.Domain.src.Shared;
+using LibraryApi.Service.src.Implementations;
 
 namespace LibraryApi.Infrastructure.src.RepoImplementations;
 
@@ -18,11 +19,12 @@ public class LoanRepo : BaseRepo<Loan>, ILoanRepo
 
   public async Task<IEnumerable<Loan>> GetLoansForOneUser(Guid id)
   {
-    return await _loans.Include(l => l.User)
+    var loans = _loans.Include(l => l.User)
                        .Include(l => l.Book)
-                       .ThenInclude(l => l.Author)
-                       .Where(l => l.UserId == id)
-                       .ToListAsync();
+                       .ThenInclude(l => l.Author).AsQueryable();
+
+    loans = loans.Where(l => l.UserId == id);
+    return await loans.ToListAsync();
   }
 
   public async override Task<Loan> GetOneById(Guid id)
