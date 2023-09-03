@@ -21,21 +21,13 @@ const initialState: LoanReducer = {
 export const fetchAllLoans = createAsyncThunk('fetchAllLoans', async () => {
   try {
     const token = window.localStorage.getItem('token')
-    const result = await axios.get<Loan[]>(`${config.backendUrl}/loans`, {
+    const result = await axios.get<LoanReadDto[]>(`${config.backendUrl}/loans`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
-    // this is a temporary solution until I figure out what is the matter with ef core relations
-    return await Promise.all(result.data.map(async (loan) => {
-      const user = await axios.get<User>(`${config.backendUrl}/users/${loan.userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      const book = await axios.get<Book>(`${config.backendUrl}/books/${loan.bookId}`)
-      return { id: loan.id, user: user.data, book: book.data, isReturned: loan.isReturned }
-    }))
+    console.log(result.data)
+    return result.data ?? []
   } catch (e) {
     return e as AxiosError
   }
@@ -44,15 +36,12 @@ export const fetchAllLoans = createAsyncThunk('fetchAllLoans', async () => {
 export const fetchUserLoans = createAsyncThunk('fetchUserLoans', async (user: User) => {
   try {
     const token = window.localStorage.getItem('token')
-    const result = await axios.get<Loan[]>(`${config.backendUrl}/loans/${user.id}`, {
+    const result = await axios.get<LoanReadDto[]>(`${config.backendUrl}/loans/${user.id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
-    return await Promise.all(result.data.map(async loan => {
-      const book = await axios.get<Book>(`${config.backendUrl}/books/${loan.bookId}`)
-      return { id: loan.id, user, book: book.data, isReturned: loan.isReturned }
-    }))
+    return result.data
   } catch (e) {
     return e as AxiosError
   }

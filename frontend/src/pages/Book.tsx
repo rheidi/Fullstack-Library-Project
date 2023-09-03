@@ -7,6 +7,7 @@ import { fetchOneBook } from '../redux/reducers/bookReducer'
 import { addToCart } from '../redux/reducers/cartReducer'
 import '../styles/book.scss'
 import { Link } from 'react-router-dom'
+import { formatAuthorName } from '../utils/authorUtils'
 
 const Book = () => {
   const id = useParams().id
@@ -35,7 +36,7 @@ const Book = () => {
       {book.imageUrl ? <img src={book.imageUrl} alt={`Cover of ${book.title}`} /> : null}
       <h1>{book.title}</h1>
       <p className="author">
-        {book.authorName}
+        {formatAuthorName(book.author)}
       </p>
       <p className="meta">
         <span className="genre">{book.genre}</span> <span className="year">{book.year}</span>

@@ -5,6 +5,7 @@ import useAppDispatch from '../hooks/useAppDispatch'
 import useAppSelector from '../hooks/useAppSelector'
 import { emptyCart, removeFromCart } from '../redux/reducers/cartReducer'
 import { loan } from '../redux/reducers/bookReducer'
+import { formatAuthorName } from '../utils/authorUtils'
 
 const Cart = () => {
   const cart = useAppSelector(state => state.cartReducer.books)
@@ -32,7 +33,7 @@ const Cart = () => {
               <li className="cart-item" key={i.id}>
                 <span className="title">{i.title}</span>
                 <span className="year">{i.year}</span>
-                <span className="author">{i.authorName}</span>
+                <span className="author">{formatAuthorName(i.author)}</span>
                 <button onClick={() => dispatch(removeFromCart(i))}>Remove book from cart</button>
               </li>
             ))}

@@ -8,7 +8,7 @@ const AddOrEditAuthor = () => {
   const id = useParams().id
   const [firstname, setFirstname] = useState('')
   const [lastname, setLastname] = useState('')
-  const [birthYear, setBirthYear] = useState(0)
+  const [birthYear, setBirthYear] = useState(1900)
   const { currentAuthor } = useAppSelector(state => state.authorReducer)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()

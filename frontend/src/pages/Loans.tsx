@@ -3,6 +3,8 @@ import useAppSelector from "../hooks/useAppSelector"
 import { isAdmin } from "../utils/userUtils"
 import useAppDispatch from "../hooks/useAppDispatch"
 import loanReducer, { fetchAllLoans, fetchUserLoans, returnLoan } from "../redux/reducers/loanReducer"
+import { formatAuthorShortname } from "../utils/authorUtils"
+import { Link } from "react-router-dom"
 
 const Loans = () => {
   const { loans } = useAppSelector(state => state.loanReducer)
@@ -20,6 +22,12 @@ const Loans = () => {
     }
   }, [currentUser])
 
+  if (!loans || loans.length < 1) {
+    return <main>
+      <h1>No loans for {currentUser?.firstName}</h1>
+    </main>
+  }
+
   return <main>
     <h1>Loans</h1>
     <table>
@@ -36,7 +44,12 @@ const Loans = () => {
         const { id, book, user } = loan
         const status = loan.isReturned ? 'returned' : 'borrowed'
         return <tr key={id}>
-          <td>{`${book.title} - ${book.authorName} (${book.year})`}</td>
+          <td>
+            <Link to={`/book/${book.id}`}>{book.title}</Link>
+            {book.author ?
+              <Link to={`/author/${book.author.id}`}>`- ${formatAuthorShortname(book.author)}`</Link> :
+              ''
+            } ({book.year})</td>
           <td>{`${user.firstName} ${user.lastName}`}</td>
           <td className={status}>{status}</td>
           {admin && <td>
