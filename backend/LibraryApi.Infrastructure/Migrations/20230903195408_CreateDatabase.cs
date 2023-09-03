@@ -7,13 +7,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LibraryApi.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateOnceAgain2 : Migration
+    public partial class CreateDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
-                .Annotation("Npgsql:Enum:genre", "novel,romance,crime,sci_fi,fantasy,horror,poems")
+                .Annotation("Npgsql:Enum:genre", "novel,romance,crime,scifi,fantasy,horror,poems")
                 .Annotation("Npgsql:Enum:role", "admin,customer,librarian");
 
             migrationBuilder.CreateTable(
@@ -59,7 +59,6 @@ namespace LibraryApi.Infrastructure.Migrations
                     title = table.Column<string>(type: "text", nullable: false),
                     year = table.Column<int>(type: "integer", nullable: false),
                     author_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    author_name = table.Column<string>(type: "text", nullable: false),
                     description = table.Column<string>(type: "text", nullable: false),
                     genre = table.Column<Genre>(type: "genre", nullable: false),
                     image_url = table.Column<string>(type: "text", nullable: false),
@@ -115,14 +114,12 @@ namespace LibraryApi.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "ix_loans_book_id",
                 table: "loans",
-                column: "book_id",
-                unique: true);
+                column: "book_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_loans_user_id",
                 table: "loans",
-                column: "user_id",
-                unique: true);
+                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_users_email",

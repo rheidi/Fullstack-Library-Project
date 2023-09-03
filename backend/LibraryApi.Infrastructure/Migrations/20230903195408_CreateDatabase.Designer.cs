@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LibraryApi.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230831062225_CreateOnceAgain3")]
-    partial class CreateOnceAgain3
+    [Migration("20230903195408_CreateDatabase")]
+    partial class CreateDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace LibraryApi.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "genre", new[] { "novel", "romance", "crime", "sci_fi", "fantasy", "horror", "poems" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "genre", new[] { "novel", "romance", "crime", "scifi", "fantasy", "horror", "poems" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "role", new[] { "admin", "customer", "librarian" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
@@ -73,11 +73,6 @@ namespace LibraryApi.Infrastructure.Migrations
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uuid")
                         .HasColumnName("author_id");
-
-                    b.Property<string>("AuthorName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("author_name");
 
                     b.Property<int>("BooksAvailable")
                         .HasColumnType("integer")
@@ -158,11 +153,9 @@ namespace LibraryApi.Infrastructure.Migrations
                         .HasName("pk_loans");
 
                     b.HasIndex("BookId")
-                        .IsUnique()
                         .HasDatabaseName("ix_loans_book_id");
 
                     b.HasIndex("UserId")
-                        .IsUnique()
                         .HasDatabaseName("ix_loans_user_id");
 
                     b.ToTable("loans", (string)null);
@@ -237,15 +230,15 @@ namespace LibraryApi.Infrastructure.Migrations
             modelBuilder.Entity("LibraryApi.Domain.src.Entities.Loan", b =>
                 {
                     b.HasOne("LibraryApi.Domain.src.Entities.Book", "Book")
-                        .WithOne("Loan")
-                        .HasForeignKey("LibraryApi.Domain.src.Entities.Loan", "BookId")
+                        .WithMany("Loans")
+                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_loans_books_book_id");
 
                     b.HasOne("LibraryApi.Domain.src.Entities.User", "User")
-                        .WithOne("Loan")
-                        .HasForeignKey("LibraryApi.Domain.src.Entities.Loan", "UserId")
+                        .WithMany("Loans")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_loans_users_user_id");
@@ -262,12 +255,12 @@ namespace LibraryApi.Infrastructure.Migrations
 
             modelBuilder.Entity("LibraryApi.Domain.src.Entities.Book", b =>
                 {
-                    b.Navigation("Loan");
+                    b.Navigation("Loans");
                 });
 
             modelBuilder.Entity("LibraryApi.Domain.src.Entities.User", b =>
                 {
-                    b.Navigation("Loan");
+                    b.Navigation("Loans");
                 });
 #pragma warning restore 612, 618
         }

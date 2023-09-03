@@ -21,7 +21,7 @@ namespace LibraryApi.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "genre", new[] { "novel", "romance", "crime", "sci_fi", "fantasy", "horror", "poems" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "genre", new[] { "novel", "romance", "crime", "scifi", "fantasy", "horror", "poems" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "role", new[] { "admin", "customer", "librarian" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
