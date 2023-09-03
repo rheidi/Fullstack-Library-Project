@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import useAppSelector from './hooks/useAppSelector'
 import useAppDispatch from './hooks/useAppDispatch'
@@ -17,6 +17,7 @@ import './styles/style.scss'
 import Loans from './pages/Loans'
 import Profile from './pages/Profile'
 import Users from './pages/Users'
+import Author from './pages/Author'
 
 const App = () => {
   const dispatch = useAppDispatch()
@@ -46,6 +47,7 @@ const App = () => {
           <Route path="books" element={<Books />} />
           <Route path="book/:id" element={<Book />} />
           <Route path="authors" element={<Authors />} />
+          <Route path="author/:id" element={<Author />} />
           <Route element={<LoggedInRoutes isAllowed={!currentUser} />}>
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignUp />} />

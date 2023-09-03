@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import useAppSelector from "../hooks/useAppSelector"
 import { useEffect } from "react"
 import useAppDispatch from "../hooks/useAppDispatch"
 import { fetchOneAuthor } from "../redux/reducers/authorReducer"
-import { formatAuthorName, formatAuthorShortname } from "../utils/authorUtils"
+import { formatAuthorShortname } from "../utils/authorUtils"
 
 const Author = () => {
   const id = useParams().id
@@ -31,7 +31,13 @@ const Author = () => {
       <h1>{formatAuthorShortname(currentAuthor)}</h1>
       {yearOfBirth && <span className="yob">Born {yearOfBirth}</span>}
       <ul>
-        {books.map(b => <li>`${b.title} (${b.year}), ${b.genre})`</li>)}
+        {books.map(b => {
+          return (
+          <li key={b.id}>
+            <Link to={`/books/${b.id}`}>`${b.title} (${b.year}), ${b.genre})`</Link>
+          </li>
+          )}
+        )}
       </ul>
     </main>
   )
