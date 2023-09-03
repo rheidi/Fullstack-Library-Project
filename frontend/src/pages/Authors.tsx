@@ -19,7 +19,14 @@ const Authors = () => {
     <h1>List of authors</h1>
     <ul>
       { authors.map(author => {
-          return <li key={author.id}>{formatAuthorName(author)} {isAdmin(currentUser) && <Link to={`/edit_author/${author.id}`}>Edit</Link>}</li>
+          return <li key={author.id}>
+            <Link to={`/author/${author.id}`} >
+              {formatAuthorName(author)}
+            </Link>
+            {isAdmin(currentUser) &&
+              <Link to={`/edit_author/${author.id}`}>Edit</Link>
+            }
+          </li>
         })
       }
     </ul>
