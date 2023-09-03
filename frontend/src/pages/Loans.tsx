@@ -21,6 +21,12 @@ const Loans = () => {
     }
   }, [currentUser])
 
+  if (!loans || loans.length < 1) {
+    return <main>
+      <h1>No loans for {currentUser?.firstName}</h1>
+    </main>
+  }
+
   return <main>
     <h1>Loans</h1>
     <table>
