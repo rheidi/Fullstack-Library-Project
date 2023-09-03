@@ -4,7 +4,6 @@ import config from '../../config'
 import axios, { AxiosError } from 'axios'
 import { NewUser } from '../../types/NewUser'
 import { UserCredential } from '../../types/UserCredential'
-import { access } from 'fs'
 
 interface UserReducer {
   users: User[]
@@ -132,6 +131,9 @@ const usersSlice = createSlice({
           state.error = action.payload.message
         } else {
           state.users = state.users.filter(user => user.id !== action.payload)
+          window.localStorage.removeItem('user')
+          window.localStorage.removeItem('token')
+          delete state.currentUser
         }
       })
   }

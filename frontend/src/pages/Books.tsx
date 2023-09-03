@@ -5,7 +5,7 @@ import { fetchAllBooks } from '../redux/reducers/bookReducer'
 import '../styles/books.scss'
 import { Link } from 'react-router-dom'
 import { addToCart } from '../redux/reducers/cartReducer'
-import { formatAuthorName } from '../utils/authorUtils'
+import { formatAuthorShortname } from '../utils/authorUtils'
 
 const Books = () => {
   const { books } = useAppSelector(state => state.bookReducer)
@@ -31,11 +31,15 @@ const Books = () => {
   const increasePageNumber = () => {
     if (books.length < pageSize) return
     setPageNumber(pageNumber + 1)
+    const queryParams = { pageNumber, pageSize, search }
+    dispatch(fetchAllBooks(queryParams))
   }
 
   const decreasePageNumber = () => {
     if (pageNumber <= 1) return
     setPageNumber(pageNumber - 1)
+    const queryParams = { pageNumber, pageSize, search }
+    dispatch(fetchAllBooks(queryParams))
   }
 
   return (
@@ -57,8 +61,8 @@ const Books = () => {
           <Link to={`/book/${b.id}`}>
             <h2>{b.title}</h2>
             <p>{b.genre}</p>
-            <h3><Link to={`/author/${b.author.id}`}>{`${formatAuthorName(b.author)}`}</Link></h3>
           </Link>
+          <h3><Link to={`/author/${b.author.id}`}>{`${formatAuthorShortname(b.author)}`}</Link></h3>
           {currentUser && (
             <div className="tools">
               <button onClick={_ => dispatch(addToCart(b))}>Add to cart</button>

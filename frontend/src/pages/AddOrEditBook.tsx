@@ -7,6 +7,7 @@ import { useParams } from 'react-router'
 import useAppSelector from '../hooks/useAppSelector'
 import { fetchAllAuthors } from '../redux/reducers/authorReducer'
 import { AxiosError } from 'axios'
+import { formatAuthorName } from '../utils/authorUtils'
 
 const AddOrEditBook = () => {
   const id = useParams().id
@@ -90,7 +91,7 @@ const AddOrEditBook = () => {
             value={authorId}
           >
             {authors.map(author => {
-              return <option key={author.id} value={author.id}>{`${author.firstName} ${author.lastName}`}</option>
+              return <option key={author.id} value={author.id}>{formatAuthorName(author)}</option>
             })}
           </select>
           <label htmlFor="description">

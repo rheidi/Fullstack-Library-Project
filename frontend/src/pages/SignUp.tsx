@@ -24,7 +24,7 @@ const SignUp = () => {
         setLastName('')
         setEmail('')
         setPassword('')
-        setTimeout(() => navigate('/login'), 5000)
+        setTimeout(() => navigate('/login'), 1500)
       }
     })
   }
