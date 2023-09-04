@@ -47,9 +47,9 @@ const Books = () => {
       <div id="book-tools" className="tools">
         <label htmlFor='page-size'>Books per page</label>
         <select id="page-size" onChange={e => setPageSize(parseInt(e.target.value))}>
-          <option value="9">10</option>
-          <option value="27">25</option>
-          <option value="54">50</option>
+          <option value="9">9</option>
+          <option value="27">27</option>
+          <option value="54">54</option>
         </select>
         <form id="searchform" onSubmit={e => {updateSearch(e)}} >
           <input name="search-term" id="search" placeholder="search" value={search} onChange={e => setSearch(e.target.value)} />
