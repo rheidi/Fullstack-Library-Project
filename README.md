@@ -77,17 +77,17 @@ There is a ready-made admin account for testing purposes (the token expires in 1
 
 ### Cloning from GitHub
 
-Clone  the  repository from GitHub with `git clone` Then `npm install` for the node module packages in /frontend and lastly `npm start` and go to your http://localhost:3000 to see the website. In /backend install necessary packages with `dotnet restore`, and start back end server with `dotnet run`. 
+Clone  the  repository from GitHub with `git clone` Then `npm install` for the node module packages in /frontend and lastly `npm start` and go to your http://localhost:3000 to see the website. In /backend install necessary packages with `dotnet restore`, and start back end server with `dotnet run`. Requires a postgreSQL database with a connection string in appsettings.json in Infrastructure layer.
 
 ### Deployment
 
 The back end of this project has been deployed in
-https://home-library-management-application.azurewebsites.net
+[azure cloud services](https://home-library-management-application.azurewebsites.net)
 
 and the routes can be viewed and tested in
-https://home-library-management-application.azurewebsites.net/swagger/index.html
+[swagger](https://home-library-management-application.azurewebsites.net/swagger/index.html)
 
-The front end has been deployed in https://fullstack-library-project.vercel.app/
+The front end has been deployed in [vercel](https://fullstack-library-project.vercel.app/)
 
 It is really slow to start, maybe due to the back end residing in low priority tier computing because it is a free service. It might take up to 20-30 seconds to start, but then it should operate normally.
 
