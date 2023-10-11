@@ -20,7 +20,7 @@ public class UserService : BaseService<User, UserReadDto, UserCreateDto, UserUpd
     var foundUser = await _userRepo.GetOneById(id);
     if (foundUser is null)
     {
-      throw new Exception(id + ": User not found");
+      throw CustomException.NotFoundException("User not found.");
     }
     PasswordService.HashPassword(newPassword, out var hashedPassword, out var salt);
     foundUser.Password = hashedPassword;

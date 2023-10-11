@@ -2,6 +2,7 @@ using AutoMapper;
 using LibraryApi.Domain.src.Abstractions;
 using LibraryApi.Domain.src.Shared;
 using LibraryApi.Service.src.Abstractions;
+using LibraryApi.Service.src.Shared;
 
 namespace LibraryApi.Service.src.Implementations;
 
@@ -33,7 +34,12 @@ public class BaseService<T, TReadDto, TCreateDto, TUpdateDto> : IBaseService<T, 
 
   public async Task<TReadDto> GetOneById(Guid id)
   {
-    return _mapper.Map<TReadDto>(await _baseRepo.GetOneById(id));
+    var foundItem = await _baseRepo.GetOneById(id);
+    if (foundItem is null)
+    {
+      throw CustomException.NotFoundException();
+    }
+    return _mapper.Map<TReadDto>(foundItem);
   }
 
   public async Task<TReadDto> UpdateOneById(Guid id, TUpdateDto updated)
@@ -41,7 +47,7 @@ public class BaseService<T, TReadDto, TCreateDto, TUpdateDto> : IBaseService<T, 
     var foundItem = await _baseRepo.GetOneById(id);
     if (foundItem is null)
     {
-      throw new Exception("Item not found.");
+      throw CustomException.NotFoundException();
     }
     var updatedEntity = _baseRepo.UpdateOneById(_mapper.Map<T>(updated));
     return _mapper.Map<TReadDto>(updatedEntity);

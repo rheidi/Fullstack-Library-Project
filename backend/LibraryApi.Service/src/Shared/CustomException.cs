@@ -1,3 +1,4 @@
+using System.Runtime.Serialization;
 using Microsoft.AspNetCore.Components.Forms;
 
 namespace LibraryApi.Service.src.Shared;
