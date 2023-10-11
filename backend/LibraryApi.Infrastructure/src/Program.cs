@@ -14,6 +14,7 @@ using Npgsql;
 using LibraryApi.Domain.src.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using LibraryApi.Infrastructure.src.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,9 @@ builder.Services.AddCors(opts =>
         builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
     });
 });
+
+builder.Services
+.AddSingleton<ErrorHandlerMiddleware>();
 
 var connectionString = builder.Configuration.GetConnectionString("Default");
 
@@ -115,6 +119,8 @@ app.UseSwaggerUI();
 app.UseCors();
 
 //app.UseHttpsRedirection();
+
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.UseAuthentication();
 
