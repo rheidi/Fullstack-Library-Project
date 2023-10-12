@@ -7,11 +7,22 @@ main.book-grid {
   margin: 2rem;
   grid-gap: 1rem;
   align-items: stretch;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 
   .tools {
     grid-column-start: 1;
     grid-column-end: 4;
-    width: 100%;
+    @media (max-width: 768px) {
+      grid-column-end: 3;
+    }
+    @media (max-width: 600px) {
+      grid-column-end: 2;
+    }
   }
 
   #book-tools {
@@ -55,15 +66,15 @@ main.book-grid {
 
   div.card {
     align-self: start;
-    padding: 1rem;
-    border-radius: 4px;
-    border: 1px solid palette.$shade-light;
-    background: palette.$accent;
+    padding: 4em;
+    border-radius: 10px;
+    border: 3px solid palette.$shade;
+    background: palette.$background;
     color: palette.$panel-light;
 
     h2 {
       margin-top: 0.5rem;
-      color: palette.$panel;
+      color: palette.$accent;
     }
 
     .more-info {

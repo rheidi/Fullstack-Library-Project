@@ -28,8 +28,8 @@ form:not(#searchform) {
 
     input {
       border: 1px solid palette.$panel-light;
-      background: palette.$highlight-dark;
-      color: white;
+      background: palette.$background;
+      color: palette.$background-light;
       &:focus, &:focus-visible {
         border: 1px solid palette.$highlight;
       }
