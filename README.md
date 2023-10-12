@@ -1,9 +1,13 @@
 # Fullstack Project - Library
+
 ![Emoji](https://img.shields.io/badge/IN_PROGRESS-YES-red)
 
 ## Introduction
 
 This project is a library management system for book borrowing for every home library. It is a full-stack application made as an assignment for Integrify. The project uses React on front end and .NET EF Core on back end with PostgreSQL database. Architecture in the back end follows clean architecture principles.
+
+This image has inspired me when I chose colors for the front end.
+![color palette image](color-palette-2595.png)
 
 ## Table of Content
 
@@ -29,6 +33,7 @@ Books and single book information as well as list of all authors and single auth
 There is a ready-made admin account for testing purposes (the token expires in 10 minutes after logging in). Email: admin@mail.com, password: admin123.
 
 ## Project Structure
+
 ```
 .
 ├── backend
@@ -77,7 +82,7 @@ There is a ready-made admin account for testing purposes (the token expires in 1
 
 ### Cloning from GitHub
 
-Clone  the  repository from GitHub with `git clone` Then `npm install` for the node module packages in /frontend and lastly `npm start` and go to your http://localhost:3000 to see the website. In /backend install necessary packages with `dotnet restore`, and start back end server with `dotnet run`. Requires a postgreSQL database with a connection string in appsettings.json in Infrastructure layer.
+Clone the repository from GitHub with `git clone` Then `npm install` for the node module packages in /frontend and lastly `npm start` and go to your http://localhost:3000 to see the website. In /backend install necessary packages with `dotnet restore`, and start back end server with `dotnet run`. Requires a postgreSQL database with a connection string in appsettings.json in Infrastructure layer.
 
 ### Deployment
 
@@ -95,14 +100,14 @@ There is one user with admin rights created already, with email admin@mail.com a
 
 ## Missing Functionalities
 
-* Library needs an inventory.
-* Books could have multiple authors.
-* Deleting books or authors is not done in the front end yet.
-* Addind reviews would be nice.
-* Loans should have return date
+- Library needs an inventory.
+- Books could have multiple authors.
+- Deleting books or authors is not done in the front end yet.
+- Addind reviews would be nice.
+- Loans should have return date
 
 ## Known Bugs
 
-* User can still borrow same book multiple times
-* There is no indicator if book is added to a cart or not
-* If User has loans, and user removes own cart, loans just evaporate
+- User can still borrow same book multiple times
+- There is no indicator if book is added to a cart or not
+- If User has loans, and user removes own cart, loans just evaporate
